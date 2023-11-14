@@ -1,11 +1,22 @@
 # Load in required packages
 library(rmarkdown)
 library(tidyverse)
+library(lubridate)
+library(slider)
+library(dataRetrieval)
+library(ggpubr)
 
 #Determine which scripts should be run
+prelim_report = T #Makes a preliminary report based on environmental data from Lake Champlain
 process_data = F #Runs data analysis 
 make_report = F #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
+
+if(prelim_report == T){
+  render(input = "Output/Reports/prelim_data.Rmd", #Input the path to your .Rmd file here
+         #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
+         output_format = "all")
+}
 
 ############################
 ### Read in the RAW data ###
