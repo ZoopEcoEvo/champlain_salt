@@ -1,0 +1,11 @@
+﻿experiment_date,lab_temp,replicate,treatment,tube,ctmax_minute,ctmax_second
+12/19/23,7,1,control,1,62,14
+12/19/23,7,1,salt,2,72,1
+12/19/23,7,1,salt,3,52,27
+12/19/23,7,1,control,4,53,1
+12/19/23,7,1,control,5,58,18
+12/19/23,7,1,salt,6,68,16
+12/19/23,7,1,salt,7,63,39
+12/19/23,7,1,control,8,65,20
+12/19/23,7,1,salt,9,66,30
+12/19/23,7,1,control,10,71,23

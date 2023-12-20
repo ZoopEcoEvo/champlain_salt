@@ -1,10 +1,15 @@
 # Load in required packages
 library(rmarkdown)
+library(survival)
+library(survminer)
 library(tidyverse)
 library(lubridate)
 library(slider)
 library(dataRetrieval)
 library(ggpubr)
+library(ggsurvfit)
+
+source("Scripts/ctmax_function.R")
 
 #Determine which scripts should be run
 prelim_report = T #Makes a preliminary report based on environmental data from Lake Champlain
@@ -13,8 +18,12 @@ make_report = F #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
 if(prelim_report == T){
+  
+  prelim_surv = read.csv(file = "Raw_data/surv_trial/trial_surv.csv")
+  test_temp = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_temp.CSV")
+  test_time = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_obs.csv")
+  
   render(input = "Output/Reports/prelim_data.Rmd", #Input the path to your .Rmd file here
-         #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
          output_format = "all")
 }
 

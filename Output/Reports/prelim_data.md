@@ -1,10 +1,16 @@
-Temperature and Salinity in Lake Champlain
+Preliminary Report
 ================
-2023-10-02
+2023-12-19
 
-- [Acquiring environmental data](#acquiring-environmental-data)
-- [Seasonal patterns](#seasonal-patterns)
-- [Matt’s recommendation](#matts-recommendation)
+- [Temperature and Salinity in Lake
+  Champlain](#temperature-and-salinity-in-lake-champlain)
+  - [Acquiring environmental data](#acquiring-environmental-data)
+  - [Seasonal patterns](#seasonal-patterns)
+- [Preliminary Survival Experiment](#preliminary-survival-experiment)
+  - [Survival Analysis](#survival-analysis)
+  - [CTmax Analysis](#ctmax-analysis)
+
+## Temperature and Salinity in Lake Champlain
 
 To start the project, we examine patterns in environmental conditions in
 Lake Champlain to help pick levels of salinity exposure to use in the
@@ -20,7 +26,7 @@ experiment. This report:
 4.  Displays the distribution of salinity values observed, with possible
     treatment levels.
 
-## Acquiring environmental data
+### Acquiring environmental data
 
 The USGS maintains a continuous data record near Burlington Fishing
 Pier, where we’ve been collecting copepods for the past several months.
@@ -47,14 +53,13 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   select(date, "temp" = X_00010_00003, "cond" = X_00095_00003) %>% 
     drop_na(temp, cond) %>% 
   mutate(doy = yday(date)) %>% 
-  mutate(psu = ((cond / 1000)^1.0878) * 0.4665, #Converts from conductivity to psu
-         mgL = psu * 1000) #Converts from psu to mg per L (this is an approximation)
+  mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3270 days is available, covering a period of time
-spanning from October 01, 2014 to October 01, 2023.
+Data for a total of 3348 days is available, covering a period of time
+spanning from October 01, 2014 to December 18, 2023.
 
-## Seasonal patterns
+### Seasonal patterns
 
 Shown below are the plots showing the seasonal patterns in temperature
 and salinity. The temperature plot highlights that Lake Champlain is
@@ -130,44 +135,92 @@ ggplot(aes(x = temp, y = mgL)) +
 
 <img src="../Figures/markdown/temp-salt-corrs-2.png" style="display: block; margin: auto;" />
 
-The distribution of daily salinity values is shown below, along with
-vertical lines indicating the 50th, 75th, 90th, and 99th percentiles for
-winter days (water temperatures below 10°C). These quartile values would
-be strong candidates for **environmentally realistic** levels of
-salinity exposures.
+## Preliminary Survival Experiment
+
+To select salinity treatments for the full experiment we ran a 4 day
+survival test, with copepods exposed to a range of salinities (0 mg/L -
+1000 mg/L added to bottled spring water). Survival was checked
+approximately every 24 hours. After four days, upper thermal limits (as
+CTmax) were measured for five copepods each from the control and 1000
+mg/L salinity treatment.
 
 ``` r
-winter_vals = env_data %>% 
-  filter(temp <= 10)
+recipe = data.frame(desired = seq(from = 0, to = 1000, by = 100)) %>% 
+  mutate(salt_added = (desired * 30) / 2000)
+```
 
-sal_quants = quantile(winter_vals$mgL, probs = c(0.5, 0.75, 0.9, 0.99), na.rm = T)
+### Survival Analysis
 
-ggplot(env_data, aes(x = mgL)) + 
-  geom_histogram(binwidth = 2, 
-                 fill = "grey30") + 
-  geom_vline(xintercept = sal_quants, colour = "steelblue3", linewidth = 1) + 
-  labs(x = "Salinity (mg/L)") + 
+Survival was high across all treatments, with minimal mortality in the
+highest salinity treatments.
+
+``` r
+surv_data = prelim_surv %>% 
+  filter(!(treatment %in% c("half", "RO"))) %>% 
+  mutate(treatment = as.numeric(treatment)) %>% 
+  pivot_longer(cols = starts_with("hour_"),
+               values_to = "surv", 
+               names_to = "hour",
+               names_prefix = "hour_") %>% 
+  group_by(treatment) %>% 
+  mutate(initial = first(surv)) %>% ### REMOVE THIS LINE AT END
+  group_by(treatment, hour) %>% 
+  drop_na(surv) %>% 
+  mutate(hour = as.numeric(hour),
+         "ind_surv" = paste(rep(c(0,1), c(surv, initial - surv)), collapse = ",")) %>%
+  select(-surv, -initial) %>% 
+  separate_rows(ind_surv, sep = ",", convert = T) %>% 
+  mutate("ID" = row_number()) %>%  
+  ungroup() %>% 
+  group_by(treatment, ID) %>% 
+  filter(ind_surv == 1 | treatment == 0) %>% 
+  filter(hour == min(hour)) %>% 
+  ungroup() %>% 
+  complete(treatment,ID, 
+           fill = list(hour = 123,
+                       ind_surv = 0))
+
+surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
+
+surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+
+#summary(surv_fit)
+
+ggsurvplot(surv_fit, 
+           conf.int=T, pval=F, risk.table=F, 
+           conf.int.alpha = 0.1,
+           size = 2,
+           legend.title="Salt Treatment",
+           palette=c("lightskyblue1", "dodgerblue","dodgerblue3", "dodgerblue4", "navy", "darkorchid4", "lightsalmon", "indianred2", "indianred4", "orangered3", "firebrick4"))
+```
+
+<img src="../Figures/markdown/surv-trial-1.png" style="display: block; margin: auto;" />
+
+``` r
+cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+
+cox.model
+## Call:
+## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_data)
+## 
+##                coef exp(coef)  se(coef)     z     p
+## treatment 9.405e-05 1.000e+00 2.604e-03 0.036 0.971
+## 
+## Likelihood ratio test=0  on 1 df, p=0.9712
+## n= 72, number of events= 5
+```
+
+### CTmax Analysis
+
+``` r
+trial_ctmax = est_ctmax(test_temp, test_time)
+
+ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) + 
+  geom_boxplot(width = 0.3) +
+  geom_point(size = 4) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
   theme_matt()
 ```
 
-<img src="../Figures/markdown/sal-hist-1.png" style="display: block; margin: auto;" />
-
-## Matt’s recommendation
-
-Collect copepods, and separate into two groups (n = 20 each).
-
-One group remains at control (standard salinity), while the other is
-acclimated to a mild salinity treatment (the 75th quartile value).
-
-After one week of acclimation, thermal limits are measured in either
-standard conditions or under salinity stress (90th or 99th percentile).
-These measurements are made over 3 replicate assays, with individuals
-randomly assigned to control or salt treatments from the two acclimation
-groups.
-
-30 individuals per experiment (n = 10 per replicate); 15 individuals per
-acclimation treatment; 7-8 individuals per assay treatment.
-
-By repeating the experiment three times, both technical and biological
-replication will be robust. In total, the project would take
-approximately 4-6 weeks.
+<img src="../Figures/markdown/ctmax-trial-1.png" style="display: block; margin: auto;" />
