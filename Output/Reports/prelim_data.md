@@ -163,7 +163,7 @@ surv_data = prelim_surv %>%
                names_to = "hour",
                names_prefix = "hour_") %>% 
   group_by(treatment) %>% 
-  mutate(initial = first(surv)) %>% ### REMOVE THIS LINE AT END
+  mutate(initial = first(surv)) %>% 
   group_by(treatment, hour) %>% 
   drop_na(surv) %>% 
   mutate(hour = as.numeric(hour),
@@ -172,13 +172,19 @@ surv_data = prelim_surv %>%
   separate_rows(ind_surv, sep = ",", convert = T) %>% 
   mutate("ID" = row_number()) %>%  
   ungroup() %>% 
+  group_by(treatment, ID) 
+
+mort_1 = surv_data %>% ungroup() %>%  
   group_by(treatment, ID) %>% 
-  filter(ind_surv == 1 | treatment == 0) %>% 
-  filter(hour == min(hour)) %>% 
-  ungroup() %>% 
-  complete(treatment,ID, 
-           fill = list(hour = 123,
-                       ind_surv = 0))
+  filter(ind_surv == 1) %>% 
+  filter(hour == min(hour)) 
+
+mort_2 = surv_data %>% ungroup() %>%  
+  group_by(treatment, ID) %>% 
+  filter(hour == 99) %>% 
+  filter(ind_surv == 0) 
+
+surv_data = bind_rows(mort_1, mort_2)
 
 surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
 
@@ -199,15 +205,15 @@ ggsurvplot(surv_fit,
 ``` r
 cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
 
-cox.model
+print(cox.model)
 ## Call:
 ## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_data)
 ## 
-##                coef exp(coef)  se(coef)     z     p
-## treatment 9.405e-05 1.000e+00 2.604e-03 0.036 0.971
+##               coef exp(coef) se(coef)     z      p
+## treatment 0.003594  1.003601 0.001947 1.846 0.0649
 ## 
-## Likelihood ratio test=0  on 1 df, p=0.9712
-## n= 72, number of events= 5
+## Likelihood ratio test=4.65  on 1 df, p=0.03111
+## n= 121, number of events= 5
 ```
 
 ### CTmax Analysis
