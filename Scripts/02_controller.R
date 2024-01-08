@@ -9,7 +9,7 @@ library(dataRetrieval)
 library(ggpubr)
 library(ggsurvfit)
 
-source("Scripts/ctmax_function.R")
+source("Scripts/project_functions.R")
 
 #Determine which scripts should be run
 prelim_report = T #Makes a preliminary report based on environmental data from Lake Champlain
@@ -19,7 +19,8 @@ knit_manuscript = F #Compiles manuscript draft
 
 if(prelim_report == T){
   
-  prelim_surv = read.csv(file = "Raw_data/surv_trial/trial_surv.csv")
+  prelim_surv = read.csv(file = "Raw_data/surv_trial/trial_surv_1.csv")
+  prelim_surv2 = read.csv(file = "Raw_data/surv_trial/trial_surv_2.csv")
   test_temp = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_temp.CSV")
   test_time = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_obs.csv")
   

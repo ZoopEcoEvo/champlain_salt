@@ -1,37 +1,25 @@
 Preliminary Report
 ================
-2023-12-19
+2024-01-08
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
   - [Acquiring environmental data](#acquiring-environmental-data)
   - [Seasonal patterns](#seasonal-patterns)
-- [Preliminary Survival Experiment](#preliminary-survival-experiment)
+- [Preliminary Survival Experiments](#preliminary-survival-experiments)
   - [Survival Analysis](#survival-analysis)
   - [CTmax Analysis](#ctmax-analysis)
 
 ## Temperature and Salinity in Lake Champlain
 
-To start the project, we examine patterns in environmental conditions in
-Lake Champlain to help pick levels of salinity exposure to use in the
-experiment. This report:
-
-1.  Pulls temperature and conductivity data from the USGS sensor in Lake
-    Champlain from near where copepods are regularly collected (averaged
-    to daily values).
-2.  Converts conductivity values to salinity values that are easier to
-    use for planning.
-3.  Displays climatology plots for temperature and salinity, and a
-    correlation plot for these two factors.
-4.  Displays the distribution of salinity values observed, with possible
-    treatment levels.
+To provide context for this project, we begin by examining patterns in
+temperature and salinity in Lake Champlain.
 
 ### Acquiring environmental data
 
 The USGS maintains a continuous data record near Burlington Fishing
-Pier, where we’ve been collecting copepods for the past several months.
-This sensor records both temperature and specific conductivity. All
-available data is retrieved using the following R code.
+Pier, where copepods were collected. This sensor records both
+temperature and specific conductivity.
 
 ``` r
 #### Load the data ####
@@ -56,21 +44,22 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3348 days is available, covering a period of time
-spanning from October 01, 2014 to December 18, 2023.
+Data for a total of 3368 days is available, covering a period of time
+spanning from October 01, 2014 to January 07, 2024.
 
 ### Seasonal patterns
 
-Shown below are the plots showing the seasonal patterns in temperature
-and salinity. The temperature plot highlights that Lake Champlain is
-highly seasonal, with a \>20°C difference in temperature between Winter
-and Summer.
+Shown below are the plots of the seasonal patterns in temperature and
+salinity. The temperature plot highlights that Lake Champlain is highly
+seasonal, with a \>20°C difference in temperature between Winter and
+Summer.
 
 The salinity plot shows a different seasonal pattern, with slight
 increases in both winter and summer. These increases may be driven by
 different processes: increased salt input to the lake during Winter, and
 increased evaporative water loss during the Summer. Note that the
-highest observed salinity values are observed during the Winter.
+highest salinity values are observed during the Winter, occuring as
+infrequent, short spikes in salinity.
 
 ``` r
 
@@ -100,11 +89,9 @@ again we see that the highest salinity values occur when water
 temperatures are low. If we restrict the correlation to just days where
 temperature is below 10°C, we see that there is generally no
 relationship between salinity and temperature. The overall average
-salinity is included in this restricted plot in red.
-
-This suggests that Lake Champlain during the winter is largely
-characterized by stable salinities, with a small number of relatively
-extreme events.
+salinity is included in this restricted plot in red. This suggests that
+Lake Champlain during the winter is largely characterized by stable
+salinities, with a small number of relatively extreme events.
 
 ``` r
 
@@ -135,64 +122,61 @@ ggplot(aes(x = temp, y = mgL)) +
 
 <img src="../Figures/markdown/temp-salt-corrs-2.png" style="display: block; margin: auto;" />
 
-## Preliminary Survival Experiment
+Shown below is the distribution of observed salinity values from the
+sensor, restricted to data from days were the temperature was less than
+or equal to 10°C. This distribution suggests that salinity levels are
+fairly low in the lake, with the distribution centered around 55 mg/L.
 
-To select salinity treatments for the full experiment we ran a 4 day
-survival test, with copepods exposed to a range of salinities (0 mg/L -
-1000 mg/L added to bottled spring water). Survival was checked
-approximately every 24 hours. After four days, upper thermal limits (as
-CTmax) were measured for five copepods each from the control and 1000
-mg/L salinity treatment.
+## Preliminary Survival Experiments
 
-``` r
-recipe = data.frame(desired = seq(from = 0, to = 1000, by = 100)) %>% 
-  mutate(salt_added = (desired * 30) / 2000)
-```
+To select salinity treatments for the full experiment we ran a multi-day
+survival test, with copepods exposed to a range of salinities. The first
+preliminary trial used concentrations based on the observed salinity
+distribution in the lake, and the EPA guidlines on acute and extended
+exposure thresholds. These values (0 mg/L - 1000 mg/L added to bottled
+spring water) span the observed salinities, and extend past the EPA
+thresholds.
+
+Survival was checked approximately every 24 hours. After four days,
+upper thermal limits (as CTmax) were measured for five copepods each
+from the control and 1000 mg/L salinity treatment.
 
 ### Survival Analysis
 
-Survival was high across all treatments, with minimal mortality in the
-highest salinity treatments.
+Surprisingly, survival was high across all treatments in this trial,
+with only minimal mortality in the highest salinity treatments.
 
 ``` r
-surv_data = prelim_surv %>% 
-  filter(!(treatment %in% c("half", "RO"))) %>% 
-  mutate(treatment = as.numeric(treatment)) %>% 
-  pivot_longer(cols = starts_with("hour_"),
-               values_to = "surv", 
-               names_to = "hour",
-               names_prefix = "hour_") %>% 
-  group_by(treatment) %>% 
-  mutate(initial = first(surv)) %>% 
-  group_by(treatment, hour) %>% 
-  drop_na(surv) %>% 
-  mutate(hour = as.numeric(hour),
-         "ind_surv" = paste(rep(c(0,1), c(surv, initial - surv)), collapse = ",")) %>%
-  select(-surv, -initial) %>% 
-  separate_rows(ind_surv, sep = ",", convert = T) %>% 
-  mutate("ID" = row_number()) %>%  
+
+surv_trial_1 = make_surv(prelim_surv)
+surv_obj_1 = Surv(surv_trial_1$hour, surv_trial_1$ind_surv)
+surv_fit_1 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_1)
+
+surv_trial_1  %>% 
   ungroup() %>% 
-  group_by(treatment, ID) 
+  select(-ID, -hour) %>% 
+  group_by(treatment, initial) %>% 
+  summarise(num_died = sum(ind_surv)) %>%  
+  mutate(total_surv = initial - num_died,
+         prop_surv = total_surv / initial) %>% 
+  ggplot(aes(x = treatment, y = prop_surv)) + 
+  geom_hline(yintercept = 0.5,
+             colour = "grey", 
+             linetype = "dashed") + 
+  geom_point(size = 4) + 
+  labs(x = "Salinity (mg/L)",
+       y = "Proportion Surviving ") + 
+  theme_matt()
+```
 
-mort_1 = surv_data %>% ungroup() %>%  
-  group_by(treatment, ID) %>% 
-  filter(ind_surv == 1) %>% 
-  filter(hour == min(hour)) 
+<img src="../Figures/markdown/surv-trial-1.png" style="display: block; margin: auto;" />
 
-mort_2 = surv_data %>% ungroup() %>%  
-  group_by(treatment, ID) %>% 
-  filter(hour == 99) %>% 
-  filter(ind_surv == 0) 
+``` r
 
-surv_data = bind_rows(mort_1, mort_2)
-
-surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
-
-surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_data)
 
 #summary(surv_fit)
 
-ggsurvplot(surv_fit, 
+ggsurvplot(surv_fit_1, 
            conf.int=T, pval=F, risk.table=F, 
            conf.int.alpha = 0.1,
            size = 2,
@@ -200,32 +184,84 @@ ggsurvplot(surv_fit,
            palette=c("lightskyblue1", "dodgerblue","dodgerblue3", "dodgerblue4", "navy", "darkorchid4", "lightsalmon", "indianred2", "indianred4", "orangered3", "firebrick4"))
 ```
 
-<img src="../Figures/markdown/surv-trial-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/markdown/surv-trial-2.png" style="display: block; margin: auto;" />
+
+This first preliminary test suggests that *L. sicilis* has fairly high
+salinity tolerance. A second preliminary test was run with a much larger
+salinity range (spanning 1000 to 7000 mg salt/L). No acute mortality
+(\<5 hours after the ramp up was completed) was observed, but within 24
+hours there was mortality observed in some of the higher salt
+concentration treatments. Note that the salinity values where mortality
+occured correspond to \>5 g added salt per L water.
 
 ``` r
-cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+surv_trial_2 = make_surv(prelim_surv2)
 
-print(cox.model)
+surv_trial_2 %>% 
+  ungroup() %>% 
+  group_by(treatment, initial) %>% 
+  summarise(num_died = sum(ind_surv)) %>%  
+  mutate(total_surv = initial - num_died,
+         prop_surv = total_surv / initial) %>% 
+  ggplot(aes(x = treatment, y = prop_surv)) + 
+  geom_hline(yintercept = 0.5,
+             colour = "grey", 
+             linetype = "dashed") + 
+  geom_point(size = 4) + 
+  labs(x = "Salinity (mg/L)",
+       y = "Proportion Surviving ") + 
+  theme_matt()
+```
+
+<img src="../Figures/markdown/trial-2-init-mort-1.png" style="display: block; margin: auto;" />
+
+``` r
+surv_obj_2 = Surv(surv_trial_2$hour, surv_trial_2$ind_surv)
+surv_fit_2 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
+
+#summary(surv_fit)
+
+ggsurvplot(surv_fit_2, 
+           conf.int=T, pval=F, risk.table=F, 
+           conf.int.alpha = 0.1,
+           size = 2,
+           legend.title="Salt Treatment")
+```
+
+<img src="../Figures/markdown/surv-trial-2-1.png" style="display: block; margin: auto;" />
+
+``` r
+cox.model_2 = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
+print(cox.model_2)
 ## Call:
-## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_data)
+## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 ## 
-##               coef exp(coef) se(coef)     z      p
-## treatment 0.003594  1.003601 0.001947 1.846 0.0649
+##                coef exp(coef)  se(coef)     z        p
+## treatment 0.0018763 1.0018781 0.0004051 4.632 3.63e-06
 ## 
-## Likelihood ratio test=4.65  on 1 df, p=0.03111
-## n= 121, number of events= 5
+## Likelihood ratio test=61.68  on 1 df, p=4.048e-15
+## n= 140, number of events= 18
+
+#ggforest(cox.model_2, data = surv_trial_2)
 ```
 
 ### CTmax Analysis
+
+After several days of acclimation to the new salt levels, CTmax was
+measured for individual copepods. In trial 1, the control and maximum
+salt concentrations were used (0 and 1000 mg/L, respectively). One CTmax
+assay was performed (n = 5 per treatment), resulting in only a small
+comparison. Nonetheless, no large differences in CTmax were observed.
 
 ``` r
 trial_ctmax = est_ctmax(test_temp, test_time)
 
 ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) + 
-  geom_boxplot(width = 0.3) +
+  geom_boxplot(width = 0.5) +
   geom_point(size = 4) + 
   labs(x = "Treatment", 
-       y = "CTmax (°C)") + 
+       y = "CTmax (°C)",
+       title = "Trial 1") + 
   theme_matt()
 ```
 
