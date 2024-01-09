@@ -55,8 +55,12 @@ make_surv = function(prelim_surv){
   
   mort_1 = surv_data %>% ungroup() %>%  
     group_by(treatment, ID) %>% 
-    filter(ind_surv == 1) %>% ### Pulls out only the mortality events 
-    filter(hour == min(hour)) ### Isolates when mortality was observed
+    filter(ind_surv == 1) ### Pulls out only the mortality events 
+  
+  if(dim(mort_1)[1] > 0){
+    mort_1 = mort_1 %>% 
+      filter(hour == min(hour)) ### Isolates when mortality was observed
+  }  
   
   mort_2 = surv_data %>% ungroup() %>%  
     group_by(treatment, ID) %>% 

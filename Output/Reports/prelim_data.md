@@ -1,6 +1,6 @@
 Preliminary Report
 ================
-2024-01-08
+2024-01-09
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
@@ -39,13 +39,13 @@ url = constructNWISURL(siteNumbers = siteNumber, parameterCd = parameterCd,
 env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%  
   mutate("date" = as.Date(dateTime)) %>%  
   select(date, "temp" = X_00010_00003, "cond" = X_00095_00003) %>% 
-    drop_na(temp, cond) %>% 
+  drop_na(temp, cond) %>% 
   mutate(doy = yday(date)) %>% 
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3368 days is available, covering a period of time
-spanning from October 01, 2014 to January 07, 2024.
+Data for a total of 3369 days is available, covering a period of time
+spanning from October 01, 2014 to January 08, 2024.
 
 ### Seasonal patterns
 
@@ -111,7 +111,7 @@ ggplot(env_data, aes(x = temp, y = mgL)) +
 ### Summer increase in conductivity driven by increasing evaporation / decreasing input? 
 env_data %>% 
   filter(temp < 10) %>% 
-ggplot(aes(x = temp, y = mgL)) + 
+  ggplot(aes(x = temp, y = mgL)) + 
   geom_hline(yintercept = mean(env_data$mgL, na.rm = T), linewidth = 2, colour = "sienna3") + 
   geom_point(alpha = 0.2, colour = "grey30") + 
   geom_smooth(colour = "black", linewidth = 2) + 
@@ -195,19 +195,35 @@ concentration treatments. Note that the salinity values where mortality
 occured correspond to \>5 g added salt per L water.
 
 ``` r
-surv_trial_2 = make_surv(prelim_surv2)
 
-surv_trial_2 %>% 
+daily_surv_data = data.frame()
+
+for(i in 3:dim(prelim_surv2)[2]){
+  
+  col_name = colnames(prelim_surv2)[i]
+  hour = as.numeric(str_split_fixed(col_name, pattern = "_", n = 2)[2])
+  
+  day_data = prelim_surv2 %>%  
+  select(treatment:{{col_name}}) %>% 
+  make_surv() %>% 
   ungroup() %>% 
   group_by(treatment, initial) %>% 
   summarise(num_died = sum(ind_surv)) %>%  
   mutate(total_surv = initial - num_died,
-         prop_surv = total_surv / initial) %>% 
-  ggplot(aes(x = treatment, y = prop_surv)) + 
+         prop_surv = total_surv / initial,
+         hour = hour)
+  
+  daily_surv_data = bind_rows(daily_surv_data, day_data)
+}
+
+ggplot(daily_surv_data, aes(x = treatment, y = prop_surv, colour = factor(hour))) + 
   geom_hline(yintercept = 0.5,
              colour = "grey", 
              linetype = "dashed") + 
   geom_point(size = 4) + 
+  geom_smooth(method = "glm", 
+    method.args = list(family = "binomial"), 
+    se = FALSE) + 
   labs(x = "Salinity (mg/L)",
        y = "Proportion Surviving ") + 
   theme_matt()
@@ -216,10 +232,11 @@ surv_trial_2 %>%
 <img src="../Figures/markdown/trial-2-init-mort-1.png" style="display: block; margin: auto;" />
 
 ``` r
+surv_trial_2 = make_surv(prelim_surv2)
 surv_obj_2 = Surv(surv_trial_2$hour, surv_trial_2$ind_surv)
 surv_fit_2 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 
-#summary(surv_fit)
+#summary(surv_fit_2)
 
 ggsurvplot(surv_fit_2, 
            conf.int=T, pval=F, risk.table=F, 
@@ -237,10 +254,10 @@ print(cox.model_2)
 ## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 ## 
 ##                coef exp(coef)  se(coef)     z        p
-## treatment 0.0018763 1.0018781 0.0004051 4.632 3.63e-06
+## treatment 0.0014919 1.0014930 0.0001868 7.986 1.39e-15
 ## 
-## Likelihood ratio test=61.68  on 1 df, p=4.048e-15
-## n= 140, number of events= 18
+## Likelihood ratio test=128.1  on 1 df, p=< 2.2e-16
+## n= 140, number of events= 41
 
 #ggforest(cox.model_2, data = surv_trial_2)
 ```
