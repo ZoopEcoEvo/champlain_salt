@@ -31,9 +31,10 @@ est_ctmax = function(temp_data, time_data) {
   return(ct_data)
 }
 
-make_surv = function(prelim_surv){
+
+expand_surv = function(prelim_surv) {
   
-  surv_data = prelim_surv %>% 
+  expanded_data = prelim_surv %>% 
     filter(!(treatment %in% c("half", "RO"))) %>% 
     mutate(treatment = as.numeric(treatment)) %>% 
     pivot_longer(cols = starts_with("hour_"),
@@ -51,9 +52,14 @@ make_surv = function(prelim_surv){
     mutate("ID" = row_number()) %>%  
     ungroup() %>% 
     group_by(treatment, ID) %>% 
-    select(treatment, ID, initial, hour, ind_surv)
+    select(treatment, ID, initial, hour, ind_surv) 
   
-  mort_1 = surv_data %>% ungroup() %>%  
+  return(expanded_data)
+}
+
+make_surv = function(expanded_data){
+  
+  mort_1 = expanded_data %>% ungroup() %>%  
     group_by(treatment, ID) %>% 
     filter(ind_surv == 1) ### Pulls out only the mortality events 
   
@@ -62,7 +68,7 @@ make_surv = function(prelim_surv){
       filter(hour == min(hour)) ### Isolates when mortality was observed
   }  
   
-  mort_2 = surv_data %>% ungroup() %>%  
+  mort_2 = expanded_data %>% ungroup() %>%  
     group_by(treatment, ID) %>% 
     filter(hour == max(hour)) %>% ### Pulls out just the final observations
     filter(ind_surv == 0) ### Filters to just survivors

@@ -1,6 +1,6 @@
 Preliminary Report
 ================
-2024-01-09
+2024-01-12
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
@@ -44,8 +44,8 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3369 days is available, covering a period of time
-spanning from October 01, 2014 to January 08, 2024.
+Data for a total of 3372 days is available, covering a period of time
+spanning from October 01, 2014 to January 11, 2024.
 
 ### Seasonal patterns
 
@@ -148,7 +148,7 @@ with only minimal mortality in the highest salinity treatments.
 
 ``` r
 
-surv_trial_1 = make_surv(prelim_surv)
+surv_trial_1 = expand_surv(prelim_surv) %>% make_surv()
 surv_obj_1 = Surv(surv_trial_1$hour, surv_trial_1$ind_surv)
 surv_fit_1 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_1)
 
@@ -205,6 +205,7 @@ for(i in 3:dim(prelim_surv2)[2]){
   
   day_data = prelim_surv2 %>%  
   select(treatment:{{col_name}}) %>% 
+    expand_surv() %>% 
   make_surv() %>% 
   ungroup() %>% 
   group_by(treatment, initial) %>% 
@@ -225,14 +226,15 @@ ggplot(daily_surv_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
     method.args = list(family = "binomial"), 
     se = FALSE) + 
   labs(x = "Salinity (mg/L)",
-       y = "Proportion Surviving ") + 
+       y = "Proportion Surviving",
+       colour = "Hour") + 
   theme_matt()
 ```
 
 <img src="../Figures/markdown/trial-2-init-mort-1.png" style="display: block; margin: auto;" />
 
 ``` r
-surv_trial_2 = make_surv(prelim_surv2)
+surv_trial_2 = expand_surv(prelim_surv2) %>% make_surv()
 surv_obj_2 = Surv(surv_trial_2$hour, surv_trial_2$ind_surv)
 surv_fit_2 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 
@@ -253,11 +255,11 @@ print(cox.model_2)
 ## Call:
 ## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 ## 
-##                coef exp(coef)  se(coef)     z        p
-## treatment 0.0014919 1.0014930 0.0001868 7.986 1.39e-15
+##               coef exp(coef) se(coef)     z      p
+## treatment 0.001527  1.001528 0.000148 10.32 <2e-16
 ## 
-## Likelihood ratio test=128.1  on 1 df, p=< 2.2e-16
-## n= 140, number of events= 41
+## Likelihood ratio test=195.6  on 1 df, p=< 2.2e-16
+## n= 140, number of events= 67
 
 #ggforest(cox.model_2, data = surv_trial_2)
 ```

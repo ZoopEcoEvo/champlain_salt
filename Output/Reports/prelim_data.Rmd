@@ -202,7 +202,7 @@ Surprisingly, survival was high across all treatments in this trial, with only m
 
 ```{r surv-trial, fig.width=6, fig.height=6}
 
-surv_trial_1 = make_surv(prelim_surv)
+surv_trial_1 = expand_surv(prelim_surv) %>% make_surv()
 surv_obj_1 = Surv(surv_trial_1$hour, surv_trial_1$ind_surv)
 surv_fit_1 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_1)
 
@@ -246,6 +246,7 @@ for(i in 3:dim(prelim_surv2)[2]){
   
   day_data = prelim_surv2 %>%  
   select(treatment:{{col_name}}) %>% 
+    expand_surv() %>% 
   make_surv() %>% 
   ungroup() %>% 
   group_by(treatment, initial) %>% 
@@ -266,12 +267,53 @@ ggplot(daily_surv_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
     method.args = list(family = "binomial"), 
     se = FALSE) + 
   labs(x = "Salinity (mg/L)",
-       y = "Proportion Surviving ") + 
+       y = "Proportion Surviving",
+       colour = "Hour") + 
   theme_matt()
 ```
 
+```{r include = F}
+daily_surv_data = data.frame()
+
+for(i in 3:dim(prelim_surv2)[2]){
+  
+  col_name = colnames(prelim_surv2)[i]
+  hour = as.numeric(str_split_fixed(col_name, pattern = "_", n = 2)[2])
+  
+  day_data = prelim_surv2 %>%  
+  select(treatment:{{col_name}}) %>% 
+    expand_surv() %>% 
+  make_surv() %>% 
+  ungroup() %>% 
+  group_by(treatment, initial) %>% 
+  summarise(num_died = sum(ind_surv)) %>%  
+  mutate(total_surv = initial - num_died,
+         prop_surv = total_surv / initial,
+         hour = hour)
+  
+  daily_surv_data = bind_rows(daily_surv_data, day_data)
+}
+
+prelim_surv2 %>%  
+  expand_surv() %>% 
+  mutate(ind_surv = -1*(ind_surv - 1)) %>% 
+ggplot(aes(x = treatment, y = ind_surv, colour = factor(hour))) + 
+  geom_hline(yintercept = 0.5,
+             colour = "grey", 
+             linetype = "dashed") + 
+  geom_point(size = 4) + 
+  geom_smooth(method = "glm", 
+    method.args = list(family = "binomial"), 
+    se = F) + 
+  labs(x = "Salinity (mg/L)",
+       y = "Proportion Surviving",
+       colour = "Hour") + 
+  theme_matt()
+```
+
+
 ```{r surv-trial-2, fig.width=10, fig.height=6}
-surv_trial_2 = make_surv(prelim_surv2)
+surv_trial_2 = expand_surv(prelim_surv2) %>% make_surv()
 surv_obj_2 = Surv(surv_trial_2$hour, surv_trial_2$ind_surv)
 surv_fit_2 = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 
@@ -290,6 +332,7 @@ print(cox.model_2)
 
 #ggforest(cox.model_2, data = surv_trial_2)
 ```
+
 
 ### CTmax Analysis 
 
