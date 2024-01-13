@@ -21,8 +21,11 @@ if(prelim_report == T){
   
   prelim_surv = read.csv(file = "Raw_data/surv_trial/trial_surv_1.csv")
   prelim_surv2 = read.csv(file = "Raw_data/surv_trial/trial_surv_2.csv")
-  test_temp = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_temp.CSV")
-  test_time = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_obs.csv")
+  
+  ctmax_temp1 = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_temp.CSV")
+  ctmax_time1 = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_obs.csv")
+  ctmax_temp2 = read.csv(file = "Raw_data/ctmax_trial/2024_01_13_temp.CSV")
+  ctmax_time2 = read.csv(file = "Raw_data/ctmax_trial/2024_01_13_1_obs.csv")
   
   render(input = "Output/Reports/prelim_data.Rmd", #Input the path to your .Rmd file here
          output_format = "all")

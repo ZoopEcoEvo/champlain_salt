@@ -1,6 +1,6 @@
 Preliminary Report
 ================
-2024-01-12
+2024-01-13
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
@@ -44,8 +44,8 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3372 days is available, covering a period of time
-spanning from October 01, 2014 to January 11, 2024.
+Data for a total of 3373 days is available, covering a period of time
+spanning from October 01, 2014 to January 12, 2024.
 
 ### Seasonal patterns
 
@@ -255,11 +255,11 @@ print(cox.model_2)
 ## Call:
 ## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
 ## 
-##               coef exp(coef) se(coef)     z      p
-## treatment 0.001527  1.001528 0.000148 10.32 <2e-16
+##                coef exp(coef)  se(coef)     z      p
+## treatment 0.0015364 1.0015376 0.0001473 10.43 <2e-16
 ## 
-## Likelihood ratio test=195.6  on 1 df, p=< 2.2e-16
-## n= 140, number of events= 67
+## Likelihood ratio test=200.4  on 1 df, p=< 2.2e-16
+## n= 140, number of events= 69
 
 #ggforest(cox.model_2, data = surv_trial_2)
 ```
@@ -273,9 +273,9 @@ assay was performed (n = 5 per treatment), resulting in only a small
 comparison. Nonetheless, no large differences in CTmax were observed.
 
 ``` r
-trial_ctmax = est_ctmax(test_temp, test_time)
+ctmax_data2 = est_ctmax(ctmax_temp2, ctmax_time2)
 
-ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) + 
+ggplot(ctmax_data2, aes(x = treatment, y = ctmax)) + 
   geom_boxplot(width = 0.5) +
   geom_point(size = 4) + 
   labs(x = "Treatment", 
@@ -285,3 +285,18 @@ ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) +
 ```
 
 <img src="../Figures/markdown/ctmax-trial-1.png" style="display: block; margin: auto;" />
+
+``` r
+t.test(data = ctmax_data2, ctmax~treatment)
+## 
+##  Welch Two Sample t-test
+## 
+## data:  ctmax by treatment
+## t = 3.2395, df = 7.7656, p-value = 0.01237
+## alternative hypothesis: true difference in means between group control and group salt is not equal to 0
+## 95 percent confidence interval:
+##  0.5966679 3.5994114
+## sample estimates:
+## mean in group control    mean in group salt 
+##              28.22419              26.12615
+```

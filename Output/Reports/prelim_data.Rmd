@@ -339,9 +339,9 @@ print(cox.model_2)
 After several days of acclimation to the new salt levels, CTmax was measured for individual copepods. In trial 1, the control and maximum salt concentrations were used (0 and 1000 mg/L, respectively). One CTmax assay was performed (n = 5 per treatment), resulting in only a small comparison. Nonetheless, no large differences in CTmax were observed. 
 
 ```{r ctmax-trial, fig.width=6, fig.height=7}
-trial_ctmax = est_ctmax(test_temp, test_time)
+ctmax_data2 = est_ctmax(ctmax_temp2, ctmax_time2)
 
-ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) + 
+ggplot(ctmax_data2, aes(x = treatment, y = ctmax)) + 
   geom_boxplot(width = 0.5) +
   geom_point(size = 4) + 
   labs(x = "Treatment", 
@@ -349,4 +349,9 @@ ggplot(trial_ctmax, aes(x = treatment, y = ctmax)) +
        title = "Trial 1") + 
   theme_matt()
 ```
+
+```{r message = T}
+t.test(data = ctmax_data2, ctmax~treatment)
+```
+
 
