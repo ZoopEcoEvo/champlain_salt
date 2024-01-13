@@ -204,15 +204,15 @@ for(i in 3:dim(prelim_surv2)[2]){
   hour = as.numeric(str_split_fixed(col_name, pattern = "_", n = 2)[2])
   
   day_data = prelim_surv2 %>%  
-  select(treatment:{{col_name}}) %>% 
+    select(treatment:{{col_name}}) %>% 
     expand_surv() %>% 
-  make_surv() %>% 
-  ungroup() %>% 
-  group_by(treatment, initial) %>% 
-  summarise(num_died = sum(ind_surv)) %>%  
-  mutate(total_surv = initial - num_died,
-         prop_surv = total_surv / initial,
-         hour = hour)
+    make_surv() %>% 
+    ungroup() %>% 
+    group_by(treatment, initial) %>% 
+    summarise(num_died = sum(ind_surv)) %>%  
+    mutate(total_surv = initial - num_died,
+           prop_surv = total_surv / initial,
+           hour = hour)
   
   daily_surv_data = bind_rows(daily_surv_data, day_data)
 }
@@ -223,8 +223,8 @@ ggplot(daily_surv_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
              linetype = "dashed") + 
   geom_point(size = 4) + 
   geom_smooth(method = "glm", 
-    method.args = list(family = "binomial"), 
-    se = FALSE) + 
+              method.args = list(family = "binomial"), 
+              se = FALSE) + 
   labs(x = "Salinity (mg/L)",
        y = "Proportion Surviving",
        colour = "Hour") + 
@@ -272,6 +272,13 @@ salt concentrations were used (0 and 1000 mg/L, respectively). One CTmax
 assay was performed (n = 5 per treatment), resulting in only a small
 comparison. Nonetheless, no large differences in CTmax were observed.
 
+After trial 2, CTmax was measured for control individuals and
+individuals from the 3500 mg/L treatment. Survival was high in the 4000
+mg/L treatment as well, but these individuals were generally inactive,
+inhibiting the measurements of CTmax. Individuals from the 3500 mg/L
+treatment were more active. There was a clear decrease in thermal limits
+in the salt-acclimated copepods.
+
 ``` r
 ctmax_data2 = est_ctmax(ctmax_temp2, ctmax_time2)
 
@@ -279,24 +286,52 @@ ggplot(ctmax_data2, aes(x = treatment, y = ctmax)) +
   geom_boxplot(width = 0.5) +
   geom_point(size = 4) + 
   labs(x = "Treatment", 
-       y = "CTmax (°C)",
-       title = "Trial 1") + 
+       y = "CTmax (°C)") + 
   theme_matt()
 ```
 
 <img src="../Figures/markdown/ctmax-trial-1.png" style="display: block; margin: auto;" />
 
 ``` r
-t.test(data = ctmax_data2, ctmax~treatment)
-## 
-##  Welch Two Sample t-test
-## 
-## data:  ctmax by treatment
-## t = 3.2395, df = 7.7656, p-value = 0.01237
-## alternative hypothesis: true difference in means between group control and group salt is not equal to 0
-## 95 percent confidence interval:
-##  0.5966679 3.5994114
-## sample estimates:
-## mean in group control    mean in group salt 
-##              28.22419              26.12615
+broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>% 
+  mutate("difference" = paste("-", round(estimate, digits = 2), " [", "-", round(conf.low, digits = 2), ",-", round(conf.high, digits = 2), "]", sep = "")) %>% 
+  select("Control" = estimate1, "Salt" = estimate2, "Effect" = difference, "p-value" = p.value) %>% 
+  knitr::kable(align = "c",
+               digits = 2,
+               format = "html")
 ```
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">
+Control
+</th>
+<th style="text-align:center;">
+Salt
+</th>
+<th style="text-align:center;">
+Effect
+</th>
+<th style="text-align:center;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+28.22
+</td>
+<td style="text-align:center;">
+26.13
+</td>
+<td style="text-align:center;">
+-2.1 \[-0.6,-3.6\]
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+</tr>
+</tbody>
+</table>
