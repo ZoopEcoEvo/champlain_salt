@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-01-18
+2024-01-19
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -24,7 +24,7 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
   theme_matt()
 ```
 
-<img src="../Figures/markdown/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 ``` r
 surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
@@ -40,7 +40,7 @@ ggsurvplot(surv_fit,
            legend.title="Salt Treatment")
 ```
 
-<img src="../Figures/markdown/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
 cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
@@ -50,10 +50,10 @@ cox.model
 ## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_data)
 ## 
 ##                coef exp(coef)  se(coef)     z      p
-## treatment 0.0010633 1.0010639 0.0001064 9.997 <2e-16
+## treatment 0.0010247 1.0010252 0.0001026 9.989 <2e-16
 ## 
-## Likelihood ratio test=177.6  on 1 df, p=< 2.2e-16
-## n= 147, number of events= 66
+## Likelihood ratio test=173.6  on 1 df, p=< 2.2e-16
+## n= 145, number of events= 67
 ```
 
 ## CTmax Data

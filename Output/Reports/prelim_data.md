@@ -1,6 +1,6 @@
 Preliminary Report
 ================
-2024-01-18
+2024-01-19
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
@@ -44,8 +44,8 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3378 days is available, covering a period of time
-spanning from October 01, 2014 to January 17, 2024.
+Data for a total of 3379 days is available, covering a period of time
+spanning from October 01, 2014 to January 18, 2024.
 
 ### Seasonal patterns
 
@@ -82,7 +82,7 @@ sal_plot = ggplot(env_data, aes(x = doy, y = mgL)) +
 ggarrange(temp_plot, sal_plot, nrow = 2)
 ```
 
-<img src="../Figures/markdown/temp-sal-plots-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/temp-sal-plots-1.png" style="display: block; margin: auto;" />
 
 The correlation between temperature and salinity is weakly positive, but
 again we see that the highest salinity values occur when water
@@ -104,7 +104,7 @@ ggplot(env_data, aes(x = temp, y = mgL)) +
   theme_matt()
 ```
 
-<img src="../Figures/markdown/temp-salt-corrs-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/temp-salt-corrs-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -120,7 +120,7 @@ env_data %>%
   theme_matt()
 ```
 
-<img src="../Figures/markdown/temp-salt-corrs-2.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/temp-salt-corrs-2.png" style="display: block; margin: auto;" />
 
 Shown below is the distribution of observed salinity values from the
 sensor, restricted to data from days were the temperature was less than
@@ -169,7 +169,7 @@ surv_trial_1  %>%
   theme_matt()
 ```
 
-<img src="../Figures/markdown/surv-trial-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/surv-trial-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -184,7 +184,7 @@ ggsurvplot(surv_fit_1,
            palette=c("lightskyblue1", "dodgerblue","dodgerblue3", "dodgerblue4", "navy", "darkorchid4", "lightsalmon", "indianred2", "indianred4", "orangered3", "firebrick4"))
 ```
 
-<img src="../Figures/markdown/surv-trial-2.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/surv-trial-2.png" style="display: block; margin: auto;" />
 
 This first preliminary test suggests that *L. sicilis* has fairly high
 salinity tolerance. A second preliminary test was run with a much larger
@@ -231,7 +231,7 @@ ggplot(daily_surv_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
   theme_matt()
 ```
 
-<img src="../Figures/markdown/trial-2-init-mort-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/trial-2-init-mort-1.png" style="display: block; margin: auto;" />
 
 ``` r
 surv_trial_2 = expand_surv(prelim_surv2) %>% make_surv()
@@ -247,7 +247,7 @@ ggsurvplot(surv_fit_2,
            legend.title="Salt Treatment")
 ```
 
-<img src="../Figures/markdown/surv-trial-2-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/surv-trial-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
 cox.model_2 = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_trial_2)
@@ -290,7 +290,7 @@ ggplot(ctmax_data2, aes(x = treatment, y = ctmax)) +
   theme_matt()
 ```
 
-<img src="../Figures/markdown/ctmax-trial-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/trial/ctmax-trial-1.png" style="display: block; margin: auto;" />
 
 ``` r
 broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>% 
@@ -300,37 +300,6 @@ broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>%
                digits = 2)
 ```
 
-<table>
-<thead>
-<tr>
-<th style="text-align:center;">
-Control
-</th>
-<th style="text-align:center;">
-Salt
-</th>
-<th style="text-align:center;">
-Effect
-</th>
-<th style="text-align:center;">
-p-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center;">
-28.22
-</td>
-<td style="text-align:center;">
-26.13
-</td>
-<td style="text-align:center;">
--2.1 \[-0.6,-3.6\]
-</td>
-<td style="text-align:center;">
-0.01
-</td>
-</tr>
-</tbody>
-</table>
+| Control | Salt  |       Effect       | p-value |
+|:-------:|:-----:|:------------------:|:-------:|
+|  28.22  | 26.13 | -2.1 \[-0.6,-3.6\] |  0.01   |

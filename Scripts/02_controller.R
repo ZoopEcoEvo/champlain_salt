@@ -12,9 +12,9 @@ library(ggsurvfit)
 source("Scripts/project_functions.R")
 
 #Determine which scripts should be run
-prelim_report = T #Makes a preliminary report based on environmental data from Lake Champlain
-process_data = F #Runs data analysis 
-make_report = F #Runs project summary
+prelim_report = F #Makes a preliminary report based on environmental data from Lake Champlain
+process_data = T #Runs data analysis 
+make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
 if(prelim_report == T){
@@ -45,8 +45,10 @@ if(process_data == T){
 
 if(make_report == T){
   surv_data = read.csv(file = "Output/Output_data/surv_data.csv")
-  ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv")
+  
+  ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
+  
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
          output_format = "all")

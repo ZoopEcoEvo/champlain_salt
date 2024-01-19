@@ -17,7 +17,7 @@ output:
 knitr::opts_chunk$set(
   echo = knitr::is_html_output(),
   fig.align = "center",
-  fig.path = "../Figures/markdown/",
+  fig.path = "../Figures/report/",
   dev = c("png", "pdf"),
   message = FALSE,
   warning = FALSE,
