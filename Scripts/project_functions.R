@@ -35,15 +35,14 @@ est_ctmax = function(temp_data, time_data) {
 expand_surv = function(prelim_surv) {
   
   expanded_data = prelim_surv %>% 
-    filter(!(treatment %in% c("half", "RO"))) %>% 
     mutate(treatment = as.numeric(treatment)) %>% 
     pivot_longer(cols = starts_with("hour_"),
                  values_to = "surv", 
                  names_to = "hour",
                  names_prefix = "hour_") %>% ### Gets data into long format
-    group_by(treatment) %>% 
+    group_by(treatment, replicate) %>% 
     mutate(initial = first(surv)) %>% 
-    group_by(treatment, hour) %>% 
+    group_by(treatment, replicate, hour) %>% 
     drop_na(surv) %>% 
     mutate(hour = as.numeric(hour),
            "ind_surv" = paste(rep(c(0,1), c(surv, initial - surv)), collapse = ",")) %>% ### Assembles vector of mortality events for each time point (0 = survived, 1 = mortality)
@@ -51,8 +50,8 @@ expand_surv = function(prelim_surv) {
     separate_rows(ind_surv, sep = ",", convert = T) %>% ### Separates data so it's one event per ro
     mutate("ID" = row_number()) %>%  
     ungroup() %>% 
-    group_by(treatment, ID) %>% 
-    select(treatment, ID, initial, hour, ind_surv) 
+    group_by(treatment, replicate, ID) %>% 
+    select(treatment, replicate, ID, initial, hour, ind_surv) 
   
   return(expanded_data)
 }

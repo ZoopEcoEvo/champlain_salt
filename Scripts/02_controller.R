@@ -19,13 +19,13 @@ knit_manuscript = F #Compiles manuscript draft
 
 if(prelim_report == T){
   
-  prelim_surv = read.csv(file = "Raw_data/surv_trial/trial_surv_1.csv")
-  prelim_surv2 = read.csv(file = "Raw_data/surv_trial/trial_surv_2.csv")
+  prelim_surv = read.csv(file = "Raw_data/surv_data/trial_surv_1.csv")
+  prelim_surv2 = read.csv(file = "Raw_data/surv_data/trial_surv_2.csv")
   
-  ctmax_temp1 = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_temp.CSV")
-  ctmax_time1 = read.csv(file = "Raw_data/ctmax_trial/2023_12_19_1_obs.csv")
-  ctmax_temp2 = read.csv(file = "Raw_data/ctmax_trial/2024_01_13_temp.CSV")
-  ctmax_time2 = read.csv(file = "Raw_data/ctmax_trial/2024_01_13_1_obs.csv")
+  ctmax_temp1 = read.csv(file = "Raw_data/ctmax_data/trial_2023_12_19_1_temp.CSV")
+  ctmax_time1 = read.csv(file = "Raw_data/ctmax_data/trial_2023_12_19_1_obs.csv")
+  ctmax_temp2 = read.csv(file = "Raw_data/ctmax_data/trial_2024_01_13_temp.CSV")
+  ctmax_time2 = read.csv(file = "Raw_data/ctmax_data/trial_2024_01_13_1_obs.csv")
   
   render(input = "Output/Reports/prelim_data.Rmd", #Input the path to your .Rmd file here
          output_format = "all")
@@ -44,6 +44,9 @@ if(process_data == T){
 ##################################
 
 if(make_report == T){
+  surv_data = read.csv(file = "Output/Output_data/surv_data.csv")
+  ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
+  daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv")
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
          output_format = "all")

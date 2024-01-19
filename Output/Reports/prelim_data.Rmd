@@ -352,27 +352,11 @@ ggplot(ctmax_data2, aes(x = treatment, y = ctmax)) +
 ```
 
 ```{r}
-if(knitr::is_html_output()){
-  
-  broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>% 
+broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>% 
   mutate("difference" = paste("-", round(estimate, digits = 2), " [", "-", round(conf.low, digits = 2), ",-", round(conf.high, digits = 2), "]", sep = "")) %>% 
   select("Control" = estimate1, "Salt" = estimate2, "Effect" = difference, "p-value" = p.value) %>% 
   knitr::kable(align = "c",
-               digits = 2) %>%
-  kableExtra::kable_styling(full_width = F)
-  
-}else{
-  
-  broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>% 
-  mutate("difference" = paste("-", round(estimate, digits = 2), " [", "-", round(conf.low, digits = 2), ",-", round(conf.high, digits = 2), "]", sep = "")) %>% 
-  select("Control" = estimate1, "Salt" = estimate2, "Effect" = difference, "p-value" = p.value) %>% 
-  knitr::kable(align = "c",
-               digits = 2,
-               format = "pipe") 
-  
-}
-
-
+               digits = 2)
 ```
 
 

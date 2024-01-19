@@ -1,6 +1,6 @@
 Preliminary Report
 ================
-2024-01-13
+2024-01-18
 
 - [Temperature and Salinity in Lake
   Champlain](#temperature-and-salinity-in-lake-champlain)
@@ -44,8 +44,8 @@ env_data = importWaterML1(url, asDateTime = T, tz = "America/New_York") %>%
   mutate(mgL = cond * 0.292) # State equation to convert continuous conductivity measurements to chloride concentrations: VT DEC 2019 - Watershed Management Division. Vermont Surface Water Assessment and Listing Methodology in accordance with USEPA Guidance. Montpelier www.watershedmanagement.vt.gov
 ```
 
-Data for a total of 3373 days is available, covering a period of time
-spanning from October 01, 2014 to January 12, 2024.
+Data for a total of 3378 days is available, covering a period of time
+spanning from October 01, 2014 to January 17, 2024.
 
 ### Seasonal patterns
 
@@ -297,8 +297,7 @@ broom::tidy(t.test(data = ctmax_data2, ctmax~treatment)) %>%
   mutate("difference" = paste("-", round(estimate, digits = 2), " [", "-", round(conf.low, digits = 2), ",-", round(conf.high, digits = 2), "]", sep = "")) %>% 
   select("Control" = estimate1, "Salt" = estimate2, "Effect" = difference, "p-value" = p.value) %>% 
   knitr::kable(align = "c",
-               digits = 2,
-               format = "html")
+               digits = 2)
 ```
 
 <table>
