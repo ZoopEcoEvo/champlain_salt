@@ -8,6 +8,7 @@ library(slider)
 library(dataRetrieval)
 library(ggpubr)
 library(ggsurvfit)
+library(dabestr)
 
 source("Scripts/project_functions.R")
 

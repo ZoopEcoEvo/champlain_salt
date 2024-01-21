@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-01-19
+2024-01-20
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -43,17 +43,66 @@ ggsurvplot(surv_fit,
 <img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
-cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+cox.model = coxph(Surv(hour, ind_surv) ~ treatment + replicate, data = surv_data)
 
 cox.model
 ## Call:
-## coxph(formula = Surv(hour, ind_surv) ~ treatment, data = surv_data)
+## coxph(formula = Surv(hour, ind_surv) ~ treatment + replicate, 
+##     data = surv_data)
 ## 
-##                coef exp(coef)  se(coef)     z      p
-## treatment 0.0010247 1.0010252 0.0001026 9.989 <2e-16
+##                 coef exp(coef)  se(coef)      z      p
+## treatment  0.0010301 1.0010306 0.0001027 10.029 <2e-16
+## replicateB 0.1985920 1.2196842 0.2484764  0.799  0.424
 ## 
-## Likelihood ratio test=173.6  on 1 df, p=< 2.2e-16
-## n= 145, number of events= 67
+## Likelihood ratio test=176.4  on 2 df, p=< 2.2e-16
+## n= 144, number of events= 68
 ```
 
 ## CTmax Data
+
+``` r
+ctmax_data %>%  
+  mutate("ID" = paste(experiment_date, "- Exp.", experiment)) %>% 
+  ggplot(aes(x = treatment, y = ctmax, fill = ID)) +
+  geom_boxplot(width = 0.5,
+               position = position_dodge(width = 0.7)) +
+  geom_point(size = 3,
+             position = position_dodge(width = 0.7)) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  guides(fill = guide_legend(override.aes = list(shape = NA))) + 
+  theme_matt() + 
+  theme(legend.position = "right")
+```
+
+<img src="../Figures/report/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+``` r
+ctmax_filtered = ctmax_data %>% 
+  filter(experiment == 2 | experiment_date == "1/13/24")
+
+t.test(data = ctmax_filtered, 
+       ctmax ~ treatment)
+## 
+##  Welch Two Sample t-test
+## 
+## data:  ctmax by treatment
+## t = 2.2532, df = 17.648, p-value = 0.03722
+## alternative hypothesis: true difference in means between group control and group salt is not equal to 0
+## 95 percent confidence interval:
+##  0.1212395 3.5394332
+## sample estimates:
+## mean in group control    mean in group salt 
+##              27.67218              25.84184
+```
+
+``` r
+ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
+  geom_boxplot(width = 0.5) +
+  geom_point(size = 4) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt()
+```
+
+<img src="../Figures/report/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />

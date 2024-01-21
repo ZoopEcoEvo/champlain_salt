@@ -1,0 +1,11 @@
+﻿experiment_date,lab_temp,experiment,treatment,replicate,tube,ctmax_minute,ctmax_second
+1/13/24,4,1,control,A,1,62,12
+1/13/24,4,1,control,A,2,60,6
+1/13/24,4,1,salt,A,3,45,10
+1/13/24,4,1,control,A,4,52,10
+1/13/24,4,1,salt,A,5,47,15
+1/13/24,4,1,salt,A,6,54,10
+1/13/24,4,1,control,A,7,53,0
+1/13/24,4,1,salt,A,8,45,45
+1/13/24,4,1,control,A,9,53,50
+1/13/24,4,1,salt,A,10,46,41

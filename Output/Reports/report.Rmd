@@ -117,10 +117,53 @@ ggsurvplot(surv_fit,
 ```
 
 ```{r}
-cox.model = coxph(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+cox.model = coxph(Surv(hour, ind_surv) ~ treatment + replicate, data = surv_data)
 
 cox.model
 ```
 
 
 ## CTmax Data
+```{r}
+ctmax_data %>%  
+  mutate("ID" = paste(experiment_date, "- Exp.", experiment)) %>% 
+  ggplot(aes(x = treatment, y = ctmax, fill = ID)) +
+  geom_boxplot(width = 0.5,
+               position = position_dodge(width = 0.7)) +
+  geom_point(size = 3,
+             position = position_dodge(width = 0.7)) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  guides(fill = guide_legend(override.aes = list(shape = NA))) + 
+  theme_matt() + 
+  theme(legend.position = "right")
+```
+
+```{r}
+ctmax_filtered = ctmax_data %>% 
+  filter(experiment == 2 | experiment_date == "1/13/24")
+
+t.test(data = ctmax_filtered, 
+       ctmax ~ treatment)
+```
+
+```{r}
+ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
+  geom_boxplot(width = 0.5) +
+  geom_point(size = 4) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt()
+```
+
+```{r, include = F}
+mean_diff <- load(data = ctmax_filtered,
+                  x = treatment,
+                  y = ctmax,
+                  idx = c("control", "salt"),
+                  ci = 90) %>%
+  mean_diff()
+
+dabest_plot(mean_diff)
+```
+

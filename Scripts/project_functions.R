@@ -26,7 +26,7 @@ est_ctmax = function(temp_data, time_data) {
         minute_passed < time)$temp_C))
   
   ct_data = inner_join(time_converted, ind_measurements, by = c("tube")) %>% 
-    select(experiment_date, lab_temp, replicate, treatment, tube, rank, time, ctmax)
+    select(experiment_date, experiment, lab_temp, replicate, treatment, tube, rank, time, ctmax)
   
   return(ct_data)
 }
