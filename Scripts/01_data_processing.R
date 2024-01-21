@@ -40,7 +40,7 @@ for(file in surv_files){
       make_surv() %>% 
       ungroup() %>% 
       group_by(treatment, replicate, initial) %>% 
-      summarise(num_died = sum(ind_surv)) %>%  
+      summarise(num_died = sum(ind_surv), .groups = "keep") %>%  
       mutate(total_surv = initial - num_died,
              prop_surv = total_surv / initial,
              hour = hour,
@@ -74,4 +74,5 @@ for(file in ctmax_times){
 
 # Write the data to files in the Output directory
 write.csv(ctmax_data, file = "Output/Output_data/ctmax_data.csv", row.names = F)
+
 

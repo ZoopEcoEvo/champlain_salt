@@ -141,7 +141,7 @@ ctmax_data %>%
 
 ```{r}
 ctmax_filtered = ctmax_data %>% 
-  filter(experiment == 2 | experiment_date == "1/13/24")
+  filter(!(experiment == 1 & experiment_date == "1/20/24"))
 
 t.test(data = ctmax_filtered, 
        ctmax ~ treatment)
@@ -165,5 +165,23 @@ mean_diff <- load(data = ctmax_filtered,
   mean_diff()
 
 dabest_plot(mean_diff)
+```
+
+```{r, include = F}
+ctmax.model = lmer(data = ctmax_filtered,
+     ctmax ~ treatment + (treatment|experiment_date))
+
+rep_effects = coefficients(ctmax.model)$experiment_date %>% 
+  rownames_to_column(var = "exp_date") %>% 
+  janitor::clean_names()
+
+car::Anova(ctmax.model)
+
+ggplot(rep_effects, aes(x = exp_date, y = treatmentsalt)) + 
+  geom_hline(yintercept = 0) + 
+  geom_point(size = 5) + 
+  labs(x = "Experiment Date", 
+       y = "Salinity Effect") + 
+  theme_matt()
 ```
 

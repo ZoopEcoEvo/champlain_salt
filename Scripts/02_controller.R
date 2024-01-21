@@ -9,6 +9,7 @@ library(dataRetrieval)
 library(ggpubr)
 library(ggsurvfit)
 library(dabestr)
+library(lme4)
 
 source("Scripts/project_functions.R")
 
