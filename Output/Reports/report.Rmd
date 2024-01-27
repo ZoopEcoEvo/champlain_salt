@@ -86,7 +86,8 @@ theme_matt_facets = function(base_size = 18,
 ## Survival Analyses
 
 ```{r}
-ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(hour))) + 
+ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_day))) + 
+  facet_wrap(salt~.) + 
   geom_hline(yintercept = 0.5,
              colour = "grey", 
              linetype = "dashed") + 
@@ -98,28 +99,32 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(hour))
   scale_colour_brewer(type = "seq", palette = 9) + 
   labs(x = "Salinity (mg/L)",
        y = "Proportion Surviving",
-       colour = "Hour") + 
+       colour = "Day") + 
   theme_matt()
 ```
 
 ```{r}
 surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
-surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment, data = surv_data)
+surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment + salt, data = surv_data)
 
 #summary(surv_fit_2)
 
-ggsurvplot(surv_fit, 
-           conf.int=T, pval=F, risk.table=F, 
-           conf.int.alpha = 0.1,
-           size = 2,
-           palette = "YlOrRd",
-           legend.title="Salt Treatment")
+ggsurvplot_facet(surv_fit, 
+                 data = surv_data,
+                 facet.by = "salt",
+                 conf.int=T, pval=F, risk.table=F, 
+                 conf.int.alpha = 0.1,
+                 size = 2,
+                 palette = "YlOrRd",
+                 legend.title="Salt Treatment")
 ```
 
 ```{r}
-cox.model = coxph(Surv(hour, ind_surv) ~ treatment + replicate, data = surv_data)
+cox.model = coxph(Surv(hour, ind_surv) ~ treatment + replicate + salt, data = surv_data)
 
 cox.model
+
+#ggforest(cox.model, data = surv_data)
 ```
 
 
@@ -128,6 +133,7 @@ cox.model
 ctmax_data %>%  
   mutate("ID" = paste(experiment_date, "- Exp.", experiment)) %>% 
   ggplot(aes(x = treatment, y = ctmax, fill = ID)) +
+  facet_wrap(salt~.) +
   geom_boxplot(width = 0.5,
                position = position_dodge(width = 0.7)) +
   geom_point(size = 3,
@@ -143,45 +149,33 @@ ctmax_data %>%
 ctmax_filtered = ctmax_data %>% 
   filter(!(experiment == 1 & experiment_date == "1/20/24"))
 
-t.test(data = ctmax_filtered, 
-       ctmax ~ treatment)
+knitr::kable(ctmax_filtered %>% 
+  group_by(salt, treatment) %>%  
+  count())
+
+salt.model = lmer(data = ctmax_filtered, 
+                  ctmax ~ treatment * salt + (1 + treatment|experiment_date))
+
+# salt.model = lm(data = ctmax_filtered,
+#                 ctmax ~ treatment * salt)
+
+salt.model
+
+car::Anova(salt.model, type = "III")
+
+salt.means = emmeans::emmeans(salt.model,
+                pairwise ~ treatment | salt)
+
+salt.means
+
 ```
 
 ```{r}
 ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
+  facet_wrap(salt~.) + 
   geom_boxplot(width = 0.5) +
   geom_point(size = 4) + 
   labs(x = "Treatment", 
        y = "CTmax (°C)") + 
   theme_matt()
 ```
-
-```{r, include = F}
-mean_diff <- load(data = ctmax_filtered,
-                  x = treatment,
-                  y = ctmax,
-                  idx = c("control", "salt"),
-                  ci = 90) %>%
-  mean_diff()
-
-dabest_plot(mean_diff)
-```
-
-```{r, include = F}
-ctmax.model = lmer(data = ctmax_filtered,
-     ctmax ~ treatment + (treatment|experiment_date))
-
-rep_effects = coefficients(ctmax.model)$experiment_date %>% 
-  rownames_to_column(var = "exp_date") %>% 
-  janitor::clean_names()
-
-car::Anova(ctmax.model)
-
-ggplot(rep_effects, aes(x = exp_date, y = treatmentsalt)) + 
-  geom_hline(yintercept = 0) + 
-  geom_point(size = 5) + 
-  labs(x = "Experiment Date", 
-       y = "Salinity Effect") + 
-  theme_matt()
-```
-

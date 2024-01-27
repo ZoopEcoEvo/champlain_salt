@@ -46,8 +46,11 @@ if(process_data == T){
 ##################################
 
 if(make_report == T){
-  surv_data = read.csv(file = "Output/Output_data/surv_data.csv")
-  daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv")
+  surv_data = read.csv(file = "Output/Output_data/surv_data.csv") %>% 
+    mutate(exp_day = ceiling(hour / 24))
+  
+  daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv") %>% 
+    mutate(exp_day = ceiling(hour / 24))
   
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   

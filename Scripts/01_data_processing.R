@@ -29,17 +29,17 @@ for(file in surv_files){
   ### Processes data to provide daily proportional survival data
   
   prop_data = data.frame()
-  for(i in 3:dim(raw_data)[2]){
+  for(i in 4:dim(raw_data)[2]){
     
     col_name = colnames(raw_data)[i]
     hour = as.numeric(str_split_fixed(col_name, pattern = "_", n = 2)[2])
     
     day_data = raw_data %>%  
-      select(treatment:{{col_name}}) %>% 
+      select(salt:{{col_name}}) %>% 
       expand_surv() %>% 
       make_surv() %>% 
       ungroup() %>% 
-      group_by(treatment, replicate, initial) %>% 
+      group_by(salt, treatment, replicate, initial) %>% 
       summarise(num_died = sum(ind_surv), .groups = "keep") %>%  
       mutate(total_surv = initial - num_died,
              prop_surv = total_surv / initial,
