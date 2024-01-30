@@ -15,7 +15,8 @@ for(file in surv_files){
   # Extracts experiment date from file name
   exp_date = str_split(string = str_replace_all(file, pattern = "_", replacement = "-"), pattern = "-surv")[[1]][1]
   
-  raw_data = read.csv(file = paste("Raw_data/surv_data/", file, sep = ""))
+  raw_data = read.csv(file = paste("Raw_data/surv_data/", file, sep = "")) %>% 
+    discard(~all(is.na(.x)))
   
   # Uses custom functions to process survival data into usable formats
   data = raw_data %>% 

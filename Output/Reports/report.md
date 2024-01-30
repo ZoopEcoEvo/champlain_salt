@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-01-27
+2024-01-29
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -46,20 +46,18 @@ ggsurvplot_facet(surv_fit,
 <img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
-cox.model = coxph(Surv(hour, ind_surv) ~ treatment + replicate + salt, data = surv_data)
+cox.model = coxph(Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
 
 cox.model
 ## Call:
-## coxph(formula = Surv(hour, ind_surv) ~ treatment + replicate + 
-##     salt, data = surv_data)
+## coxph(formula = Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
 ## 
-##                   coef exp(coef)  se(coef)      z      p
-## treatment    1.030e-03 1.001e+00 1.027e-04 10.029 <2e-16
-## replicateB   1.986e-01 1.220e+00 2.485e-01  0.799  0.424
-## saltRoadSalt 2.323e+01 1.228e+10 4.495e+03  0.005  0.996
+##                   coef exp(coef)  se(coef)     z      p
+## treatment    1.022e-03 1.001e+00 1.023e-04 9.991 <2e-16
+## saltRoadSalt 2.218e+01 4.299e+09 2.590e+03 0.009  0.993
 ## 
-## Likelihood ratio test=297.8  on 3 df, p=< 2.2e-16
-## n= 304, number of events= 68
+## Likelihood ratio test=279.8  on 2 df, p=< 2.2e-16
+## n= 455, number of events= 69
 
 #ggforest(cox.model, data = surv_data)
 ```
@@ -86,11 +84,17 @@ ctmax_data %>%
 
 ``` r
 ctmax_filtered = ctmax_data %>% 
-  filter(!(experiment == 1 & experiment_date == "1/20/24"))
+  filter(!(experiment == 1 & experiment_date == "1/20/24")) %>% 
+  mutate("ID" = paste(salt, treatment, sep = " - ")) %>% 
+  mutate(group = case_when(
+    treatment == "control" ~ "control",
+    treatment == "salt" ~ salt,
+    treatment == "salt" ~ salt
+  ))
 
 knitr::kable(ctmax_filtered %>% 
-  group_by(salt, treatment) %>%  
-  count())
+               group_by(salt, treatment) %>%  
+               count())
 ```
 
 | salt         | treatment |   n |
@@ -102,70 +106,61 @@ knitr::kable(ctmax_filtered %>%
 
 ``` r
 
-salt.model = lmer(data = ctmax_filtered, 
-                  ctmax ~ treatment * salt + (1 + treatment|experiment_date))
+# salt.model = lmer(data = ctmax_filtered, 
+#                   ctmax ~ treatment * salt + (1 + treatment|experiment_date))
 
-# salt.model = lm(data = ctmax_filtered,
-#                 ctmax ~ treatment * salt)
+salt.model = lm(data = ctmax_filtered,
+                ctmax ~ treatment * salt)
 
 salt.model
-## Linear mixed model fit by REML ['lmerMod']
-## Formula: ctmax ~ treatment * salt + (1 + treatment | experiment_date)
-##    Data: ctmax_filtered
-## REML criterion at convergence: 159.9542
-## Random effects:
-##  Groups          Name          Std.Dev.  Corr 
-##  experiment_date (Intercept)   0.0002178      
-##                  treatmentsalt 0.0001321 -1.00
-##  Residual                      1.9634941      
-## Number of obs: 40, groups:  experiment_date, 3
-## Fixed Effects:
+## 
+## Call:
+## lm(formula = ctmax ~ treatment * salt, data = ctmax_filtered)
+## 
+## Coefficients:
 ##                (Intercept)               treatmentsalt                saltRoadSalt  
 ##                    26.8673                      0.9291                      0.8049  
 ## treatmentsalt:saltRoadSalt  
-##                    -2.7594  
-## optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings
+##                    -2.7594
 
 car::Anova(salt.model, type = "III")
-## Analysis of Deviance Table (Type III Wald chisquare tests)
+## Anova Table (Type III tests)
 ## 
 ## Response: ctmax
-##                    Chisq Df Pr(>Chisq)    
-## (Intercept)    1872.3601  1    < 2e-16 ***
-## treatment         1.1194  1    0.29004    
-## salt              0.8401  1    0.35936    
-## treatment:salt    4.9375  1    0.02628 *  
+##                Sum Sq Df   F value  Pr(>F)    
+## (Intercept)    7218.5  1 1872.3603 < 2e-16 ***
+## treatment         4.3  1    1.1194 0.29709    
+## salt              3.2  1    0.8401 0.36546    
+## treatment:salt   19.0  1    4.9375 0.03265 *  
+## Residuals       138.8 36                      
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 salt.means = emmeans::emmeans(salt.model,
-                pairwise ~ treatment | salt)
+                              pairwise ~ treatment | salt)
 
 salt.means
 ## $emmeans
 ## salt = InstantOcean:
-##  treatment emmean    SE   df lower.CL upper.CL
-##  control     26.9 0.621 0.25 -29441.5  29495.2
-##  salt        27.8 0.621 0.25 -29440.6  29496.1
+##  treatment emmean    SE df lower.CL upper.CL
+##  control     26.9 0.621 36     25.6     28.1
+##  salt        27.8 0.621 36     26.5     29.1
 ## 
 ## salt = RoadSalt:
-##  treatment emmean    SE   df lower.CL upper.CL
-##  control     27.7 0.621 1.00     19.8     35.6
-##  salt        25.8 0.621 1.00     18.0     33.7
+##  treatment emmean    SE df lower.CL upper.CL
+##  control     27.7 0.621 36     26.4     28.9
+##  salt        25.8 0.621 36     24.6     27.1
 ## 
-## Degrees-of-freedom method: kenward-roger 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ## salt = InstantOcean:
-##  contrast       estimate    SE   df t.ratio p.value
-##  control - salt   -0.929 0.878 0.25  -1.058  0.7036
+##  contrast       estimate    SE df t.ratio p.value
+##  control - salt   -0.929 0.878 36  -1.058  0.2971
 ## 
 ## salt = RoadSalt:
-##  contrast       estimate    SE   df t.ratio p.value
-##  control - salt    1.830 0.878 1.00   2.084  0.2848
-## 
-## Degrees-of-freedom method: kenward-roger
+##  contrast       estimate    SE df t.ratio p.value
+##  control - salt    1.830 0.878 36   2.084  0.0443
 ```
 
 ``` r
@@ -179,3 +174,28 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
 ```
 
 <img src="../Figures/report/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+``` r
+ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
+  facet_wrap(salt~.) + 
+  geom_violin(draw_quantiles = c(0.25,0.75)) + 
+  geom_point(size = 4) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt()
+```
+
+<img src="../Figures/report/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+
+``` r
+mean_diff = load(ctmax_filtered, 
+                 x = ID, y = ctmax,
+  idx = list(
+    c("InstantOcean - control", "InstantOcean - salt"),
+    c("RoadSalt - control", "RoadSalt - salt"))) %>%
+  mean_diff()
+
+dabest_plot(mean_diff)
+```
+
+<img src="../Figures/report/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
