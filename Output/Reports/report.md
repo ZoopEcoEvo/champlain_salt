@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-01-29
+2024-01-31
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -52,12 +52,12 @@ cox.model
 ## Call:
 ## coxph(formula = Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
 ## 
-##                   coef exp(coef)  se(coef)     z      p
-## treatment    1.022e-03 1.001e+00 1.023e-04 9.991 <2e-16
-## saltRoadSalt 2.218e+01 4.299e+09 2.590e+03 0.009  0.993
+##                   coef exp(coef)  se(coef)      z      p
+## treatment    8.313e-04 1.001e+00 7.634e-05 10.889 <2e-16
+## saltRoadSalt 2.099e+01 1.303e+09 2.352e+03  0.009  0.993
 ## 
-## Likelihood ratio test=279.8  on 2 df, p=< 2.2e-16
-## n= 455, number of events= 69
+## Likelihood ratio test=300  on 2 df, p=< 2.2e-16
+## n= 452, number of events= 99
 
 #ggforest(cox.model, data = surv_data)
 ```
