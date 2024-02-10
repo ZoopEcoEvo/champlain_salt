@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-02-03
+2024-02-10
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -85,6 +85,7 @@ ctmax_data %>%
 ``` r
 ctmax_filtered = ctmax_data %>% 
   filter(!(experiment == 1 & experiment_date == "1/20/24")) %>% 
+  filter(!(experiment_date == "2/3/24")) %>% 
   mutate("ID" = paste(salt, treatment, sep = " - ")) %>% 
   mutate(group = case_when(
     treatment == "control" ~ "control",
@@ -106,8 +107,8 @@ knitr::kable(ctmax_filtered %>%
 
 ``` r
 
-# salt.model = lmer(data = ctmax_filtered, 
-#                   ctmax ~ treatment * salt + (1 + treatment|experiment_date))
+salt.model = lmer(data = ctmax_filtered,
+                  ctmax ~ treatment * salt + (1|experiment_date))
 
 salt.model = lm(data = ctmax_filtered,
                 ctmax ~ treatment * salt)
@@ -119,20 +120,20 @@ salt.model
 ## 
 ## Coefficients:
 ##                (Intercept)               treatmentsalt                saltRoadSalt  
-##                    26.8673                      0.9291                      1.5214  
+##                   26.86732                     0.92907                     0.03163  
 ## treatmentsalt:saltRoadSalt  
-##                    -2.4313
+##                   -3.69640
 
 car::Anova(salt.model, type = "III")
 ## Anova Table (Type III tests)
 ## 
 ## Response: ctmax
-##                Sum Sq Df   F value  Pr(>F)    
-## (Intercept)    7218.5  1 1137.7979 < 2e-16 ***
-## treatment         4.3  1    0.6803 0.41299    
-## salt             15.4  1    2.4322 0.12450    
-## treatment:salt   19.7  1    3.1059 0.08347 .  
-## Residuals       355.3 56                      
+##                Sum Sq Df   F value    Pr(>F)    
+## (Intercept)    7218.5  1 1317.1082 < 2.2e-16 ***
+## treatment         4.3  1    0.7875  0.378661    
+## salt              0.0  1    0.0012  0.972298    
+## treatment:salt   45.5  1    8.3102  0.005582 ** 
+## Residuals       306.9 56                        
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -143,24 +144,24 @@ salt.means
 ## $emmeans
 ## salt = InstantOcean:
 ##  treatment emmean    SE df lower.CL upper.CL
-##  control     26.9 0.797 56     25.3     28.5
-##  salt        27.8 0.797 56     26.2     29.4
+##  control     26.9 0.740 56     25.4     28.4
+##  salt        27.8 0.740 56     26.3     29.3
 ## 
 ## salt = RoadSalt:
 ##  treatment emmean    SE df lower.CL upper.CL
-##  control     28.4 0.563 56     27.3     29.5
-##  salt        26.9 0.563 56     25.8     28.0
+##  control     26.9 0.523 56     25.9     27.9
+##  salt        24.1 0.523 56     23.1     25.2
 ## 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ## salt = InstantOcean:
-##  contrast       estimate    SE df t.ratio p.value
-##  control - salt   -0.929 1.126 56  -0.825  0.4130
+##  contrast       estimate   SE df t.ratio p.value
+##  control - salt   -0.929 1.05 56  -0.887  0.3787
 ## 
 ## salt = RoadSalt:
-##  contrast       estimate    SE df t.ratio p.value
-##  control - salt    1.502 0.797 56   1.886  0.0645
+##  contrast       estimate   SE df t.ratio p.value
+##  control - salt    2.767 0.74 56   3.738  0.0004
 ```
 
 ``` r

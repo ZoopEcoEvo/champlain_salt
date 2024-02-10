@@ -148,6 +148,7 @@ ctmax_data %>%
 ```{r}
 ctmax_filtered = ctmax_data %>% 
   filter(!(experiment == 1 & experiment_date == "1/20/24")) %>% 
+  filter(!(experiment_date == "2/3/24")) %>% 
   mutate("ID" = paste(salt, treatment, sep = " - ")) %>% 
   mutate(group = case_when(
     treatment == "control" ~ "control",
@@ -159,8 +160,8 @@ knitr::kable(ctmax_filtered %>%
                group_by(salt, treatment) %>%  
                count())
 
-# salt.model = lmer(data = ctmax_filtered, 
-#                   ctmax ~ treatment * salt + (1 + treatment|experiment_date))
+salt.model = lmer(data = ctmax_filtered,
+                  ctmax ~ treatment * salt + (1|experiment_date))
 
 salt.model = lm(data = ctmax_filtered,
                 ctmax ~ treatment * salt)
