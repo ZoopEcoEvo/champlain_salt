@@ -1,6 +1,6 @@
 TITLE HERE
 ================
-2024-02-10
+2024-03-03
 
 - [Survival Analyses](#survival-analyses)
 - [CTmax Data](#ctmax-data)
@@ -19,10 +19,12 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
               se = FALSE,
               linewidth = 2) + 
   scale_colour_brewer(type = "seq", palette = 9) + 
+  guides(colour = guide_legend(nrow = 1)) + 
   labs(x = "Salinity (mg/L)",
        y = "Proportion Surviving",
        colour = "Day") + 
-  theme_matt()
+  theme_matt_facets() + 
+  theme(legend.position = "bottom")
 ```
 
 <img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
@@ -45,42 +47,7 @@ ggsurvplot_facet(surv_fit,
 
 <img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
-``` r
-cox.model = coxph(Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
-
-cox.model
-## Call:
-## coxph(formula = Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
-## 
-##                   coef exp(coef)  se(coef)      z      p
-## treatment    1.084e-03 1.001e+00 7.972e-05 13.596 <2e-16
-## saltRoadSalt 2.158e+01 2.361e+09 1.904e+03  0.011  0.991
-## 
-## Likelihood ratio test=475  on 2 df, p=< 2.2e-16
-## n= 443, number of events= 130
-
-#ggforest(cox.model, data = surv_data)
-```
-
 ## CTmax Data
-
-``` r
-ctmax_data %>%  
-  mutate("ID" = paste(experiment_date, "- Exp.", experiment)) %>% 
-  ggplot(aes(x = treatment, y = ctmax, fill = ID)) +
-  facet_wrap(salt~.) +
-  geom_boxplot(width = 0.5,
-               position = position_dodge(width = 0.7)) +
-  geom_point(size = 3,
-             position = position_dodge(width = 0.7)) + 
-  labs(x = "Treatment", 
-       y = "CTmax (°C)") + 
-  guides(fill = guide_legend(override.aes = list(shape = NA))) + 
-  theme_matt() + 
-  theme(legend.position = "right")
-```
-
-<img src="../Figures/report/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 ``` r
 ctmax_filtered = ctmax_data %>% 
@@ -110,30 +77,18 @@ knitr::kable(ctmax_filtered %>%
 salt.model = lmer(data = ctmax_filtered,
                   ctmax ~ treatment * salt + (1|experiment_date))
 
-salt.model = lm(data = ctmax_filtered,
-                ctmax ~ treatment * salt)
-
-salt.model
-## 
-## Call:
-## lm(formula = ctmax ~ treatment * salt, data = ctmax_filtered)
-## 
-## Coefficients:
-##                (Intercept)               treatmentsalt                saltRoadSalt  
-##                   26.86732                     0.92907                     0.03163  
-## treatmentsalt:saltRoadSalt  
-##                   -3.69640
+# salt.model = lm(data = ctmax_filtered,
+#                 ctmax ~ treatment * salt)
 
 car::Anova(salt.model, type = "III")
-## Anova Table (Type III tests)
+## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: ctmax
-##                Sum Sq Df   F value    Pr(>F)    
-## (Intercept)    7218.5  1 1317.1082 < 2.2e-16 ***
-## treatment         4.3  1    0.7875  0.378661    
-## salt              0.0  1    0.0012  0.972298    
-## treatment:salt   45.5  1    8.3102  0.005582 ** 
-## Residuals       306.9 56                        
+##                   Chisq Df Pr(>Chisq)    
+## (Intercept)    297.1865  1  < 2.2e-16 ***
+## treatment        0.9650  1   0.325929    
+## salt             0.0461  1   0.830013    
+## treatment:salt  10.1837  1   0.001417 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -143,25 +98,28 @@ salt.means = emmeans::emmeans(salt.model,
 salt.means
 ## $emmeans
 ## salt = InstantOcean:
-##  treatment emmean    SE df lower.CL upper.CL
-##  control     26.9 0.740 56     25.4     28.4
-##  salt        27.8 0.740 56     26.3     29.3
+##  treatment emmean    SE   df lower.CL upper.CL
+##  control     26.9 1.559 2.13     20.6     33.2
+##  salt        27.8 1.559 2.13     21.5     34.1
 ## 
 ## salt = RoadSalt:
-##  treatment emmean    SE df lower.CL upper.CL
-##  control     26.9 0.523 56     25.9     27.9
-##  salt        24.1 0.523 56     23.1     25.2
+##  treatment emmean    SE   df lower.CL upper.CL
+##  control     27.3 0.948 2.60     24.0     30.6
+##  salt        24.5 0.948 2.60     21.2     27.8
 ## 
+## Degrees-of-freedom method: kenward-roger 
 ## Confidence level used: 0.95 
 ## 
 ## $contrasts
 ## salt = InstantOcean:
-##  contrast       estimate   SE df t.ratio p.value
-##  control - salt   -0.929 1.05 56  -0.887  0.3787
+##  contrast       estimate    SE df t.ratio p.value
+##  control - salt   -0.929 0.946 54  -0.982  0.3303
 ## 
 ## salt = RoadSalt:
-##  contrast       estimate   SE df t.ratio p.value
-##  control - salt    2.767 0.74 56   3.738  0.0004
+##  contrast       estimate    SE df t.ratio p.value
+##  control - salt    2.767 0.669 54   4.138  0.0001
+## 
+## Degrees-of-freedom method: kenward-roger
 ```
 
 ``` r

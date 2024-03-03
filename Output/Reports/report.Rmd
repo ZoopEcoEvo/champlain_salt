@@ -97,10 +97,12 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
               se = FALSE,
               linewidth = 2) + 
   scale_colour_brewer(type = "seq", palette = 9) + 
+  guides(colour = guide_legend(nrow = 1)) + 
   labs(x = "Salinity (mg/L)",
        y = "Proportion Surviving",
        colour = "Day") + 
-  theme_matt()
+  theme_matt_facets() + 
+  theme(legend.position = "bottom")
 ```
 
 ```{r}
@@ -119,7 +121,7 @@ ggsurvplot_facet(surv_fit,
                  legend.title="Salt Treatment")
 ```
 
-```{r}
+```{r include = F}
 cox.model = coxph(Surv(exp_day, ind_surv) ~ treatment + salt, data = surv_data)
 
 cox.model
@@ -129,7 +131,7 @@ cox.model
 
 
 ## CTmax Data
-```{r}
+```{r include = F}
 ctmax_data %>%  
   mutate("ID" = paste(experiment_date, "- Exp.", experiment)) %>% 
   ggplot(aes(x = treatment, y = ctmax, fill = ID)) +
@@ -163,10 +165,8 @@ knitr::kable(ctmax_filtered %>%
 salt.model = lmer(data = ctmax_filtered,
                   ctmax ~ treatment * salt + (1|experiment_date))
 
-salt.model = lm(data = ctmax_filtered,
-                ctmax ~ treatment * salt)
-
-salt.model
+# salt.model = lm(data = ctmax_filtered,
+#                 ctmax ~ treatment * salt)
 
 car::Anova(salt.model, type = "III")
 

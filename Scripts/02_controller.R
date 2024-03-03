@@ -15,7 +15,7 @@ source("Scripts/project_functions.R")
 
 #Determine which scripts should be run
 prelim_report = F #Makes a preliminary report based on environmental data from Lake Champlain
-process_data = T #Runs data analysis 
+process_data = F #Runs data analysis 
 make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
