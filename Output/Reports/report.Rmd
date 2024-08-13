@@ -1,5 +1,5 @@
 ---
-title: TITLE HERE
+title: Effects of salinity acclimation on upper thermal limits of *Leptodiaptomus sicilis*
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -129,6 +129,32 @@ cox.model
 #ggforest(cox.model, data = surv_data)
 ```
 
+### Skistodiaptomus oregonensis 
+
+```{r, fig.width=10, fig.height=6}
+
+oreg_data %>% 
+  mutate(initial = hour_0) %>% 
+  pivot_longer(cols = c("hour_0", "hour_18", "hour_42", "hour_62", "hour_86"), 
+               names_to = "hour", 
+               values_to = "individuals") %>% 
+  mutate(prop_surv = individuals / initial) %>% 
+  ggplot(aes(x = treatment, y = prop_surv, colour = sex)) +
+  facet_wrap(hour~.) + 
+  geom_point(position = position_jitter(height = 0.01, width = 200)) + 
+  geom_smooth(method = "glm", 
+              method.args = list(family = "binomial"), 
+              se = FALSE,
+              linewidth = 2) + 
+  scale_colour_manual(values = c("female" = "lightcoral", 
+                                 "male" = "lightblue3")) + 
+  labs(x = "Salinity (mg/L)", 
+       y = "Proportion Surviving") + 
+  theme_matt_facets()
+
+```
+
+
 
 ## CTmax Data
 ```{r include = F}
@@ -147,6 +173,7 @@ ctmax_data %>%
   theme(legend.position = "right")
 ```
 
+Shown below are the sample sizes for the various salt-treatment combinations. Fewer experiments were run with Instant Ocean, so the sample sizes are smaller for this salt. 
 ```{r}
 ctmax_filtered = ctmax_data %>% 
   filter(!(experiment == 1 & experiment_date == "1/20/24")) %>% 
@@ -161,33 +188,54 @@ ctmax_filtered = ctmax_data %>%
 knitr::kable(ctmax_filtered %>% 
                group_by(salt, treatment) %>%  
                count())
+```
 
+A linear mixed effects model was used to examine variation in CTmax as a function of salt type (Instant Ocean and road salt) and treatment (control or salt-acclimated). We also examined the interaction between these factors to determine whether the effect of treatment depended on the type of salt used. Experiment date was included as a random effect to control for any differences between collections or experimental replicates. 
+
+```{r}
 salt.model = lmer(data = ctmax_filtered,
                   ctmax ~ treatment * salt + (1|experiment_date))
 
 # salt.model = lm(data = ctmax_filtered,
 #                 ctmax ~ treatment * salt)
 
-car::Anova(salt.model, type = "III")
+knitr::kable(car::Anova(salt.model, type = "III"))
+```
 
+The mixed effects model indicates that there was a significant interaction between salt type and treatment. We examined this interaction by calculating the marginal treatment means by salt type. Shown below, there was no significant difference between treatment groups in the Instant Ocean experiments, but there was a substantial difference between treatment groups in the road salt experiments. 
+```{r}
 salt.means = emmeans::emmeans(salt.model,
                               pairwise ~ treatment | salt)
 
-salt.means
-
+knitr::kable(salt.means$contrasts)
 ```
 
-```{r}
-ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
+```{r plot-for-poster, fig.width = 8, fig.height=7}
+
+treat_cols = c("salt" = "#95d5ce", "control" = "#028260")
+
+ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
   facet_wrap(salt~.) + 
   geom_boxplot(width = 0.5) +
-  geom_point(size = 4) + 
+  geom_point(size = 4, alpha = 0.5) + 
+  scale_fill_manual(values = treat_cols) + 
   labs(x = "Treatment", 
        y = "CTmax (°C)") + 
-  theme_matt()
+  theme_matt_facets() + 
+  theme(legend.position = "none",
+        strip.background = element_rect(fill = "lightsalmon"),
+        strip.text = element_text(margin = margin(0.7,0,0.7,0, "cm"),
+                                  size = 20))
+
+# ggplot(ctmax_filtered, aes(x = ctmax, fill = treatment)) + 
+#   facet_wrap(salt~.) + 
+#   geom_density(alpha = 0.5)
+# 
+# # Approach 1 - Simple t-test (comparison between two groups)
+# t.test(data = filter(ctmax_filtered, salt == "RoadSalt"), ctmax ~ treatment)
 ```
 
-```{r}
+```{r include = F}
 ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
   facet_wrap(salt~.) + 
   geom_violin(draw_quantiles = c(0.25,0.75)) + 
@@ -195,15 +243,4 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
   labs(x = "Treatment", 
        y = "CTmax (°C)") + 
   theme_matt()
-```
-
-```{r}
-mean_diff = load(ctmax_filtered, 
-                 x = ID, y = ctmax,
-  idx = list(
-    c("InstantOcean - control", "InstantOcean - salt"),
-    c("RoadSalt - control", "RoadSalt - salt"))) %>%
-  mean_diff()
-
-dabest_plot(mean_diff)
 ```

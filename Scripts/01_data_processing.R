@@ -1,5 +1,7 @@
 # Identifies all survival data for experiments 
 surv_files = dir(path = "Raw_data/surv_data/")[str_detect(dir(path = "Raw_data/surv_data/"), pattern = "2024")]
+sic_surv = surv_files[str_detect(surv_files, "2024_01")]
+oreg_surv = surv_files[str_detect(surv_files, "2024_08")]
 
 # Identifies all files for the CTmax experiments 
 ctmax_files = dir(path = "Raw_data/ctmax_data/")[!str_detect(dir(path = "Raw_data/ctmax_data/"), pattern = "trial")]
@@ -10,7 +12,7 @@ ctmax_temps = ctmax_files[str_detect(ctmax_files, pattern = "_temp")]
 surv_data = data.frame()
 daily_prop_data = data.frame()
 
-for(file in surv_files){
+for(file in sic_surv){
   
   # Extracts experiment date from file name
   exp_date = str_split(string = str_replace_all(file, pattern = "_", replacement = "-"), pattern = "-surv")[[1]][1]
@@ -58,13 +60,14 @@ for(file in surv_files){
 write.csv(surv_data, file = "Output/Output_data/surv_data.csv", row.names = F)
 write.csv(daily_prop_data, file = "Output/Output_data/daily_prop_data.csv", row.names = F)
 
+
 #### Processing the CTmax data ####
 
 ctmax_data = data.frame()
 for(file in ctmax_times){
   
   meta_info = str_split_fixed(file, pattern = "obs", n = 2)
-
+  
   time_data = read.csv(file = paste("Raw_data/ctmax_data/", file, sep = ""))
   temp_data = read.csv(file = paste("Raw_data/ctmax_data/", meta_info[1], "temp.csv", sep = ""))
   

@@ -52,6 +52,9 @@ if(make_report == T){
   daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv") %>% 
     mutate(exp_day = round(hour / 24))
   
+  oreg_data = read.csv(file = paste("Raw_data/surv_data/2024_08_10_surv.csv", sep = "")) %>% 
+    discard(~all(is.na(.x)))
+  
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here

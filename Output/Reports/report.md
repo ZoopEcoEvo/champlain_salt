@@ -1,8 +1,10 @@
-TITLE HERE
+Effects of salinity acclimation on upper thermal limits of
+*Leptodiaptomus sicilis*
 ================
-2024-03-03
+2024-08-12
 
 - [Survival Analyses](#survival-analyses)
+  - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
 - [CTmax Data](#ctmax-data)
 
 ## Survival Analyses
@@ -47,7 +49,37 @@ ggsurvplot_facet(surv_fit,
 
 <img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
+### Skistodiaptomus oregonensis
+
+``` r
+
+oreg_data %>% 
+  mutate(initial = hour_0) %>% 
+  pivot_longer(cols = c("hour_0", "hour_18", "hour_42"), 
+               names_to = "hour", 
+               values_to = "individuals") %>% 
+  mutate(prop_surv = individuals / initial) %>% 
+  ggplot(aes(x = treatment, y = prop_surv, colour = sex)) +
+  facet_wrap(hour~.) + 
+  geom_point(position = position_jitter(height = 0.01, width = 200)) + 
+  geom_smooth(method = "glm", 
+              method.args = list(family = "binomial"), 
+              se = FALSE,
+              linewidth = 2) + 
+  scale_colour_manual(values = c("female" = "lightcoral", 
+                                 "male" = "lightblue3")) + 
+  labs(x = "Salinity (mg/L)", 
+       y = "Proportion Surviving") + 
+  theme_matt_facets()
+```
+
+<img src="../Figures/report/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
 ## CTmax Data
+
+Shown below are the sample sizes for the various salt-treatment
+combinations. Fewer experiments were run with Instant Ocean, so the
+sample sizes are smaller for this salt.
 
 ``` r
 ctmax_filtered = ctmax_data %>% 
@@ -72,89 +104,76 @@ knitr::kable(ctmax_filtered %>%
 | RoadSalt     | control   |  20 |
 | RoadSalt     | salt      |  20 |
 
-``` r
+A linear mixed effects model was used to examine variation in CTmax as a
+function of salt type (Instant Ocean and road salt) and treatment
+(control or salt-acclimated). We also examined the interaction between
+these factors to determine whether the effect of treatment depended on
+the type of salt used. Experiment date was included as a random effect
+to control for any differences between collections or experimental
+replicates.
 
+``` r
 salt.model = lmer(data = ctmax_filtered,
                   ctmax ~ treatment * salt + (1|experiment_date))
 
 # salt.model = lm(data = ctmax_filtered,
 #                 ctmax ~ treatment * salt)
 
-car::Anova(salt.model, type = "III")
-## Analysis of Deviance Table (Type III Wald chisquare tests)
-## 
-## Response: ctmax
-##                   Chisq Df Pr(>Chisq)    
-## (Intercept)    297.1865  1  < 2.2e-16 ***
-## treatment        0.9650  1   0.325929    
-## salt             0.0461  1   0.830013    
-## treatment:salt  10.1837  1   0.001417 ** 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+knitr::kable(car::Anova(salt.model, type = "III"))
+```
 
+|                |       Chisq |  Df | Pr(\>Chisq) |
+|:---------------|------------:|----:|------------:|
+| (Intercept)    | 297.1864842 |   1 |   0.0000000 |
+| treatment      |   0.9650063 |   1 |   0.3259287 |
+| salt           |   0.0460898 |   1 |   0.8300127 |
+| treatment:salt |  10.1836510 |   1 |   0.0014169 |
+
+The mixed effects model indicates that there was a significant
+interaction between salt type and treatment. We examined this
+interaction by calculating the marginal treatment means by salt type.
+Shown below, there was no significant difference between treatment
+groups in the Instant Ocean experiments, but there was a substantial
+difference between treatment groups in the road salt experiments.
+
+``` r
 salt.means = emmeans::emmeans(salt.model,
                               pairwise ~ treatment | salt)
 
-salt.means
-## $emmeans
-## salt = InstantOcean:
-##  treatment emmean    SE   df lower.CL upper.CL
-##  control     26.9 1.559 2.13     20.6     33.2
-##  salt        27.8 1.559 2.13     21.5     34.1
-## 
-## salt = RoadSalt:
-##  treatment emmean    SE   df lower.CL upper.CL
-##  control     27.3 0.948 2.60     24.0     30.6
-##  salt        24.5 0.948 2.60     21.2     27.8
-## 
-## Degrees-of-freedom method: kenward-roger 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-## salt = InstantOcean:
-##  contrast       estimate    SE df t.ratio p.value
-##  control - salt   -0.929 0.946 54  -0.982  0.3303
-## 
-## salt = RoadSalt:
-##  contrast       estimate    SE df t.ratio p.value
-##  control - salt    2.767 0.669 54   4.138  0.0001
-## 
-## Degrees-of-freedom method: kenward-roger
+knitr::kable(salt.means$contrasts)
 ```
 
-``` r
-ggplot(ctmax_filtered, aes(x = treatment, y = ctmax)) +
-  facet_wrap(salt~.) + 
-  geom_boxplot(width = 0.5) +
-  geom_point(size = 4) + 
-  labs(x = "Treatment", 
-       y = "CTmax (°C)") + 
-  theme_matt()
-```
-
-<img src="../Figures/report/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+| contrast       | salt         |   estimate |        SE |     df |    t.ratio |   p.value |
+|:---------------|:-------------|-----------:|----------:|-------:|-----------:|----------:|
+| control - salt | InstantOcean | -0.9290657 | 0.9457608 | 54.002 | -0.9823474 | 0.3303095 |
+| control - salt | RoadSalt     |  2.7673322 | 0.6687539 | 54.002 |  4.1380427 | 0.0001234 |
 
 ``` r
+
+treat_cols = c("salt" = "#95d5ce", "control" = "#028260")
+
 ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
   facet_wrap(salt~.) + 
-  geom_violin(draw_quantiles = c(0.25,0.75)) + 
-  geom_point(size = 4) + 
+  geom_boxplot(width = 0.5) +
+  geom_point(size = 4, alpha = 0.5) + 
+  scale_fill_manual(values = treat_cols) + 
   labs(x = "Treatment", 
        y = "CTmax (°C)") + 
-  theme_matt()
+  theme_matt_facets() + 
+  theme(legend.position = "none",
+        strip.background = element_rect(fill = "lightsalmon"),
+        strip.text = element_text(margin = margin(0.7,0,0.7,0, "cm"),
+                                  size = 20))
 ```
 
-<img src="../Figures/report/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/plot-for-poster-1.png" style="display: block; margin: auto;" />
 
 ``` r
-mean_diff = load(ctmax_filtered, 
-                 x = ID, y = ctmax,
-  idx = list(
-    c("InstantOcean - control", "InstantOcean - salt"),
-    c("RoadSalt - control", "RoadSalt - salt"))) %>%
-  mean_diff()
 
-dabest_plot(mean_diff)
+# ggplot(ctmax_filtered, aes(x = ctmax, fill = treatment)) + 
+#   facet_wrap(salt~.) + 
+#   geom_density(alpha = 0.5)
+# 
+# # Approach 1 - Simple t-test (comparison between two groups)
+# t.test(data = filter(ctmax_filtered, salt == "RoadSalt"), ctmax ~ treatment)
 ```
-
-<img src="../Figures/report/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
