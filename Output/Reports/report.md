@@ -1,7 +1,7 @@
 Effects of salinity acclimation on upper thermal limits of
 *Leptodiaptomus sicilis*
 ================
-2024-08-12
+2025-03-30
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
@@ -55,7 +55,7 @@ ggsurvplot_facet(surv_fit,
 
 oreg_data %>% 
   mutate(initial = hour_0) %>% 
-  pivot_longer(cols = c("hour_0", "hour_18", "hour_42"), 
+  pivot_longer(cols = c("hour_0", "hour_18", "hour_42", "hour_62", "hour_86"), 
                names_to = "hour", 
                values_to = "individuals") %>% 
   mutate(prop_surv = individuals / initial) %>% 
