@@ -1,0 +1,11 @@
+﻿Treatment,Species,Replication,Collection Date,Acclimation Date,Collection Time,Acclimation Time,Lake Temperature (Degrees C),Lab Temperature,Cl Concentration (mg/L),Dose Group,0 Hour,24 Hour
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1000,D1,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1100,D2,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1200,D3,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1300,D4,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1400,D5,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1500,D6,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1600,D7,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,1700,D8,5,0
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,0,C1,5,4
+NaCl,Skistodiaptomus,1,9/22/25,9/23/25,6:00,18:30,18,18,0,C2,5,5
