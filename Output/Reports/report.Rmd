@@ -245,6 +245,28 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 
 ## Ion Specific Patterns Across Seasons
 
+The salinity treatments exhibit the expected survival surves, with minimal acute effects, but strong effects emerging over five days. 
+
+```{r}
+
+surv_2025_data %>% 
+  mutate(day = as.factor(day)) %>% 
+  ggplot(aes(x = cl_conc, y = prop_surv, colour = day, group = day)) + 
+  facet_grid(species ~ treatment) + 
+  geom_hline(yintercept = 0.5, colour = "grey") + 
+  geom_point(alpha = 0.5) + 
+  geom_smooth(method = "glm",
+              method.args = list(family = "quasibinomial"), 
+              se = F, 
+              linewidth = 2.5) + 
+  scale_y_continuous(breaks = c(0,1)) + 
+  scale_colour_brewer(palette = "RdBu", direction = -1) + 
+  labs(x = "[Chloride] (mg / L)", 
+       y = "Proportion Surviving") + 
+  theme_bw(base_size = 24) + 
+  theme(panel.grid = element_blank())
+```
+
 Shown below are the average CTmax values for each chloride concentration (one mean per species, ion, and collection date combination). While salt acclimation has minimal effects on L. minutus, MgCl2 acclimation seems to have strong negative effects on L. sicilis. Note that the x-axis differs slightly between species. 
 
 ```{r}
@@ -263,6 +285,36 @@ acclim_data %>%
   labs(y = "CTmax (°C)", 
        x = "Chloride (grams)") + 
   theme_matt_facets()
+```
+
+These same effects can be shown against the proportional mortality - this is meant to provide a standardized metric for "stress" of exposure to these different salts. 
+
+```{r}
+
+test_ctmax = acclim_data %>% 
+  group_by(species, 
+           collection_date, 
+           treatment, 
+           cl_conc) %>% 
+  summarise(mean_ctmax = mean(ctmax)) %>% 
+  mutate(collection_date = as_date(collection_date))
+
+test_surv = surv_2025_data %>% 
+  group_by(treatment, species, collection_date) %>% 
+  filter(time == max(time))
+
+
+left_join(test_ctmax, test_surv) %>% 
+  mutate(prop_mort = 1 - prop_surv) %>% 
+  ggplot(aes(x = prop_mort, y = mean_ctmax, colour = treatment)) + 
+  facet_wrap(.~species) + 
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  labs(y = "Mean CTmax (°C)", 
+       x = "Proportion Mortality") + 
+  scale_x_continuous(breaks = c(0, 0.5, 1)) + 
+  theme_matt_facets()
+
 ```
 
 We modeled these effects using a mixed effects model, with CTmax as a function of chloride concentration and salt compound (with interaction). Species was also included as a fixed effect, while collection date and tube position were included as random effects.  
@@ -365,25 +417,5 @@ emmeans::emmeans(max_comp.model, ~ salt, by = "species") %>%
   coord_flip() + 
   theme_matt_facets()
 
-```
-
-```{r}
-
-surv_2025_data %>% 
-  mutate(day = as.factor(day)) %>% 
-  ggplot(aes(x = cl_conc, y = prop_surv, colour = day, group = day)) + 
-  facet_grid(species ~ treatment) + 
-  geom_hline(yintercept = 0.5, colour = "grey") + 
-  geom_point(alpha = 0.5) + 
-  geom_smooth(method = "glm",
-              method.args = list(family = "quasibinomial"), 
-              se = F, 
-              linewidth = 2.5) + 
-  scale_y_continuous(breaks = c(0,1)) + 
-  scale_colour_brewer(palette = "RdBu", direction = -1) + 
-  labs(x = "[Chloride] (mg / L)", 
-       y = "Proportion Surviving") + 
-  theme_bw(base_size = 24) + 
-  theme(panel.grid = element_blank())
 ```
 
