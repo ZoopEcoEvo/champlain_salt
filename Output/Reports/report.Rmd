@@ -106,19 +106,19 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
 ```
 
 ```{r}
-surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
-surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment + salt, data = surv_data)
-
-#summary(surv_fit_2)
-
-ggsurvplot_facet(surv_fit, 
-                 data = surv_data,
-                 facet.by = "salt",
-                 conf.int=T, pval=F, risk.table=F, 
-                 conf.int.alpha = 0.1,
-                 size = 2,
-                 palette = "YlOrRd",
-                 legend.title="Salt Treatment")
+# surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
+# surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment + salt, data = surv_data)
+# 
+# #summary(surv_fit_2)
+# 
+# ggsurvplot_facet(surv_fit, 
+#                  data = surv_data,
+#                  facet.by = "salt",
+#                  conf.int=T, pval=F, risk.table=F, 
+#                  conf.int.alpha = 0.1,
+#                  size = 2,
+#                  palette = "YlOrRd",
+#                  legend.title="Salt Treatment")
 ```
 
 ```{r include = F}
@@ -245,7 +245,7 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 
 ## Ion Specific Patterns Across Seasons
 
-The salinity treatments exhibit the expected survival surves, with minimal acute effects, but strong effects emerging over five days. 
+The salinity treatments exhibit the expected survival curves, with minimal acute effects, but strong effects emerging over five days. 
 
 ```{r}
 

@@ -1,7 +1,7 @@
 Effects of salinity acclimation on upper thermal limits of
 *Leptodiaptomus sicilis*
 ================
-2026-03-01
+2026-03-30
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
@@ -34,22 +34,20 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
 <img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 ``` r
-surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
-surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment + salt, data = surv_data)
-
-#summary(surv_fit_2)
-
-ggsurvplot_facet(surv_fit, 
-                 data = surv_data,
-                 facet.by = "salt",
-                 conf.int=T, pval=F, risk.table=F, 
-                 conf.int.alpha = 0.1,
-                 size = 2,
-                 palette = "YlOrRd",
-                 legend.title="Salt Treatment")
+# surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
+# surv_fit = survfit2(Surv(hour, ind_surv) ~ treatment + salt, data = surv_data)
+# 
+# #summary(surv_fit_2)
+# 
+# ggsurvplot_facet(surv_fit, 
+#                  data = surv_data,
+#                  facet.by = "salt",
+#                  conf.int=T, pval=F, risk.table=F, 
+#                  conf.int.alpha = 0.1,
+#                  size = 2,
+#                  palette = "YlOrRd",
+#                  legend.title="Salt Treatment")
 ```
-
-<img src="../Figures/report/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ### Skistodiaptomus oregonensis
 
@@ -182,6 +180,31 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 
 ## Ion Specific Patterns Across Seasons
 
+The salinity treatments exhibit the expected survival curves, with
+minimal acute effects, but strong effects emerging over five days.
+
+``` r
+
+surv_2025_data %>% 
+  mutate(day = as.factor(day)) %>% 
+  ggplot(aes(x = cl_conc, y = prop_surv, colour = day, group = day)) + 
+  facet_grid(species ~ treatment) + 
+  geom_hline(yintercept = 0.5, colour = "grey") + 
+  geom_point(alpha = 0.5) + 
+  geom_smooth(method = "glm",
+              method.args = list(family = "quasibinomial"), 
+              se = F, 
+              linewidth = 2.5) + 
+  scale_y_continuous(breaks = c(0,1)) + 
+  scale_colour_brewer(palette = "RdBu", direction = -1) + 
+  labs(x = "[Chloride] (mg / L)", 
+       y = "Proportion Surviving") + 
+  theme_bw(base_size = 24) + 
+  theme(panel.grid = element_blank())
+```
+
+<img src="../Figures/report/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
 Shown below are the average CTmax values for each chloride concentration
 (one mean per species, ion, and collection date combination). While salt
 acclimation has minimal effects on L. minutus, MgCl2 acclimation seems
@@ -206,7 +229,40 @@ acclim_data %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+
+These same effects can be shown against the proportional mortality -
+this is meant to provide a standardized metric for “stress” of exposure
+to these different salts.
+
+``` r
+
+test_ctmax = acclim_data %>% 
+  group_by(species, 
+           collection_date, 
+           treatment, 
+           cl_conc) %>% 
+  summarise(mean_ctmax = mean(ctmax)) %>% 
+  mutate(collection_date = as_date(collection_date))
+
+test_surv = surv_2025_data %>% 
+  group_by(treatment, species, collection_date) %>% 
+  filter(time == max(time))
+
+
+left_join(test_ctmax, test_surv) %>% 
+  mutate(prop_mort = 1 - prop_surv) %>% 
+  ggplot(aes(x = prop_mort, y = mean_ctmax, colour = treatment)) + 
+  facet_wrap(.~species) + 
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  labs(y = "Mean CTmax (°C)", 
+       x = "Proportion Mortality") + 
+  scale_x_continuous(breaks = c(0, 0.5, 1)) + 
+  theme_matt_facets()
+```
+
+<img src="../Figures/report/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 We modeled these effects using a mixed effects model, with CTmax as a
 function of chloride concentration and salt compound (with interaction).
@@ -219,8 +275,6 @@ acclim_data.model = lme4::lmer(data = acclim_data,
 
 performance::check_model(acclim_data.model)
 ```
-
-<img src="../Figures/report/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 Marginal trends were calculated based on this model, representing the
 effect of each salt type on CTmax (x axis shows the linear trend in
@@ -246,7 +300,7 @@ emmeans::emtrends(acclim_data.model, specs = "treatment", by = "species", var = 
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 In case salt concentration exhibits threshold effects, we also looked at
 the change in CTmax between the control and the maximum salt
@@ -263,8 +317,8 @@ acclim_data %>%
 
 | species    | treatment | cl_conc |
 |:-----------|:----------|--------:|
-| L. Sicilis | NaCl      |     1.9 |
 | L. Sicilis | MgCl2     |     2.3 |
+| L. Sicilis | NaCl      |     2.5 |
 | L. Minutus | NaCl      |     1.4 |
 | L. Minutus | MgCl2     |     1.6 |
 
@@ -305,7 +359,7 @@ ggplot(max_comps, aes(x = salt, y = ctmax, fill = salt)) +
         legend.position = "none")
 ```
 
-<img src="../Figures/report/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 Again, we will model the CTmax data using a mixed effects model, with
 interacting fixed effects of treatment (control, maximum NaCl, maximum
@@ -319,8 +373,6 @@ max_comp.model = lme4::lmer(data = max_comps,
 performance::check_model(max_comp.model)
 ```
 
-<img src="../Figures/report/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
-
 Using this model we calculate estimated marginal means comparing the
 control to the salt treatment for both species. Here again we see that
 there are no major effects of salt acclimation on thermal limits in L.
@@ -333,9 +385,9 @@ car::Anova(max_comp.model, test = "F")
 ## 
 ## Response: ctmax
 ##                   F Df Df.res   Pr(>F)   
-## salt         5.7141  2 72.056 0.004973 **
-## species      9.1693  1  9.802 0.012999 * 
-## salt:species 3.7692  2 71.738 0.027764 * 
+## salt         6.7301  2 74.622 0.002055 **
+## species      9.7091  1 11.356 0.009478 **
+## salt:species 6.9112  2 74.744 0.001762 **
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -356,26 +408,4 @@ emmeans::emmeans(max_comp.model, ~ salt, by = "species") %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
-
-``` r
-
-surv_2025_data %>% 
-  mutate(day = as.factor(day)) %>% 
-  ggplot(aes(x = cl_conc, y = prop_surv, colour = day, group = day)) + 
-  facet_grid(species ~ treatment) + 
-  geom_hline(yintercept = 0.5, colour = "grey") + 
-  geom_point(alpha = 0.5) + 
-  geom_smooth(method = "glm",
-              method.args = list(family = "quasibinomial"), 
-              se = F, 
-              linewidth = 2.5) + 
-  scale_y_continuous(breaks = c(0,1)) + 
-  scale_colour_brewer(palette = "RdBu", direction = -1) + 
-  labs(x = "[Chloride] (mg / L)", 
-       y = "Proportion Surviving") + 
-  theme_bw(base_size = 24) + 
-  theme(panel.grid = element_blank())
-```
-
-<img src="../Figures/report/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
