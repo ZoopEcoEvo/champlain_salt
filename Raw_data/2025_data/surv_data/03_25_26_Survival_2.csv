@@ -1,0 +1,11 @@
+﻿Treatment,Species,Replication,Collection Date,Acclimation Date,Collection Time,Acclimation Time,Lake Temperature (Degrees C),Lab Temperature,Cl Concentration (mg/L),Dose Group,Number Gravid,0 Hour,22 Hour,44 Hour,72 Hour,92 Hour,115 Hour
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,1900,D1,2,5,4,4,,3,3
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2000,D2,2,5,5,5,,5,5
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2100,D3,2,5,4,3,,3,3
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2200,D4,2,5,2,2,,2,2
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2300,D5,3,4,3,2,,2,2
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2400,D6,2,5,2,2,,2,2
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2500,D7,3,5,3,3,,3,3
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,2600,D8,2,4,2,2,,2,2
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,0,C1,3,5,5,5,,5,5
+MgCl2,L. Sicilis,4,3/25/26,3/25/26,7:30,4:00,1,2,0,C2,2,5,5,5,,5,5

@@ -1,7 +1,7 @@
-Effects of salinity acclimation on upper thermal limits of
-*Leptodiaptomus sicilis*
+Effects of salinity acclimation on upper thermal limits of Lake
+Champlain diaptomid copepods
 ================
-2026-03-30
+2026-04-02
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
@@ -203,7 +203,7 @@ surv_2025_data %>%
   theme(panel.grid = element_blank())
 ```
 
-<img src="../Figures/report/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/surv-curves-1.png" style="display: block; margin: auto;" />
 
 Shown below are the average CTmax values for each chloride concentration
 (one mean per species, ion, and collection date combination). While salt
@@ -212,6 +212,10 @@ to have strong negative effects on L. sicilis. Note that the x-axis
 differs slightly between species.
 
 ``` r
+
+salt_cols = c("MgCl2" = "#761968", 
+              "NaCl" = "#32ad3a")
+
 acclim_data %>% 
   group_by(species, 
            collection_date, 
@@ -223,13 +227,16 @@ acclim_data %>%
   geom_point(data = acclim_data, aes(x = cl_conc, y = ctmax, colour = treatment), 
              alpha = 0.2) + 
   geom_point(size = 3) + 
-  geom_smooth(method = "lm") + 
+  geom_smooth(method = "lm", linewidth = 2) + 
+  scale_colour_manual(values = salt_cols) + 
+  scale_x_continuous(breaks = c(0,1,2), 
+                     labels = c("0", "1", "2")) + 
   labs(y = "CTmax (°C)", 
        x = "Chloride (grams)") + 
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-salt-plot-1.png" style="display: block; margin: auto;" />
 
 These same effects can be shown against the proportional mortality -
 this is meant to provide a standardized metric for “stress” of exposure
@@ -237,7 +244,7 @@ to these different salts.
 
 ``` r
 
-test_ctmax = acclim_data %>% 
+surv_ctmax = acclim_data %>% 
   group_by(species, 
            collection_date, 
            treatment, 
@@ -245,24 +252,25 @@ test_ctmax = acclim_data %>%
   summarise(mean_ctmax = mean(ctmax)) %>% 
   mutate(collection_date = as_date(collection_date))
 
-test_surv = surv_2025_data %>% 
+surv_surv = surv_2025_data %>% 
   group_by(treatment, species, collection_date) %>% 
   filter(time == max(time))
 
-
-left_join(test_ctmax, test_surv) %>% 
+left_join(surv_ctmax, surv_surv) %>% 
   mutate(prop_mort = 1 - prop_surv) %>% 
   ggplot(aes(x = prop_mort, y = mean_ctmax, colour = treatment)) + 
   facet_wrap(.~species) + 
-  geom_point() +
-  geom_smooth(method = "lm") + 
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", linewidth = 2) + 
+    scale_colour_manual(values = salt_cols) + 
   labs(y = "Mean CTmax (°C)", 
        x = "Proportion Mortality") + 
-  scale_x_continuous(breaks = c(0, 0.5, 1)) + 
+  scale_x_continuous(breaks = c(0,0.5,1), 
+                     labels = c("0", "0.5", "1")) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-surv-plot-1.png" style="display: block; margin: auto;" />
 
 We modeled these effects using a mixed effects model, with CTmax as a
 function of chloride concentration and salt compound (with interaction).
@@ -272,9 +280,13 @@ tube position were included as random effects.
 ``` r
 acclim_data.model = lme4::lmer(data = acclim_data, 
                                ctmax ~ cl_conc * treatment * species + (1|collection_date) + (1|tube))
+```
 
+``` r
 performance::check_model(acclim_data.model)
 ```
+
+<img src="../Figures/report/model-performance-1.png" style="display: block; margin: auto;" />
 
 Marginal trends were calculated based on this model, representing the
 effect of each salt type on CTmax (x axis shows the linear trend in
@@ -285,127 +297,21 @@ to decrease substantially when L. sicilis is exposed to MgCl2.
 ``` r
 #car::Anova(acclim_data.model, test = "F")
 
-emmeans::emtrends(acclim_data.model, specs = "treatment", by = "species", var = "cl_conc") %>% 
+emmeans::emtrends(acclim_data.model, var = "cl_conc", specs = "treatment", by = "species") %>% 
   data.frame() %>% 
-  ggplot(aes(x = treatment, y = cl_conc.trend)) + 
+  ggplot(aes(x = treatment, y = cl_conc.trend, colour = treatment)) + 
   facet_wrap(species~.) + 
-  geom_hline(yintercept = 0) + 
-  geom_point(size = 3, position = position_dodge(width = 1)) + 
+  geom_hline(yintercept = 0, colour = "grey") + 
+  geom_point(size = 5, position = position_dodge(width = 1)) + 
   geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), 
                 width = 0.1, linewidth = 2,
                 position = position_dodge(width = 1)) + 
+  scale_colour_manual(values = salt_cols) + 
   labs(x = "Salt", 
        y = "CTmax vs. Chloride Trend \n(°C / g Chloride)") + 
   coord_flip() + 
-  theme_matt_facets()
+  theme_matt_facets() + 
+  theme(legend.position = "none")
 ```
 
-<img src="../Figures/report/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
-
-In case salt concentration exhibits threshold effects, we also looked at
-the change in CTmax between the control and the maximum salt
-concentration for each treatment. These chloride concentrations differ
-across species and salt, and are shown below.
-
-``` r
-acclim_data %>% 
-  group_by(treatment, species) %>% 
-  filter(cl_conc == max(cl_conc)) %>% 
-  select(species, treatment, cl_conc) %>% distinct() %>% 
-  knitr::kable()
-```
-
-| species    | treatment | cl_conc |
-|:-----------|:----------|--------:|
-| L. Sicilis | MgCl2     |     2.3 |
-| L. Sicilis | NaCl      |     2.5 |
-| L. Minutus | NaCl      |     1.4 |
-| L. Minutus | MgCl2     |     1.6 |
-
-These comparisons highlight several interesting facets. First, the
-different salts seem to have different relative effects depending on the
-species: NaCl has a slightly larger effect on CTmax than MgCl2 in L.
-minutus, while the opposite is observed for L. sicilis (although the
-effects of NaCl on CTmax in this species are highly variable). Second,
-we see that both salts seem to have a stronger effect on L. sicilis than
-on L. minutus.
-
-``` r
-max_comps = acclim_data %>% 
-  group_by(treatment, species) %>% 
-  filter(cl_conc == max(cl_conc) | cl_conc == 0) %>% 
-  mutate(salt = if_else(cl_conc > 0, treatment, "Control"))
-
-# max_comps %>% 
-#   group_by(salt, species, collection_date, cl_conc) %>% 
-#   summarise(mean_ctmax = mean(ctmax), 
-#             ctmax_se = sd(ctmax) / sqrt(n())) %>% 
-#   ggplot(aes(x = cl_conc, y = mean_ctmax, colour = salt)) + 
-#   facet_wrap(.~species) + 
-#   geom_point()
-
-### CTmax boxplots - save as 7x6"
-ggplot(max_comps, aes(x = salt, y = ctmax, fill = salt)) + 
-  facet_wrap(species~.) + 
-  geom_boxplot()+ 
-  geom_point() + 
-  labs(y = "CTmax (°C)", 
-       x = "Treatment") + 
-  scale_fill_manual(values = c("Control" = "grey90",
-                               "MgCl2" = "#3C7DA9",
-                               "NaCl" = "#50A8E2")) + 
-  theme_bw(base_size = 24) + 
-  theme(panel.grid = element_blank(),
-        legend.position = "none")
-```
-
-<img src="../Figures/report/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
-
-Again, we will model the CTmax data using a mixed effects model, with
-interacting fixed effects of treatment (control, maximum NaCl, maximum
-MgCl2) and species, and random effects of collection date and tube
-position.
-
-``` r
-max_comp.model = lme4::lmer(data = max_comps, 
-                            ctmax ~ salt * species + (1|collection_date) + (1|tube))
-
-performance::check_model(max_comp.model)
-```
-
-Using this model we calculate estimated marginal means comparing the
-control to the salt treatment for both species. Here again we see that
-there are no major effects of salt acclimation on thermal limits in L.
-minutus, while salt acclimation reduced thermal limits in L. sicilis,
-with a stronger decrease in response to MgCl2 than NaCl.
-
-``` r
-car::Anova(max_comp.model, test = "F")
-## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
-## 
-## Response: ctmax
-##                   F Df Df.res   Pr(>F)   
-## salt         6.7301  2 74.622 0.002055 **
-## species      9.7091  1 11.356 0.009478 **
-## salt:species 6.9112  2 74.744 0.001762 **
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-### Contrasts plot - save as 5x8"
-emmeans::emmeans(max_comp.model, ~ salt, by = "species") %>% 
-  emmeans::contrast(method="trt.vs.ctrl") %>% 
-  data.frame() %>% 
-  ggplot(aes(x = contrast, y = estimate)) + 
-  facet_wrap(species~.) + 
-  geom_hline(yintercept = 0) + 
-  geom_point(size = 3) + 
-  geom_errorbar(aes(ymin = estimate - 1.96*SE, ymax = estimate + 1.96*SE), 
-                width = 0.1, linewidth = 2,
-                position = position_dodge(width = 1)) + 
-  labs(x = "Comparison", 
-       y = "CTmax Effect (°C)") + 
-  coord_flip() + 
-  theme_matt_facets()
-```
-
-<img src="../Figures/report/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/salt-contrasts-1.png" style="display: block; margin: auto;" />

@@ -15,7 +15,7 @@ source("Scripts/project_functions.R")
 
 #Determine which scripts should be run
 prelim_report = F #Makes a preliminary report based on environmental data from Lake Champlain
-process_data = F #Runs data analysis 
+process_data = T #Runs data analysis 
 make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
@@ -56,11 +56,17 @@ if(make_report == T){
   
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   
-  acclim_data = read.csv(file = "Output/Output_data/acclim_data.csv")
+  acclim_data = read.csv(file = "Output/Output_data/acclim_data.csv") %>% 
+    mutate(species = if_else(species == "L. Sicilis", "L. sicilis", "L. minutus"))
   
   surv_2025_data = read.csv(file = "Output/Output_data/surv_2025.csv") %>% 
     mutate(collection_date = as_date(collection_date, format = "%m/%d/%y"), 
-           cl_conc = cl_conc/1000)
+           cl_conc = cl_conc/1000, 
+           species = case_when(
+             species == "L. Sicilis" ~ "L. sicilis", 
+             species == "L. Minutus" ~ "L. minutus", 
+             species == "Skistodiaptomus" ~ species
+           ))
   
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
