@@ -10,12 +10,13 @@ library(ggpubr)
 library(ggsurvfit)
 library(dabestr)
 library(lme4)
+library(lmerTest)
 
 source("Scripts/project_functions.R")
 
 #Determine which scripts should be run
 prelim_report = F #Makes a preliminary report based on environmental data from Lake Champlain
-process_data = T #Runs data analysis 
+process_data = F #Runs data analysis 
 make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
@@ -66,7 +67,8 @@ if(make_report == T){
              species == "L. Sicilis" ~ "L. sicilis", 
              species == "L. Minutus" ~ "L. minutus", 
              species == "Skistodiaptomus" ~ species
-           ))
+           )) %>% 
+    drop_na(surviving)
   
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
