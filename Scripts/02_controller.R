@@ -57,8 +57,24 @@ if(make_report == T){
   
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   
+  size_data = read.csv("Raw_data/2025_data/Body Size Measurements.csv") %>% 
+    separate(assay_date, sep = "_", into = c("month", "day", "year", "assay")) %>% 
+    mutate(assay = as.numeric(if_else(is.na(assay), "1", assay)), 
+           assay_date = lubridate::make_date(year = as.numeric(year) + 2000, month = as.numeric(month), day = as.numeric(day)), 
+           species = case_when(
+             species == "L.minutus" ~ "L. minutus", 
+             species == "L.sicilis" ~ "L. sicilis", 
+             T ~ "Other"
+           )) %>% 
+    dplyr::select(assay_date, assay, "size" = body_size_mm, "tube" = tube_number, species)
+
   acclim_data = read.csv(file = "Output/Output_data/acclim_data.csv") %>% 
-    mutate(species = if_else(species == "L. Sicilis", "L. sicilis", "L. minutus"))
+    mutate(species = if_else(species == "L. Sicilis", "L. sicilis", "L. minutus"), 
+           tube = parse_number(tube), 
+           assay_date = as_date(assay_date), 
+           assay = if_else(assay_date == "2026-03-31" & treatment == "NaCl", 2, 1)) %>% 
+    left_join(size_data, by = c("assay_date", "species", "tube", "assay")) %>% 
+    mutate(tube = as.factor(tube))
   
   surv_2025_data = read.csv(file = "Output/Output_data/surv_2025.csv") %>% 
     mutate(collection_date = as_date(collection_date, format = "%m/%d/%y"), 
@@ -69,6 +85,7 @@ if(make_report == T){
              species == "Skistodiaptomus" ~ species
            )) %>% 
     drop_na(surviving)
+  
   
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically

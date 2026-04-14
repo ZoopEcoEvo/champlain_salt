@@ -1,13 +1,17 @@
 Effects of salinity acclimation on upper thermal limits of Lake
 Champlain diaptomid copepods
 ================
-2026-04-03
+2026-04-14
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
 - [CTmax Data](#ctmax-data)
 - [Ion Specific Patterns Across
   Seasons](#ion-specific-patterns-across-seasons)
+  - [Survival](#survival)
+  - [Model Predictions](#model-predictions)
+  - [LC50 Values](#lc50-values)
+  - [Thermal Limit Effects](#thermal-limit-effects)
 
 ## Survival Analyses
 
@@ -31,7 +35,7 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
   theme(legend.position = "bottom")
 ```
 
-<img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-1-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 # surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
@@ -73,7 +77,7 @@ oreg_data %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" />
 
 ## CTmax Data
 
@@ -166,7 +170,7 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
                                   size = 20))
 ```
 
-<img src="../Figures/report/plot-for-poster-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/plot-for-poster-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -179,6 +183,20 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 ```
 
 ## Ion Specific Patterns Across Seasons
+
+``` r
+
+ggplot(acclim_data, aes(x = size)) + 
+  facet_wrap(species~.) + 
+  geom_histogram(fill = "grey", colour = "grey30",
+                 binwidth = 0.05) + 
+  labs(x = "Body Size (mm)") + 
+  theme_matt_facets()
+```
+
+<img src="../Figures/report/unnamed-chunk-10-1.png" alt="" style="display: block; margin: auto;" />
+
+### Survival
 
 The salinity treatments exhibit the expected survival curves, with
 minimal acute effects, but strong effects emerging over five days.
@@ -197,13 +215,13 @@ surv_2025_data %>%
               linewidth = 2.5) + 
   scale_y_continuous(breaks = c(0,1)) + 
   scale_colour_brewer(palette = "RdBu", direction = -1) + 
-  labs(x = "[Chloride] (mg / L)", 
+  labs(x = "[Chloride] (g / L)", 
        y = "Proportion Surviving") + 
   theme_bw(base_size = 24) + 
   theme(panel.grid = element_blank())
 ```
 
-<img src="../Figures/report/surv-curves-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/surv-curves-1.png" alt="" style="display: block; margin: auto;" />
 
 The survival curves were modeled as a logistic regression using a
 generalized linear mixed effects model with a binomial link function.
@@ -217,28 +235,29 @@ the group survival data.
 surv_model_data = data.frame()
 for(i in 1:dim(surv_2025_data)[1]){
   conditions = surv_2025_data[i,] %>% 
-    select(treatment, species, collection_date, collection_temp, cl_conc, time, day)
+    dplyr::select(treatment, species, collection_date, collection_temp, cl_conc, time, day)
   
   if(conditions$species != "Skistodiaptomus"){
     initial = surv_2025_data$initial[i]
-  surviving = surv_2025_data$surviving[i]
-  dead = initial - surviving
-  individual = c(1:initial)
-  
-  binary_data = data.frame("individual" = individual, 
-                           "surv" = rep(c(1,0), times = c(surviving, dead)))
-  
-  day_data = bind_cols(conditions, binary_data)
-  
-  surv_model_data = bind_rows(surv_model_data, day_data)
+    surviving = surv_2025_data$surviving[i]
+    dead = initial - surviving
+    individual = c(1:initial)
+    
+    binary_data = data.frame("individual" = individual, 
+                             "surv" = rep(c(1,0), times = c(surviving, dead)))
+    
+    day_data = bind_cols(conditions, binary_data) %>% 
+      mutate(mort = if_else(surv == 1, 0, 1))
+    
+    surv_model_data = bind_rows(surv_model_data, day_data)
     
   }
   
 }  
 
-surv.model = glmmTMB::glmmTMB(surv ~ species * treatment * cl_conc * day + collection_temp +  (1 | collection_date), 
-               data = surv_model_data, 
-               family = binomial)
+surv.model = glmmTMB::glmmTMB(surv ~ species * treatment * cl_conc * day +  (1 | collection_date), 
+                              data = surv_model_data, 
+                              family = binomial)
 
 
 # 
@@ -250,46 +269,46 @@ surv.model = glmmTMB::glmmTMB(surv ~ species * treatment * cl_conc * day + colle
 
 summary(surv.model)
 ##  Family: binomial  ( logit )
-## Formula:          surv ~ species * treatment * cl_conc * day + collection_temp +      (1 | collection_date)
+## Formula:          surv ~ species * treatment * cl_conc * day + (1 | collection_date)
 ## Data: surv_model_data
 ## 
-##      AIC      BIC   logLik deviance df.resid 
-##   2965.5   3086.5  -1464.8   2929.5     6126 
+##       AIC       BIC    logLik -2*log(L)  df.resid 
+##    2994.9    3109.2   -1480.4    2960.9      6127 
 ## 
 ## Random effects:
 ## 
 ## Conditional model:
 ##  Groups          Name        Variance Std.Dev.
-##  collection_date (Intercept) 1.413    1.189   
+##  collection_date (Intercept) 5.339    2.311   
 ## Number of obs: 6144, groups:  collection_date, 23
 ## 
 ## Conditional model:
 ##                                             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)                                 14.33334    2.34308   6.117 9.52e-10 ***
-## speciesL. sicilis                           -6.64959    2.58831  -2.569 0.010197 *  
-## treatmentNaCl                               -3.94449    2.43691  -1.619 0.105524    
-## cl_conc                                     -4.89842    1.41331  -3.466 0.000528 ***
-## day                                         -1.13137    0.55414  -2.042 0.041184 *  
-## collection_temp                             -0.55322    0.08868  -6.238 4.42e-10 ***
-## speciesL. sicilis:treatmentNaCl              7.34572    3.17907   2.311 0.020852 *  
-## speciesL. sicilis:cl_conc                    2.28989    1.49496   1.532 0.125588    
-## treatmentNaCl:cl_conc                        3.92531    1.53820   2.552 0.010715 *  
-## speciesL. sicilis:day                        1.56184    0.64886   2.407 0.016081 *  
-## treatmentNaCl:day                            0.73123    0.60201   1.215 0.224499    
-## cl_conc:day                                  0.35921    0.36955   0.972 0.331037    
-## speciesL. sicilis:treatmentNaCl:cl_conc     -3.72362    1.82892  -2.036 0.041753 *  
-## speciesL. sicilis:treatmentNaCl:day         -1.21563    0.78441  -1.550 0.121205    
-## speciesL. sicilis:cl_conc:day               -0.77099    0.39978  -1.929 0.053790 .  
-## treatmentNaCl:cl_conc:day                   -0.61228    0.41066  -1.491 0.135967    
-## speciesL. sicilis:treatmentNaCl:cl_conc:day  0.56724    0.48156   1.178 0.238827    
+## (Intercept)                                  10.4562     2.5317   4.130 3.63e-05 ***
+## speciesL. sicilis                            -4.0204     2.8277  -1.422 0.155088    
+## treatmentNaCl                                -2.1885     2.7583  -0.793 0.427533    
+## cl_conc                                      -4.8947     1.4131  -3.464 0.000532 ***
+## day                                          -1.1254     0.5542  -2.031 0.042287 *  
+## speciesL. sicilis:treatmentNaCl               4.9417     3.3624   1.470 0.141646    
+## speciesL. sicilis:cl_conc                     2.2504     1.4964   1.504 0.132603    
+## treatmentNaCl:cl_conc                         3.9546     1.5366   2.574 0.010064 *  
+## speciesL. sicilis:day                         1.5634     0.6486   2.410 0.015936 *  
+## treatmentNaCl:day                             0.7048     0.6016   1.171 0.241443    
+## cl_conc:day                                   0.3558     0.3697   0.963 0.335789    
+## speciesL. sicilis:treatmentNaCl:cl_conc      -3.5047     1.8300  -1.915 0.055473 .  
+## speciesL. sicilis:treatmentNaCl:day          -1.0907     0.7781  -1.402 0.161011    
+## speciesL. sicilis:cl_conc:day                -0.7709     0.3998  -1.928 0.053828 .  
+## treatmentNaCl:cl_conc:day                    -0.6025     0.4103  -1.468 0.142028    
+## speciesL. sicilis:treatmentNaCl:cl_conc:day   0.5141     0.4794   1.072 0.283510    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 performance::r2_nakagawa(surv.model)
 ## # R2 for Mixed Models
 ## 
-##   Conditional R2: 0.777
-##      Marginal R2: 0.681
+##   Conditional R2: 0.824
+##      Marginal R2: 0.539
+# Conditional = variance explained by both fixed and random effects
 ```
 
 ``` r
@@ -299,28 +318,33 @@ car::Anova(surv.model, type = "III") %>% knitr::kable()
 
 |                               |      Chisq |  Df | Pr(\>Chisq) |
 |:------------------------------|-----------:|----:|------------:|
-| (Intercept)                   | 37.4214229 |   1 |   0.0000000 |
-| species                       |  6.6002146 |   1 |   0.0101966 |
-| treatment                     |  2.6200063 |   1 |   0.1055240 |
-| cl_conc                       | 12.0126018 |   1 |   0.0005284 |
-| day                           |  4.1684218 |   1 |   0.0411841 |
-| collection_temp               | 38.9181133 |   1 |   0.0000000 |
-| species:treatment             |  5.3390990 |   1 |   0.0208522 |
-| species:cl_conc               |  2.3462055 |   1 |   0.1255884 |
-| treatment:cl_conc             |  6.5120623 |   1 |   0.0107145 |
-| species:day                   |  5.7939472 |   1 |   0.0160814 |
-| treatment:day                 |  1.4753781 |   1 |   0.2244991 |
-| cl_conc:day                   |  0.9448355 |   1 |   0.3310374 |
-| species:treatment:cl_conc     |  4.1451727 |   1 |   0.0417534 |
-| species:treatment:day         |  2.4016791 |   1 |   0.1212051 |
-| species:cl_conc:day           |  3.7192160 |   1 |   0.0537896 |
-| treatment:cl_conc:day         |  2.2230170 |   1 |   0.1359671 |
-| species:treatment:cl_conc:day |  1.3875030 |   1 |   0.2388272 |
+| (Intercept)                   | 17.0571380 |   1 |   0.0000363 |
+| species                       |  2.0214754 |   1 |   0.1550884 |
+| treatment                     |  0.6295157 |   1 |   0.4275330 |
+| cl_conc                       | 11.9986125 |   1 |   0.0005324 |
+| day                           |  4.1236820 |   1 |   0.0422869 |
+| species:treatment             |  2.1599869 |   1 |   0.1416459 |
+| species:cl_conc               |  2.2617628 |   1 |   0.1326030 |
+| treatment:cl_conc             |  6.6234854 |   1 |   0.0100643 |
+| species:day                   |  5.8099437 |   1 |   0.0159358 |
+| treatment:day                 |  1.3721509 |   1 |   0.2414427 |
+| cl_conc:day                   |  0.9264409 |   1 |   0.3357895 |
+| species:treatment:cl_conc     |  3.6678200 |   1 |   0.0554727 |
+| species:treatment:day         |  1.9647048 |   1 |   0.1610110 |
+| species:cl_conc:day           |  3.7180214 |   1 |   0.0538281 |
+| treatment:cl_conc:day         |  2.1558436 |   1 |   0.1420284 |
+| species:treatment:cl_conc:day |  1.1501878 |   1 |   0.2835098 |
 
-To clarify the patterns, the model was used to predict survival data for
-the two species exposed to a range of chloride concentrations (0 - 3 g
-chloride), for 0-10 days. The predictions assume a collection
-temperature of 10°C and a collection date in mid-March.
+To clarify the patterns, we further analyzed the data using 1) model
+predictions of survival, 2) a Kaplan-Meier survival analysis, and 3)
+estimates of LC50 (the chloride concentration inducing 50% mortality).
+
+### Model Predictions
+
+The generalized linear mixed model described above was used to predict
+survival data for the two species exposed to a range of chloride
+concentrations (0 - 3 g chloride), for 0-10 days. The predictions assume
+a collection temperature of 10°C and a collection date in mid-March.
 
 The predicted survival values reinforce the main points from the raw
 survival data:
@@ -351,7 +375,50 @@ ggplot(pred_data, aes(x = cl_conc, y = surv, colour = day, group = day)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-14-1.png" alt="" style="display: block; margin: auto;" />
+
+### LC50 Values
+
+We subset the data for each species, treatment, and day. We fit a
+logistic regression to each subset, and then estimated the LC50
+(chloride concentration where 50% mortality is observed). These LC50
+values are shown below. Note: the NaCl LC50 value for L. sicilis on Day
+1 is ~25 g Chloride, but has been cut off to highlight the patterns on
+later days.
+
+``` r
+
+salt_cols = c("MgCl2" = "#761968", 
+              "NaCl" = "#32ad3a")
+
+# 2. Map model and dose.p to each nested data frame
+lc50_values = surv_model_data %>%
+  filter(day != 0) %>% 
+  group_by(treatment, species, day) %>%
+  nest() %>%
+  mutate(
+    model = map(data, ~glm(surv ~ cl_conc, # Fit logistic regression
+                         data = .x, family = binomial)),
+    lc50 = map(model, ~dose.p(.x, p = 0.5))) %>% # Extract dose.p for specific probability (e.g., 0.50 for LD50)
+  dplyr::select(treatment, species, day, lc50) %>% 
+  hoist(lc50, "p = 0.5:") %>%  
+  dplyr::select(treatment:day, "lc50" = `p = 0.5:`)
+
+lc50_values %>% 
+ggplot(aes(x = day, y = lc50, colour = treatment)) + 
+  facet_grid(treatment ~ species) + 
+  geom_hline(yintercept = 0) + 
+  geom_line(linewidth = 2) + 
+  geom_point(size = 3) + 
+  scale_color_manual(values = salt_cols) + 
+  coord_cartesian(ylim = c(0,10)) + 
+  theme_matt_facets() + 
+  theme(legend.position = "none")
+```
+
+<img src="../Figures/report/unnamed-chunk-15-1.png" alt="" style="display: block; margin: auto;" />
+
+### Thermal Limit Effects
 
 Shown below are the average CTmax values for each chloride concentration
 (one mean per species, ion, and collection date combination). While salt
@@ -360,9 +427,6 @@ to have strong negative effects on L. sicilis. Note that the x-axis
 differs slightly between species.
 
 ``` r
-
-salt_cols = c("MgCl2" = "#761968", 
-              "NaCl" = "#32ad3a")
 
 acclim_data %>% 
   group_by(species, 
@@ -384,7 +448,7 @@ acclim_data %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/ctmax-salt-plot-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-salt-plot-1.png" alt="" style="display: block; margin: auto;" />
 
 These same effects can be shown against the proportional mortality -
 this is meant to provide a standardized metric for “stress” of exposure
@@ -410,7 +474,7 @@ left_join(surv_ctmax, surv_surv) %>%
   facet_wrap(.~species) + 
   geom_point(size = 3) +
   geom_smooth(method = "lm", linewidth = 2) + 
-    scale_colour_manual(values = salt_cols) + 
+  scale_colour_manual(values = salt_cols) + 
   labs(y = "Mean CTmax (°C)", 
        x = "Proportion Mortality") + 
   scale_x_continuous(breaks = c(0,0.5,1), 
@@ -418,7 +482,7 @@ left_join(surv_ctmax, surv_surv) %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/ctmax-surv-plot-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-surv-plot-1.png" alt="" style="display: block; margin: auto;" />
 
 We modeled these effects using a mixed effects model, with CTmax as a
 function of chloride concentration and salt compound (with interaction).
@@ -427,62 +491,64 @@ tube position were included as random effects.
 
 ``` r
 acclim_data.model = lmer(data = acclim_data, 
-                               ctmax ~ cl_conc * treatment * species + (1|collection_date))
+                         ctmax ~ cl_conc * treatment * species + size + (1|collection_date))
 ```
 
 ``` r
 performance::check_model(acclim_data.model)
 ```
 
-<img src="../Figures/report/model-performance-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/model-performance-1.png" alt="" style="display: block; margin: auto;" />
 
 ``` r
 
 summary(acclim_data.model)
 ## Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
-## Formula: ctmax ~ cl_conc * treatment * species + (1 | collection_date)
+## Formula: ctmax ~ cl_conc * treatment * species + size + (1 | collection_date)
 ##    Data: acclim_data
 ## 
-## REML criterion at convergence: 1419.8
+## REML criterion at convergence: 911.4
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -3.3529 -0.4004  0.1350  0.7025  1.8189 
+## -3.3467 -0.5375  0.1672  0.6543  1.7902 
 ## 
 ## Random effects:
 ##  Groups          Name        Variance Std.Dev.
-##  collection_date (Intercept)  2.875   1.696   
-##  Residual                    11.510   3.393   
-## Number of obs: 267, groups:  collection_date, 17
+##  collection_date (Intercept)  3.777   1.943   
+##  Residual                    11.528   3.395   
+## Number of obs: 174, groups:  collection_date, 10
 ## 
 ## Fixed effects:
 ##                                         Estimate Std. Error       df t value Pr(>|t|)    
-## (Intercept)                              29.9365     1.3212  60.9839  22.659   <2e-16 ***
-## cl_conc                                  -0.5534     0.8183 256.1712  -0.676    0.499    
-## treatmentNaCl                             1.8646     1.6454 170.9242   1.133    0.259    
-## speciesL. sicilis                        -0.8915     1.6851  64.2498  -0.529    0.599    
-## cl_conc:treatmentNaCl                    -0.9319     1.1959 253.3528  -0.779    0.437    
-## cl_conc:speciesL. sicilis                -1.5381     0.9396 253.9995  -1.637    0.103    
-## treatmentNaCl:speciesL. sicilis          -1.1698     2.0613 172.4633  -0.568    0.571    
-## cl_conc:treatmentNaCl:speciesL. sicilis   1.3350     1.3383 252.3275   0.998    0.319    
+## (Intercept)                              31.6360     3.3515 115.4787   9.439 5.07e-16 ***
+## cl_conc                                  -0.6280     0.9914 162.4035  -0.633    0.527    
+## treatmentNaCl                             2.2856     1.9790 137.8412   1.155    0.250    
+## speciesL. sicilis                        -0.9221     2.1729  31.7342  -0.424    0.674    
+## size                                     -1.3673     4.1560 164.0438  -0.329    0.743    
+## cl_conc:treatmentNaCl                    -1.3718     1.4528 162.1872  -0.944    0.346    
+## cl_conc:speciesL. sicilis                -1.0116     1.1076 161.6353  -0.913    0.362    
+## treatmentNaCl:speciesL. sicilis          -2.3238     2.5944 128.3888  -0.896    0.372    
+## cl_conc:treatmentNaCl:speciesL. sicilis   1.0024     1.6400 161.6539   0.611    0.542    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Correlation of Fixed Effects:
-##             (Intr) cl_cnc trtmNC spcL.s cl_:NC c_:L.s tNC:Ls
-## cl_conc     -0.730                                          
-## treatmntNCl -0.684  0.649                                   
-## specsL.scls -0.784  0.572  0.536                            
-## cl_cnc:trNC  0.509 -0.679 -0.780 -0.399                     
-## cl_cnc:sL.s  0.635 -0.871 -0.565 -0.698  0.591              
-## trtmnNC:L.s  0.546 -0.518 -0.798 -0.700  0.623  0.614       
-## cl_c:NC:L.s -0.455  0.607  0.697  0.505 -0.894 -0.697 -0.757
+##             (Intr) cl_cnc trtmNC spcL.s size   cl_:NC c_:L.s tNC:Ls
+## cl_conc     -0.337                                                 
+## treatmntNCl -0.377  0.688                                          
+## specsL.scls -0.164  0.578  0.504                                   
+## size        -0.863 -0.037  0.048 -0.267                            
+## cl_cnc:trNC  0.174 -0.679 -0.802 -0.428  0.100                     
+## cl_cnc:sL.s  0.315 -0.894 -0.617 -0.663  0.017  0.606              
+## trtmnNC:L.s  0.285 -0.525 -0.763 -0.581 -0.034  0.612  0.596       
+## cl_c:NC:L.s -0.198  0.600  0.713  0.474 -0.038 -0.881 -0.671 -0.773
 
 performance::r2_nakagawa(acclim_data.model)
 ## # R2 for Mixed Models
 ## 
-##   Conditional R2: 0.391
-##      Marginal R2: 0.239
+##   Conditional R2: 0.449
+##      Marginal R2: 0.269
 ```
 
 Marginal trends were calculated based on this model, representing the
@@ -496,15 +562,16 @@ car::Anova(acclim_data.model, type = "III")
 ## Analysis of Deviance Table (Type III Wald chisquare tests)
 ## 
 ## Response: ctmax
-##                              Chisq Df Pr(>Chisq)    
-## (Intercept)               513.4435  1     <2e-16 ***
-## cl_conc                     0.4574  1     0.4988    
-## treatment                   1.2842  1     0.2571    
-## species                     0.2799  1     0.5968    
-## cl_conc:treatment           0.6073  1     0.4358    
-## cl_conc:species             2.6794  1     0.1017    
-## treatment:species           0.3221  1     0.5704    
-## cl_conc:treatment:species   0.9951  1     0.3185    
+##                             Chisq Df Pr(>Chisq)    
+## (Intercept)               89.1009  1     <2e-16 ***
+## cl_conc                    0.4013  1     0.5264    
+## treatment                  1.3338  1     0.2481    
+## species                    0.1801  1     0.6713    
+## size                       0.1082  1     0.7422    
+## cl_conc:treatment          0.8916  1     0.3451    
+## cl_conc:species            0.8342  1     0.3611    
+## treatment:species          0.8023  1     0.3704    
+## cl_conc:treatment:species  0.3736  1     0.5411    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -525,4 +592,4 @@ emmeans::emtrends(acclim_data.model, var = "cl_conc", specs = "treatment", by = 
   theme(legend.position = "none")
 ```
 
-<img src="../Figures/report/salt-contrasts-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/salt-contrasts-1.png" alt="" style="display: block; margin: auto;" />
