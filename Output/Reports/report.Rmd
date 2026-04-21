@@ -248,6 +248,74 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 
 ## Ion Specific Patterns Across Seasons
 
+### Sample Sizes 
+
+```{r}
+
+species_surv_total = surv_2025_data %>% 
+  group_by(species, treatment) %>% 
+  count(name = "total")
+
+species_surv_collections = surv_2025_data %>% 
+  select(species, treatment, collection_date) %>% 
+  distinct() %>% 
+  group_by(species, treatment) %>% 
+  count(name = "collections")
+
+species_surv_mean = surv_2025_data %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n = mean(n))
+
+species_surv_concentrations = surv_2025_data %>% 
+  select(species, treatment, collection_date, cl_conc) %>% 
+  distinct() %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n_conditions = mean(n))
+
+
+species_surv_total %>% 
+  inner_join(species_surv_collections, by = c("species", "treatment")) %>% 
+  inner_join(species_surv_mean, by = c("species", "treatment")) %>% 
+  inner_join(species_surv_concentrations, by = c("species", "treatment")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per replicate, and the average number of conditions (chloride concentrations) employed during each replicate.")
+
+```
+
+
+
+```{r}
+
+species_ctmax_total = acclim_data %>% 
+  group_by(species, treatment) %>% 
+  count(name = "total")
+
+species_ctmax_collections = acclim_data %>% 
+  select(species, treatment, collection_date) %>% 
+  distinct() %>% 
+  group_by(species, treatment) %>% 
+  count(name = "collections")
+
+species_ctmax_mean = acclim_data %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n = mean(n))
+
+species_ctmax_total %>% 
+  inner_join(species_ctmax_collections, by = c("species", "treatment")) %>% 
+  inner_join(species_ctmax_mean, by = c("species", "treatment")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the CTmax experiments. Shown here for each species and salt type are the total number of CTmax measurements, the number of collections (i.e. experimental replicates), and the average number of CTmax measurements per replicate")
+
+```
+
+### Body Sizes
 ```{r}
 
 ggplot(acclim_data, aes(x = size)) + 

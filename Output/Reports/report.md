@@ -1,13 +1,15 @@
 Effects of salinity acclimation on upper thermal limits of Lake
 Champlain diaptomid copepods
 ================
-2026-04-14
+2026-04-21
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
 - [CTmax Data](#ctmax-data)
 - [Ion Specific Patterns Across
   Seasons](#ion-specific-patterns-across-seasons)
+  - [Sample Sizes](#sample-sizes)
+  - [Body Sizes](#body-sizes)
   - [Survival](#survival)
   - [Model Predictions](#model-predictions)
   - [LC50 Values](#lc50-values)
@@ -184,6 +186,99 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 
 ## Ion Specific Patterns Across Seasons
 
+### Sample Sizes
+
+``` r
+
+species_surv_total = surv_2025_data %>% 
+  group_by(species, treatment) %>% 
+  count(name = "total")
+
+species_surv_collections = surv_2025_data %>% 
+  select(species, treatment, collection_date) %>% 
+  distinct() %>% 
+  group_by(species, treatment) %>% 
+  count(name = "collections")
+
+species_surv_mean = surv_2025_data %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n = mean(n))
+
+species_surv_concentrations = surv_2025_data %>% 
+  select(species, treatment, collection_date, cl_conc) %>% 
+  distinct() %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n_conditions = mean(n))
+
+
+species_surv_total %>% 
+  inner_join(species_surv_collections, by = c("species", "treatment")) %>% 
+  inner_join(species_surv_mean, by = c("species", "treatment")) %>% 
+  inner_join(species_surv_concentrations, by = c("species", "treatment")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per replicate, and the average number of conditions (chloride concentrations) employed during each replicate.")
+```
+
+| species         | treatment | total | collections | mean_n | mean_n_conditions |
+|:----------------|:----------|------:|------------:|-------:|------------------:|
+| L. minutus      | MgCl2     |   180 |           3 |  60.00 |              9.00 |
+| L. minutus      | NaCl      |   216 |           5 |  43.20 |              6.80 |
+| L. sicilis      | MgCl2     |   368 |           7 |  52.57 |              8.14 |
+| L. sicilis      | NaCl      |   474 |          11 |  43.09 |              6.27 |
+| Skistodiaptomus | MgCl2     |    96 |           2 |  48.00 |              7.00 |
+| Skistodiaptomus | NaCl      |   126 |           4 |  31.50 |              5.00 |
+
+Sample size information from the survivorship experiments. Shown here
+for each species and salt type are the total number of individuals
+monitored for survival, the number of collections (i.e. experimental
+replicates), and the average number of individuals per replicate, and
+the average number of conditions (chloride concentrations) employed
+during each replicate.
+
+``` r
+
+species_ctmax_total = acclim_data %>% 
+  group_by(species, treatment) %>% 
+  count(name = "total")
+
+species_ctmax_collections = acclim_data %>% 
+  select(species, treatment, collection_date) %>% 
+  distinct() %>% 
+  group_by(species, treatment) %>% 
+  count(name = "collections")
+
+species_ctmax_mean = acclim_data %>% 
+  group_by(species, treatment, collection_date) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, treatment) %>% 
+  summarise(mean_n = mean(n))
+
+species_ctmax_total %>% 
+  inner_join(species_ctmax_collections, by = c("species", "treatment")) %>% 
+  inner_join(species_ctmax_mean, by = c("species", "treatment")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the CTmax experiments. Shown here for each species and salt type are the total number of CTmax measurements, the number of collections (i.e. experimental replicates), and the average number of CTmax measurements per replicate")
+```
+
+| species    | treatment | total | collections | mean_n |
+|:-----------|:----------|------:|------------:|-------:|
+| L. minutus | MgCl2     |    50 |           4 |   12.5 |
+| L. minutus | NaCl      |    45 |           3 |   15.0 |
+| L. sicilis | MgCl2     |    60 |           5 |   12.0 |
+| L. sicilis | NaCl      |   112 |           8 |   14.0 |
+
+Sample size information from the CTmax experiments. Shown here for each
+species and salt type are the total number of CTmax measurements, the
+number of collections (i.e. experimental replicates), and the average
+number of CTmax measurements per replicate
+
+### Body Sizes
+
 ``` r
 
 ggplot(acclim_data, aes(x = size)) + 
@@ -194,7 +289,7 @@ ggplot(acclim_data, aes(x = size)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-10-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-12-1.png" alt="" style="display: block; margin: auto;" />
 
 ### Survival
 
@@ -375,7 +470,7 @@ ggplot(pred_data, aes(x = cl_conc, y = surv, colour = day, group = day)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-14-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-16-1.png" alt="" style="display: block; margin: auto;" />
 
 ### LC50 Values
 
@@ -416,7 +511,7 @@ ggplot(aes(x = day, y = lc50, colour = treatment)) +
   theme(legend.position = "none")
 ```
 
-<img src="../Figures/report/unnamed-chunk-15-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-17-1.png" alt="" style="display: block; margin: auto;" />
 
 ### Thermal Limit Effects
 
