@@ -191,18 +191,21 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 ``` r
 
 species_surv_total = surv_2025_data %>% 
+  filter(day == 0) %>% 
   group_by(species, treatment) %>% 
-  count(name = "total")
+  summarise(total_n = sum(initial))
 
-species_surv_collections = surv_2025_data %>% 
+species_surv_collections = surv_2025_data  %>% 
+  filter(day == 0) %>% 
   select(species, treatment, collection_date) %>% 
   distinct() %>% 
   group_by(species, treatment) %>% 
   count(name = "collections")
 
 species_surv_mean = surv_2025_data %>% 
-  group_by(species, treatment, collection_date) %>% 
-  count() %>% 
+  filter(day == 0) %>% 
+  group_by(species, treatment, collection_date, replication) %>% 
+  summarise(n = sum(initial)) %>% 
   ungroup() %>% 
   group_by(species, treatment) %>% 
   summarise(mean_n = mean(n))
@@ -224,14 +227,14 @@ species_surv_total %>%
   knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per replicate, and the average number of conditions (chloride concentrations) employed during each replicate.")
 ```
 
-| species         | treatment | total | collections | mean_n | mean_n_conditions |
-|:----------------|:----------|------:|------------:|-------:|------------------:|
-| L. minutus      | MgCl2     |   180 |           3 |  60.00 |              9.00 |
-| L. minutus      | NaCl      |   216 |           5 |  43.20 |              6.80 |
-| L. sicilis      | MgCl2     |   368 |           7 |  52.57 |              8.14 |
-| L. sicilis      | NaCl      |   474 |          11 |  43.09 |              6.27 |
-| Skistodiaptomus | MgCl2     |    96 |           2 |  48.00 |              7.00 |
-| Skistodiaptomus | NaCl      |   126 |           4 |  31.50 |              5.00 |
+| species         | treatment | total_n | collections | mean_n | mean_n_conditions |
+|:----------------|:----------|--------:|------------:|-------:|------------------:|
+| L. minutus      | MgCl2     |     151 |           3 |  50.33 |              9.00 |
+| L. minutus      | NaCl      |     301 |           5 |  50.17 |              6.80 |
+| L. sicilis      | MgCl2     |     361 |           7 |  51.57 |              8.14 |
+| L. sicilis      | NaCl      |     464 |          11 |  38.67 |              6.27 |
+| Skistodiaptomus | MgCl2     |     102 |           2 |  51.00 |              7.00 |
+| Skistodiaptomus | NaCl      |     141 |           4 |  35.25 |              5.00 |
 
 Sample size information from the survivorship experiments. Shown here
 for each species and salt type are the total number of individuals

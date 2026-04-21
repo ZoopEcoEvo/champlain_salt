@@ -253,18 +253,21 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
 ```{r}
 
 species_surv_total = surv_2025_data %>% 
+  filter(day == 0) %>% 
   group_by(species, treatment) %>% 
-  count(name = "total")
+  summarise(total_n = sum(initial))
 
-species_surv_collections = surv_2025_data %>% 
+species_surv_collections = surv_2025_data  %>% 
+  filter(day == 0) %>% 
   select(species, treatment, collection_date) %>% 
   distinct() %>% 
   group_by(species, treatment) %>% 
   count(name = "collections")
 
 species_surv_mean = surv_2025_data %>% 
-  group_by(species, treatment, collection_date) %>% 
-  count() %>% 
+  filter(day == 0) %>% 
+  group_by(species, treatment, collection_date, replication) %>% 
+  summarise(n = sum(initial)) %>% 
   ungroup() %>% 
   group_by(species, treatment) %>% 
   summarise(mean_n = mean(n))
