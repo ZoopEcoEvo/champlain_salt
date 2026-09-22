@@ -1,7 +1,7 @@
 Effects of salinity acclimation on upper thermal limits of Lake
 Champlain diaptomid copepods
 ================
-2026-04-21
+2026-09-21
 
 - [Survival Analyses](#survival-analyses)
   - [Skistodiaptomus oregonensis](#skistodiaptomus-oregonensis)
@@ -37,7 +37,7 @@ ggplot(daily_prop_data, aes(x = treatment, y = prop_surv, colour = factor(exp_da
   theme(legend.position = "bottom")
 ```
 
-<img src="../Figures/report/unnamed-chunk-1-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # surv_obj = Surv(surv_data$hour, surv_data$ind_surv)
@@ -79,7 +79,7 @@ oreg_data %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-4-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 ## CTmax Data
 
@@ -172,7 +172,7 @@ ggplot(ctmax_filtered, aes(x = treatment, y = ctmax, fill = treatment)) +
                                   size = 20))
 ```
 
-<img src="../Figures/report/plot-for-poster-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/plot-for-poster-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -292,7 +292,7 @@ ggplot(acclim_data, aes(x = size)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-12-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 ### Survival
 
@@ -319,7 +319,7 @@ surv_2025_data %>%
   theme(panel.grid = element_blank())
 ```
 
-<img src="../Figures/report/surv-curves-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/surv-curves-1.png" style="display: block; margin: auto;" />
 
 The survival curves were modeled as a logistic regression using a
 generalized linear mixed effects model with a binomial link function.
@@ -370,8 +370,8 @@ summary(surv.model)
 ## Formula:          surv ~ species * treatment * cl_conc * day + (1 | collection_date)
 ## Data: surv_model_data
 ## 
-##       AIC       BIC    logLik -2*log(L)  df.resid 
-##    2994.9    3109.2   -1480.4    2960.9      6127 
+##      AIC      BIC   logLik deviance df.resid 
+##   2994.9   3109.2  -1480.4   2960.9     6127 
 ## 
 ## Random effects:
 ## 
@@ -473,7 +473,7 @@ ggplot(pred_data, aes(x = cl_conc, y = surv, colour = day, group = day)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-16-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 ### LC50 Values
 
@@ -514,7 +514,7 @@ ggplot(aes(x = day, y = lc50, colour = treatment)) +
   theme(legend.position = "none")
 ```
 
-<img src="../Figures/report/unnamed-chunk-17-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 ### Thermal Limit Effects
 
@@ -546,7 +546,7 @@ acclim_data %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/ctmax-salt-plot-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-salt-plot-1.png" style="display: block; margin: auto;" />
 
 These same effects can be shown against the proportional mortality -
 this is meant to provide a standardized metric for “stress” of exposure
@@ -580,7 +580,7 @@ left_join(surv_ctmax, surv_surv) %>%
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/ctmax-surv-plot-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-surv-plot-1.png" style="display: block; margin: auto;" />
 
 We modeled these effects using a mixed effects model, with CTmax as a
 function of chloride concentration and salt compound (with interaction).
@@ -596,7 +596,7 @@ acclim_data.model = lmer(data = acclim_data,
 performance::check_model(acclim_data.model)
 ```
 
-<img src="../Figures/report/model-performance-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/model-performance-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -690,4 +690,4 @@ emmeans::emtrends(acclim_data.model, var = "cl_conc", specs = "treatment", by = 
   theme(legend.position = "none")
 ```
 
-<img src="../Figures/report/salt-contrasts-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/salt-contrasts-1.png" style="display: block; margin: auto;" />

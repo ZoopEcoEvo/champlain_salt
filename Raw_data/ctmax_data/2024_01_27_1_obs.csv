@@ -1,0 +1,11 @@
+﻿experiment_date,lab_temp,experiment,salt,treatment,replicate,tube,ctmax_minute,ctmax_second
+1/27/24,4,1,InstantOcean,salt,A,1,66,53
+1/27/24,4,1,InstantOcean,control,A,2,71,56
+1/27/24,4,1,InstantOcean,salt,A,3,73,45
+1/27/24,4,1,InstantOcean,salt,A,4,73,1
+1/27/24,4,1,InstantOcean,control,A,5,58,54
+1/27/24,4,1,InstantOcean,control,A,6,56,7
+1/27/24,4,1,InstantOcean,salt,B,7,70,26
+1/27/24,4,1,InstantOcean,salt,B,8,53,40
+1/27/24,4,1,InstantOcean,control,B,9,71,11
+1/27/24,4,1,InstantOcean,control,B,10,68,50

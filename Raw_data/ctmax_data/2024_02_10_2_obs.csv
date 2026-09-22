@@ -1,0 +1,11 @@
+﻿experiment_date,lab_temp,experiment,salt,treatment,replicate,tube,ctmax_minute,ctmax_second
+2/10/24,4,2,RoadSalt,salt,A,1,25,27
+2/10/24,4,2,RoadSalt,control,A,2,43,37
+2/10/24,4,2,RoadSalt,salt,B,3,33,29
+2/10/24,4,2,RoadSalt,control,A,4,31,27
+2/10/24,4,2,RoadSalt,control,B,5,43,56
+2/10/24,4,2,RoadSalt,control,B,6,35,26
+2/10/24,4,2,RoadSalt,salt,A,7,28,36
+2/10/24,4,2,RoadSalt,salt,B,8,32,32
+2/10/24,4,2,RoadSalt,salt,B,9,27,48
+2/10/24,4,2,RoadSalt,control,B,10,24,25
