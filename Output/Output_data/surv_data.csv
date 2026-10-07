@@ -1,444 +1,646 @@
-"salt","treatment","replicate","ID","initial","hour","ind_surv","exp_date"
-"RoadSalt",0,"B",10,10,119,1,2024-01-14
-"RoadSalt",2000,"B",10,10,71,1,2024-01-14
-"RoadSalt",3000,"A",8,8,71,1,2024-01-14
-"RoadSalt",3000,"B",10,10,140,1,2024-01-14
-"RoadSalt",4000,"A",10,10,23,1,2024-01-14
-"RoadSalt",4000,"A",9,10,47,1,2024-01-14
-"RoadSalt",4000,"B",7,10,47,1,2024-01-14
-"RoadSalt",4000,"B",8,10,47,1,2024-01-14
-"RoadSalt",4000,"B",9,10,47,1,2024-01-14
-"RoadSalt",4000,"B",5,10,71,1,2024-01-14
-"RoadSalt",4000,"B",6,10,71,1,2024-01-14
-"RoadSalt",4000,"B",2,10,94,1,2024-01-14
-"RoadSalt",4000,"B",3,10,94,1,2024-01-14
-"RoadSalt",4000,"B",4,10,94,1,2024-01-14
-"RoadSalt",5000,"A",8,10,47,1,2024-01-14
-"RoadSalt",5000,"A",9,10,47,1,2024-01-14
-"RoadSalt",5000,"A",10,10,47,1,2024-01-14
-"RoadSalt",5000,"A",2,10,71,1,2024-01-14
-"RoadSalt",5000,"A",3,10,71,1,2024-01-14
-"RoadSalt",5000,"B",4,10,47,1,2024-01-14
-"RoadSalt",5000,"B",5,10,47,1,2024-01-14
-"RoadSalt",5000,"B",6,10,47,1,2024-01-14
-"RoadSalt",5000,"B",7,10,47,1,2024-01-14
-"RoadSalt",5000,"B",8,10,47,1,2024-01-14
-"RoadSalt",5000,"B",9,10,47,1,2024-01-14
-"RoadSalt",5000,"B",10,10,47,1,2024-01-14
-"RoadSalt",5000,"B",1,10,71,1,2024-01-14
-"RoadSalt",5000,"B",2,10,71,1,2024-01-14
-"RoadSalt",5000,"B",3,10,71,1,2024-01-14
-"RoadSalt",6000,"A",6,10,23,1,2024-01-14
-"RoadSalt",6000,"A",7,10,23,1,2024-01-14
-"RoadSalt",6000,"A",8,10,23,1,2024-01-14
-"RoadSalt",6000,"A",9,10,23,1,2024-01-14
-"RoadSalt",6000,"A",10,10,23,1,2024-01-14
-"RoadSalt",6000,"A",3,10,47,1,2024-01-14
-"RoadSalt",6000,"A",4,10,47,1,2024-01-14
-"RoadSalt",6000,"A",5,10,47,1,2024-01-14
-"RoadSalt",6000,"A",1,10,71,1,2024-01-14
-"RoadSalt",6000,"A",2,10,71,1,2024-01-14
-"RoadSalt",6000,"B",8,11,23,1,2024-01-14
-"RoadSalt",6000,"B",9,11,23,1,2024-01-14
-"RoadSalt",6000,"B",10,11,23,1,2024-01-14
-"RoadSalt",6000,"B",11,11,23,1,2024-01-14
-"RoadSalt",6000,"B",3,11,47,1,2024-01-14
-"RoadSalt",6000,"B",4,11,47,1,2024-01-14
-"RoadSalt",6000,"B",5,11,47,1,2024-01-14
-"RoadSalt",6000,"B",1,11,71,1,2024-01-14
-"RoadSalt",6000,"B",2,11,71,1,2024-01-14
-"RoadSalt",7000,"A",5,10,23,1,2024-01-14
-"RoadSalt",7000,"A",6,10,23,1,2024-01-14
-"RoadSalt",7000,"A",7,10,23,1,2024-01-14
-"RoadSalt",7000,"A",8,10,23,1,2024-01-14
-"RoadSalt",7000,"A",9,10,23,1,2024-01-14
-"RoadSalt",7000,"A",10,10,23,1,2024-01-14
-"RoadSalt",7000,"A",1,10,47,1,2024-01-14
-"RoadSalt",7000,"A",2,10,47,1,2024-01-14
-"RoadSalt",7000,"A",3,10,47,1,2024-01-14
-"RoadSalt",7000,"B",4,11,23,1,2024-01-14
-"RoadSalt",7000,"B",5,11,23,1,2024-01-14
-"RoadSalt",7000,"B",6,11,23,1,2024-01-14
-"RoadSalt",7000,"B",7,11,23,1,2024-01-14
-"RoadSalt",7000,"B",8,11,23,1,2024-01-14
-"RoadSalt",7000,"B",9,11,23,1,2024-01-14
-"RoadSalt",7000,"B",10,11,23,1,2024-01-14
-"RoadSalt",7000,"B",11,11,23,1,2024-01-14
-"RoadSalt",7000,"B",1,11,47,1,2024-01-14
-"RoadSalt",7000,"B",2,11,47,1,2024-01-14
-"RoadSalt",7000,"B",3,11,47,1,2024-01-14
-"RoadSalt",0,"A",1,10,140,0,2024-01-14
-"RoadSalt",0,"A",2,10,140,0,2024-01-14
-"RoadSalt",0,"A",3,10,140,0,2024-01-14
-"RoadSalt",0,"A",4,10,140,0,2024-01-14
-"RoadSalt",0,"A",5,10,140,0,2024-01-14
-"RoadSalt",0,"A",6,10,140,0,2024-01-14
-"RoadSalt",0,"A",7,10,140,0,2024-01-14
-"RoadSalt",0,"A",8,10,140,0,2024-01-14
-"RoadSalt",0,"A",9,10,140,0,2024-01-14
-"RoadSalt",0,"A",10,10,140,0,2024-01-14
-"RoadSalt",0,"B",1,10,140,0,2024-01-14
-"RoadSalt",0,"B",2,10,140,0,2024-01-14
-"RoadSalt",0,"B",3,10,140,0,2024-01-14
-"RoadSalt",0,"B",4,10,140,0,2024-01-14
-"RoadSalt",0,"B",5,10,140,0,2024-01-14
-"RoadSalt",0,"B",6,10,140,0,2024-01-14
-"RoadSalt",0,"B",7,10,140,0,2024-01-14
-"RoadSalt",0,"B",8,10,140,0,2024-01-14
-"RoadSalt",0,"B",9,10,140,0,2024-01-14
-"RoadSalt",1000,"A",1,10,140,0,2024-01-14
-"RoadSalt",1000,"A",2,10,140,0,2024-01-14
-"RoadSalt",1000,"A",3,10,140,0,2024-01-14
-"RoadSalt",1000,"A",4,10,140,0,2024-01-14
-"RoadSalt",1000,"A",5,10,140,0,2024-01-14
-"RoadSalt",1000,"A",6,10,140,0,2024-01-14
-"RoadSalt",1000,"A",7,10,140,0,2024-01-14
-"RoadSalt",1000,"A",8,10,140,0,2024-01-14
-"RoadSalt",1000,"A",9,10,140,0,2024-01-14
-"RoadSalt",1000,"A",10,10,140,0,2024-01-14
-"RoadSalt",1000,"B",1,10,140,0,2024-01-14
-"RoadSalt",1000,"B",2,10,140,0,2024-01-14
-"RoadSalt",1000,"B",3,10,140,0,2024-01-14
-"RoadSalt",1000,"B",4,10,140,0,2024-01-14
-"RoadSalt",1000,"B",5,10,140,0,2024-01-14
-"RoadSalt",1000,"B",6,10,140,0,2024-01-14
-"RoadSalt",1000,"B",7,10,140,0,2024-01-14
-"RoadSalt",1000,"B",8,10,140,0,2024-01-14
-"RoadSalt",1000,"B",9,10,140,0,2024-01-14
-"RoadSalt",1000,"B",10,10,140,0,2024-01-14
-"RoadSalt",2000,"A",1,10,140,0,2024-01-14
-"RoadSalt",2000,"A",2,10,140,0,2024-01-14
-"RoadSalt",2000,"A",3,10,140,0,2024-01-14
-"RoadSalt",2000,"A",4,10,140,0,2024-01-14
-"RoadSalt",2000,"A",5,10,140,0,2024-01-14
-"RoadSalt",2000,"A",6,10,140,0,2024-01-14
-"RoadSalt",2000,"A",7,10,140,0,2024-01-14
-"RoadSalt",2000,"A",8,10,140,0,2024-01-14
-"RoadSalt",2000,"A",9,10,140,0,2024-01-14
-"RoadSalt",2000,"A",10,10,140,0,2024-01-14
-"RoadSalt",2000,"B",1,10,140,0,2024-01-14
-"RoadSalt",2000,"B",2,10,140,0,2024-01-14
-"RoadSalt",2000,"B",3,10,140,0,2024-01-14
-"RoadSalt",2000,"B",4,10,140,0,2024-01-14
-"RoadSalt",2000,"B",5,10,140,0,2024-01-14
-"RoadSalt",2000,"B",6,10,140,0,2024-01-14
-"RoadSalt",2000,"B",7,10,140,0,2024-01-14
-"RoadSalt",2000,"B",8,10,140,0,2024-01-14
-"RoadSalt",2000,"B",9,10,140,0,2024-01-14
-"RoadSalt",3000,"A",1,8,140,0,2024-01-14
-"RoadSalt",3000,"A",2,8,140,0,2024-01-14
-"RoadSalt",3000,"A",3,8,140,0,2024-01-14
-"RoadSalt",3000,"A",4,8,140,0,2024-01-14
-"RoadSalt",3000,"A",5,8,140,0,2024-01-14
-"RoadSalt",3000,"A",6,8,140,0,2024-01-14
-"RoadSalt",3000,"A",7,8,140,0,2024-01-14
-"RoadSalt",3000,"B",1,10,140,0,2024-01-14
-"RoadSalt",3000,"B",2,10,140,0,2024-01-14
-"RoadSalt",3000,"B",3,10,140,0,2024-01-14
-"RoadSalt",3000,"B",4,10,140,0,2024-01-14
-"RoadSalt",3000,"B",5,10,140,0,2024-01-14
-"RoadSalt",3000,"B",6,10,140,0,2024-01-14
-"RoadSalt",3000,"B",7,10,140,0,2024-01-14
-"RoadSalt",3000,"B",8,10,140,0,2024-01-14
-"RoadSalt",3000,"B",9,10,140,0,2024-01-14
-"RoadSalt",4000,"A",1,10,140,0,2024-01-14
-"RoadSalt",4000,"B",1,10,140,0,2024-01-14
-"InstantOcean",0,"A",1,10,140,0,2024-01-21
-"InstantOcean",0,"A",2,10,140,0,2024-01-21
-"InstantOcean",0,"A",3,10,140,0,2024-01-21
-"InstantOcean",0,"A",4,10,140,0,2024-01-21
-"InstantOcean",0,"A",5,10,140,0,2024-01-21
-"InstantOcean",0,"A",6,10,140,0,2024-01-21
-"InstantOcean",0,"A",7,10,140,0,2024-01-21
-"InstantOcean",0,"A",8,10,140,0,2024-01-21
-"InstantOcean",0,"A",9,10,140,0,2024-01-21
-"InstantOcean",0,"A",10,10,140,0,2024-01-21
-"InstantOcean",0,"B",1,10,140,0,2024-01-21
-"InstantOcean",0,"B",2,10,140,0,2024-01-21
-"InstantOcean",0,"B",3,10,140,0,2024-01-21
-"InstantOcean",0,"B",4,10,140,0,2024-01-21
-"InstantOcean",0,"B",5,10,140,0,2024-01-21
-"InstantOcean",0,"B",6,10,140,0,2024-01-21
-"InstantOcean",0,"B",7,10,140,0,2024-01-21
-"InstantOcean",0,"B",8,10,140,0,2024-01-21
-"InstantOcean",0,"B",9,10,140,0,2024-01-21
-"InstantOcean",0,"B",10,10,140,0,2024-01-21
-"InstantOcean",1000,"A",1,10,140,0,2024-01-21
-"InstantOcean",1000,"A",2,10,140,0,2024-01-21
-"InstantOcean",1000,"A",3,10,140,0,2024-01-21
-"InstantOcean",1000,"A",4,10,140,0,2024-01-21
-"InstantOcean",1000,"A",5,10,140,0,2024-01-21
-"InstantOcean",1000,"A",6,10,140,0,2024-01-21
-"InstantOcean",1000,"A",7,10,140,0,2024-01-21
-"InstantOcean",1000,"A",8,10,140,0,2024-01-21
-"InstantOcean",1000,"A",9,10,140,0,2024-01-21
-"InstantOcean",1000,"A",10,10,140,0,2024-01-21
-"InstantOcean",1000,"B",1,10,140,0,2024-01-21
-"InstantOcean",1000,"B",2,10,140,0,2024-01-21
-"InstantOcean",1000,"B",3,10,140,0,2024-01-21
-"InstantOcean",1000,"B",4,10,140,0,2024-01-21
-"InstantOcean",1000,"B",5,10,140,0,2024-01-21
-"InstantOcean",1000,"B",6,10,140,0,2024-01-21
-"InstantOcean",1000,"B",7,10,140,0,2024-01-21
-"InstantOcean",1000,"B",8,10,140,0,2024-01-21
-"InstantOcean",1000,"B",9,10,140,0,2024-01-21
-"InstantOcean",1000,"B",10,10,140,0,2024-01-21
-"InstantOcean",2000,"A",1,10,140,0,2024-01-21
-"InstantOcean",2000,"A",2,10,140,0,2024-01-21
-"InstantOcean",2000,"A",3,10,140,0,2024-01-21
-"InstantOcean",2000,"A",4,10,140,0,2024-01-21
-"InstantOcean",2000,"A",5,10,140,0,2024-01-21
-"InstantOcean",2000,"A",6,10,140,0,2024-01-21
-"InstantOcean",2000,"A",7,10,140,0,2024-01-21
-"InstantOcean",2000,"A",8,10,140,0,2024-01-21
-"InstantOcean",2000,"A",9,10,140,0,2024-01-21
-"InstantOcean",2000,"A",10,10,140,0,2024-01-21
-"InstantOcean",2000,"B",1,10,140,0,2024-01-21
-"InstantOcean",2000,"B",2,10,140,0,2024-01-21
-"InstantOcean",2000,"B",3,10,140,0,2024-01-21
-"InstantOcean",2000,"B",4,10,140,0,2024-01-21
-"InstantOcean",2000,"B",5,10,140,0,2024-01-21
-"InstantOcean",2000,"B",6,10,140,0,2024-01-21
-"InstantOcean",2000,"B",7,10,140,0,2024-01-21
-"InstantOcean",2000,"B",8,10,140,0,2024-01-21
-"InstantOcean",2000,"B",9,10,140,0,2024-01-21
-"InstantOcean",2000,"B",10,10,140,0,2024-01-21
-"InstantOcean",3000,"A",1,10,140,0,2024-01-21
-"InstantOcean",3000,"A",2,10,140,0,2024-01-21
-"InstantOcean",3000,"A",3,10,140,0,2024-01-21
-"InstantOcean",3000,"A",4,10,140,0,2024-01-21
-"InstantOcean",3000,"A",5,10,140,0,2024-01-21
-"InstantOcean",3000,"A",6,10,140,0,2024-01-21
-"InstantOcean",3000,"A",7,10,140,0,2024-01-21
-"InstantOcean",3000,"A",8,10,140,0,2024-01-21
-"InstantOcean",3000,"A",9,10,140,0,2024-01-21
-"InstantOcean",3000,"A",10,10,140,0,2024-01-21
-"InstantOcean",3000,"B",1,10,140,0,2024-01-21
-"InstantOcean",3000,"B",2,10,140,0,2024-01-21
-"InstantOcean",3000,"B",3,10,140,0,2024-01-21
-"InstantOcean",3000,"B",4,10,140,0,2024-01-21
-"InstantOcean",3000,"B",5,10,140,0,2024-01-21
-"InstantOcean",3000,"B",6,10,140,0,2024-01-21
-"InstantOcean",3000,"B",7,10,140,0,2024-01-21
-"InstantOcean",3000,"B",8,10,140,0,2024-01-21
-"InstantOcean",3000,"B",9,10,140,0,2024-01-21
-"InstantOcean",3000,"B",10,10,140,0,2024-01-21
-"InstantOcean",4000,"A",1,10,140,0,2024-01-21
-"InstantOcean",4000,"A",2,10,140,0,2024-01-21
-"InstantOcean",4000,"A",3,10,140,0,2024-01-21
-"InstantOcean",4000,"A",4,10,140,0,2024-01-21
-"InstantOcean",4000,"A",5,10,140,0,2024-01-21
-"InstantOcean",4000,"A",6,10,140,0,2024-01-21
-"InstantOcean",4000,"A",7,10,140,0,2024-01-21
-"InstantOcean",4000,"A",8,10,140,0,2024-01-21
-"InstantOcean",4000,"A",9,10,140,0,2024-01-21
-"InstantOcean",4000,"A",10,10,140,0,2024-01-21
-"InstantOcean",4000,"B",1,10,140,0,2024-01-21
-"InstantOcean",4000,"B",2,10,140,0,2024-01-21
-"InstantOcean",4000,"B",3,10,140,0,2024-01-21
-"InstantOcean",4000,"B",4,10,140,0,2024-01-21
-"InstantOcean",4000,"B",5,10,140,0,2024-01-21
-"InstantOcean",4000,"B",6,10,140,0,2024-01-21
-"InstantOcean",4000,"B",7,10,140,0,2024-01-21
-"InstantOcean",4000,"B",8,10,140,0,2024-01-21
-"InstantOcean",4000,"B",9,10,140,0,2024-01-21
-"InstantOcean",4000,"B",10,10,140,0,2024-01-21
-"InstantOcean",5000,"A",1,10,140,0,2024-01-21
-"InstantOcean",5000,"A",2,10,140,0,2024-01-21
-"InstantOcean",5000,"A",3,10,140,0,2024-01-21
-"InstantOcean",5000,"A",4,10,140,0,2024-01-21
-"InstantOcean",5000,"A",5,10,140,0,2024-01-21
-"InstantOcean",5000,"A",6,10,140,0,2024-01-21
-"InstantOcean",5000,"A",7,10,140,0,2024-01-21
-"InstantOcean",5000,"A",8,10,140,0,2024-01-21
-"InstantOcean",5000,"A",9,10,140,0,2024-01-21
-"InstantOcean",5000,"A",10,10,140,0,2024-01-21
-"InstantOcean",5000,"B",1,10,140,0,2024-01-21
-"InstantOcean",5000,"B",2,10,140,0,2024-01-21
-"InstantOcean",5000,"B",3,10,140,0,2024-01-21
-"InstantOcean",5000,"B",4,10,140,0,2024-01-21
-"InstantOcean",5000,"B",5,10,140,0,2024-01-21
-"InstantOcean",5000,"B",6,10,140,0,2024-01-21
-"InstantOcean",5000,"B",7,10,140,0,2024-01-21
-"InstantOcean",5000,"B",8,10,140,0,2024-01-21
-"InstantOcean",5000,"B",9,10,140,0,2024-01-21
-"InstantOcean",5000,"B",10,10,140,0,2024-01-21
-"InstantOcean",6000,"A",1,10,140,0,2024-01-21
-"InstantOcean",6000,"A",2,10,140,0,2024-01-21
-"InstantOcean",6000,"A",3,10,140,0,2024-01-21
-"InstantOcean",6000,"A",4,10,140,0,2024-01-21
-"InstantOcean",6000,"A",5,10,140,0,2024-01-21
-"InstantOcean",6000,"A",6,10,140,0,2024-01-21
-"InstantOcean",6000,"A",7,10,140,0,2024-01-21
-"InstantOcean",6000,"A",8,10,140,0,2024-01-21
-"InstantOcean",6000,"A",9,10,140,0,2024-01-21
-"InstantOcean",6000,"A",10,10,140,0,2024-01-21
-"InstantOcean",6000,"B",1,10,140,0,2024-01-21
-"InstantOcean",6000,"B",2,10,140,0,2024-01-21
-"InstantOcean",6000,"B",3,10,140,0,2024-01-21
-"InstantOcean",6000,"B",4,10,140,0,2024-01-21
-"InstantOcean",6000,"B",5,10,140,0,2024-01-21
-"InstantOcean",6000,"B",6,10,140,0,2024-01-21
-"InstantOcean",6000,"B",7,10,140,0,2024-01-21
-"InstantOcean",6000,"B",8,10,140,0,2024-01-21
-"InstantOcean",6000,"B",9,10,140,0,2024-01-21
-"InstantOcean",6000,"B",10,10,140,0,2024-01-21
-"InstantOcean",7000,"A",1,10,140,0,2024-01-21
-"InstantOcean",7000,"A",2,10,140,0,2024-01-21
-"InstantOcean",7000,"A",3,10,140,0,2024-01-21
-"InstantOcean",7000,"A",4,10,140,0,2024-01-21
-"InstantOcean",7000,"A",5,10,140,0,2024-01-21
-"InstantOcean",7000,"A",6,10,140,0,2024-01-21
-"InstantOcean",7000,"A",7,10,140,0,2024-01-21
-"InstantOcean",7000,"A",8,10,140,0,2024-01-21
-"InstantOcean",7000,"A",9,10,140,0,2024-01-21
-"InstantOcean",7000,"A",10,10,140,0,2024-01-21
-"InstantOcean",7000,"B",1,10,140,0,2024-01-21
-"InstantOcean",7000,"B",2,10,140,0,2024-01-21
-"InstantOcean",7000,"B",3,10,140,0,2024-01-21
-"InstantOcean",7000,"B",4,10,140,0,2024-01-21
-"InstantOcean",7000,"B",5,10,140,0,2024-01-21
-"InstantOcean",7000,"B",6,10,140,0,2024-01-21
-"InstantOcean",7000,"B",7,10,140,0,2024-01-21
-"InstantOcean",7000,"B",8,10,140,0,2024-01-21
-"InstantOcean",7000,"B",9,10,140,0,2024-01-21
-"InstantOcean",7000,"B",10,10,140,0,2024-01-21
-"RoadSalt",3000,"A",9,10,73,1,2024-01-28
-"RoadSalt",3000,"A",10,10,73,1,2024-01-28
-"RoadSalt",3000,"A",8,10,123,1,2024-01-28
-"RoadSalt",3000,"A",7,10,140,1,2024-01-28
-"RoadSalt",3000,"B",12,12,123,1,2024-01-28
-"RoadSalt",3000,"B",11,12,140,1,2024-01-28
-"RoadSalt",4000,"A",7,10,123,1,2024-01-28
-"RoadSalt",4000,"A",8,10,123,1,2024-01-28
-"RoadSalt",4000,"A",9,10,123,1,2024-01-28
-"RoadSalt",4000,"A",10,10,123,1,2024-01-28
-"RoadSalt",4000,"A",5,10,140,1,2024-01-28
-"RoadSalt",4000,"A",6,10,140,1,2024-01-28
-"RoadSalt",4000,"B",12,12,73,1,2024-01-28
-"RoadSalt",4000,"B",11,12,95,1,2024-01-28
-"RoadSalt",4000,"B",10,12,123,1,2024-01-28
-"RoadSalt",5000,"A",10,10,47,1,2024-01-28
-"RoadSalt",5000,"A",9,10,73,1,2024-01-28
-"RoadSalt",5000,"A",6,10,95,1,2024-01-28
-"RoadSalt",5000,"A",3,10,123,1,2024-01-28
-"RoadSalt",5000,"A",4,10,123,1,2024-01-28
-"RoadSalt",5000,"A",1,10,140,1,2024-01-28
-"RoadSalt",5000,"B",7,10,73,1,2024-01-28
-"RoadSalt",5000,"B",8,10,73,1,2024-01-28
-"RoadSalt",5000,"B",9,10,73,1,2024-01-28
-"RoadSalt",5000,"B",5,10,95,1,2024-01-28
-"RoadSalt",5000,"B",6,10,95,1,2024-01-28
-"RoadSalt",5000,"B",2,10,123,1,2024-01-28
-"RoadSalt",5000,"B",3,10,123,1,2024-01-28
-"RoadSalt",5000,"B",4,10,123,1,2024-01-28
-"RoadSalt",5000,"B",1,10,140,1,2024-01-28
-"RoadSalt",6000,"A",6,10,73,1,2024-01-28
-"RoadSalt",6000,"A",7,10,73,1,2024-01-28
-"RoadSalt",6000,"A",8,10,73,1,2024-01-28
-"RoadSalt",6000,"A",9,10,73,1,2024-01-28
-"RoadSalt",6000,"A",1,10,95,1,2024-01-28
-"RoadSalt",6000,"A",2,10,95,1,2024-01-28
-"RoadSalt",6000,"A",3,10,95,1,2024-01-28
-"RoadSalt",6000,"A",4,10,95,1,2024-01-28
-"RoadSalt",6000,"B",10,10,47,1,2024-01-28
-"RoadSalt",6000,"B",5,10,73,1,2024-01-28
-"RoadSalt",6000,"B",6,10,73,1,2024-01-28
-"RoadSalt",6000,"B",7,10,73,1,2024-01-28
-"RoadSalt",6000,"B",8,10,73,1,2024-01-28
-"RoadSalt",6000,"B",9,10,73,1,2024-01-28
-"RoadSalt",6000,"B",1,10,95,1,2024-01-28
-"RoadSalt",6000,"B",2,10,95,1,2024-01-28
-"RoadSalt",6000,"B",3,10,95,1,2024-01-28
-"RoadSalt",6000,"B",4,10,95,1,2024-01-28
-"RoadSalt",7000,"A",6,10,47,1,2024-01-28
-"RoadSalt",7000,"A",7,10,47,1,2024-01-28
-"RoadSalt",7000,"A",8,10,47,1,2024-01-28
-"RoadSalt",7000,"A",9,10,47,1,2024-01-28
-"RoadSalt",7000,"B",10,10,24,1,2024-01-28
-"RoadSalt",7000,"B",5,10,47,1,2024-01-28
-"RoadSalt",7000,"B",6,10,47,1,2024-01-28
-"RoadSalt",7000,"B",7,10,47,1,2024-01-28
-"RoadSalt",7000,"B",8,10,47,1,2024-01-28
-"RoadSalt",7000,"B",9,10,47,1,2024-01-28
-"RoadSalt",7000,"B",1,10,73,1,2024-01-28
-"RoadSalt",7000,"B",2,10,73,1,2024-01-28
-"RoadSalt",7000,"B",3,10,73,1,2024-01-28
-"RoadSalt",7000,"B",4,10,73,1,2024-01-28
-"RoadSalt",0,"A",1,10,140,0,2024-01-28
-"RoadSalt",0,"A",2,10,140,0,2024-01-28
-"RoadSalt",0,"A",3,10,140,0,2024-01-28
-"RoadSalt",0,"A",4,10,140,0,2024-01-28
-"RoadSalt",0,"A",5,10,140,0,2024-01-28
-"RoadSalt",0,"A",6,10,140,0,2024-01-28
-"RoadSalt",0,"A",7,10,140,0,2024-01-28
-"RoadSalt",0,"A",8,10,140,0,2024-01-28
-"RoadSalt",0,"A",9,10,140,0,2024-01-28
-"RoadSalt",0,"A",10,10,140,0,2024-01-28
-"RoadSalt",0,"B",1,10,140,0,2024-01-28
-"RoadSalt",0,"B",2,10,140,0,2024-01-28
-"RoadSalt",0,"B",3,10,140,0,2024-01-28
-"RoadSalt",0,"B",4,10,140,0,2024-01-28
-"RoadSalt",0,"B",5,10,140,0,2024-01-28
-"RoadSalt",0,"B",6,10,140,0,2024-01-28
-"RoadSalt",0,"B",7,10,140,0,2024-01-28
-"RoadSalt",0,"B",8,10,140,0,2024-01-28
-"RoadSalt",0,"B",9,10,140,0,2024-01-28
-"RoadSalt",0,"B",10,10,140,0,2024-01-28
-"RoadSalt",1000,"B",1,10,140,0,2024-01-28
-"RoadSalt",1000,"B",2,10,140,0,2024-01-28
-"RoadSalt",1000,"B",3,10,140,0,2024-01-28
-"RoadSalt",1000,"B",4,10,140,0,2024-01-28
-"RoadSalt",1000,"B",5,10,140,0,2024-01-28
-"RoadSalt",1000,"B",6,10,140,0,2024-01-28
-"RoadSalt",1000,"B",7,10,140,0,2024-01-28
-"RoadSalt",1000,"B",8,10,140,0,2024-01-28
-"RoadSalt",1000,"B",9,10,140,0,2024-01-28
-"RoadSalt",1000,"B",10,10,140,0,2024-01-28
-"RoadSalt",2000,"A",1,10,140,0,2024-01-28
-"RoadSalt",2000,"A",2,10,140,0,2024-01-28
-"RoadSalt",2000,"A",3,10,140,0,2024-01-28
-"RoadSalt",2000,"A",4,10,140,0,2024-01-28
-"RoadSalt",2000,"A",5,10,140,0,2024-01-28
-"RoadSalt",2000,"A",6,10,140,0,2024-01-28
-"RoadSalt",2000,"A",7,10,140,0,2024-01-28
-"RoadSalt",2000,"A",8,10,140,0,2024-01-28
-"RoadSalt",2000,"A",9,10,140,0,2024-01-28
-"RoadSalt",2000,"A",10,10,140,0,2024-01-28
-"RoadSalt",2000,"B",1,10,140,0,2024-01-28
-"RoadSalt",2000,"B",2,10,140,0,2024-01-28
-"RoadSalt",2000,"B",3,10,140,0,2024-01-28
-"RoadSalt",2000,"B",4,10,140,0,2024-01-28
-"RoadSalt",2000,"B",5,10,140,0,2024-01-28
-"RoadSalt",2000,"B",6,10,140,0,2024-01-28
-"RoadSalt",2000,"B",7,10,140,0,2024-01-28
-"RoadSalt",2000,"B",8,10,140,0,2024-01-28
-"RoadSalt",2000,"B",9,10,140,0,2024-01-28
-"RoadSalt",2000,"B",10,10,140,0,2024-01-28
-"RoadSalt",3000,"A",1,10,140,0,2024-01-28
-"RoadSalt",3000,"A",2,10,140,0,2024-01-28
-"RoadSalt",3000,"A",3,10,140,0,2024-01-28
-"RoadSalt",3000,"A",4,10,140,0,2024-01-28
-"RoadSalt",3000,"A",5,10,140,0,2024-01-28
-"RoadSalt",3000,"A",6,10,140,0,2024-01-28
-"RoadSalt",3000,"B",1,12,140,0,2024-01-28
-"RoadSalt",3000,"B",2,12,140,0,2024-01-28
-"RoadSalt",3000,"B",3,12,140,0,2024-01-28
-"RoadSalt",3000,"B",4,12,140,0,2024-01-28
-"RoadSalt",3000,"B",5,12,140,0,2024-01-28
-"RoadSalt",3000,"B",6,12,140,0,2024-01-28
-"RoadSalt",3000,"B",7,12,140,0,2024-01-28
-"RoadSalt",3000,"B",8,12,140,0,2024-01-28
-"RoadSalt",3000,"B",9,12,140,0,2024-01-28
-"RoadSalt",3000,"B",10,12,140,0,2024-01-28
-"RoadSalt",4000,"A",1,10,140,0,2024-01-28
-"RoadSalt",4000,"A",2,10,140,0,2024-01-28
-"RoadSalt",4000,"A",3,10,140,0,2024-01-28
-"RoadSalt",4000,"A",4,10,140,0,2024-01-28
-"RoadSalt",4000,"B",1,12,140,0,2024-01-28
-"RoadSalt",4000,"B",2,12,140,0,2024-01-28
-"RoadSalt",4000,"B",3,12,140,0,2024-01-28
-"RoadSalt",4000,"B",4,12,140,0,2024-01-28
-"RoadSalt",4000,"B",5,12,140,0,2024-01-28
-"RoadSalt",4000,"B",6,12,140,0,2024-01-28
-"RoadSalt",4000,"B",7,12,140,0,2024-01-28
+"species","sex","salt","treatment","replicate","ID","initial","hour","ind_surv","exp_date"
+"L. sicilis","female","RoadSalt",0,"B",10,10,119,1,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"A",10,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",0,"B",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"A",10,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",1000,"B",10,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",10,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"A",10,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",2000,"B",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",8,8,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",10,10,140,1,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",1,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",2,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",3,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",4,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",5,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",6,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"A",7,8,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",2,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",3,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",4,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",5,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",6,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",7,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",8,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",3000,"B",9,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"A",10,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"A",9,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",7,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",8,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",9,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",5,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",6,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",2,10,94,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",3,10,94,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",4,10,94,1,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"A",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",4000,"B",1,10,140,0,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"A",8,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"A",9,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"A",10,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"A",2,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"A",3,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",4,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",5,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",6,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",7,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",8,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",9,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",10,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",1,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",2,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",5000,"B",3,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",6,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",7,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",8,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",9,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",10,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",3,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",4,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",5,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",1,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"A",2,10,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",8,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",9,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",10,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",11,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",3,11,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",4,11,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",5,11,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",1,11,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",6000,"B",2,11,71,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",5,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",6,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",7,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",8,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",9,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",10,10,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",1,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",2,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"A",3,10,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",4,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",5,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",6,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",7,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",8,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",9,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",10,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",11,11,23,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",1,11,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",2,11,47,1,2024-01-14
+"L. sicilis","female","RoadSalt",7000,"B",3,11,47,1,2024-01-14
+"L. sicilis","female","InstantOcean",0,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",0,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",1000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",2000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",3000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",4000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",5000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",6000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"A",10,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",1,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",2,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",3,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",4,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",5,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",6,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",7,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",8,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",9,10,140,0,2024-01-21
+"L. sicilis","female","InstantOcean",7000,"B",10,10,140,0,2024-01-21
+"L. sicilis","female","RoadSalt",0,"A",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",7,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",8,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",9,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"A",10,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",7,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",8,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",9,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",0,"B",10,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",7,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",8,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",9,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",1000,"B",10,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",7,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",8,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",9,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"A",10,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",7,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",8,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",9,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",2000,"B",10,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",9,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",10,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",8,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",7,10,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",12,12,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",11,12,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",5,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"A",6,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",1,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",2,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",3,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",4,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",5,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",6,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",7,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",8,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",9,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",3000,"B",10,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",7,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",8,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",9,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",10,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",5,10,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",6,10,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",12,12,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",11,12,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",10,12,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",1,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",2,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",3,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"A",4,10,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",1,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",2,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",3,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",4,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",5,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",6,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",4000,"B",7,12,140,0,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",10,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",9,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",6,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",3,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",4,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"A",1,10,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",7,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",8,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",9,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",5,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",6,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",2,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",3,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",4,10,123,1,2024-01-28
+"L. sicilis","female","RoadSalt",5000,"B",1,10,140,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",6,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",7,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",8,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",9,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",1,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",2,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",3,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"A",4,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",10,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",5,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",6,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",7,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",8,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",9,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",1,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",2,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",3,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",6000,"B",4,10,95,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"A",6,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"A",7,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"A",8,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"A",9,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",10,10,24,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",5,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",6,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",7,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",8,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",9,10,47,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",1,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",2,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",3,10,73,1,2024-01-28
+"L. sicilis","female","RoadSalt",7000,"B",4,10,73,1,2024-01-28
+"Skistodiaptomus","female","RoadSalt",0,"B",5,5,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"C",5,5,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"B",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"B",4,5,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"A",5,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",0,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",0,"C",5,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"B",5,5,42,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"B",4,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"B",5,5,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"A",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"A",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"A",3,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"A",4,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",1000,"C",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"A",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",1000,"C",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"C",4,4,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"A",5,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"B",1,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"B",2,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"B",3,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",2000,"C",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"A",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"B",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"C",1,4,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"C",2,4,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",2000,"C",3,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"A",3,3,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"B",5,5,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"C",4,4,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"B",5,5,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"B",4,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"C",5,5,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"C",4,5,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"A",1,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"A",2,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"C",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"C",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",3000,"C",3,4,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"A",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",3000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"A",5,5,18,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"B",4,4,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"B",5,5,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"B",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"B",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"B",3,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",4000,"C",5,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"A",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",4000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"B",5,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"B",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"C",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"C",4,5,42,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"A",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"A",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"A",3,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"A",4,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"B",4,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"C",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"C",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"C",3,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",5000,"C",4,4,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"A",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"A",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"B",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"B",3,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",5000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"A",4,4,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"B",3,3,18,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"B",2,3,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"C",5,5,42,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"A",2,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"A",3,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"B",2,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"B",3,5,86,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"C",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"C",4,5,62,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"C",3,5,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"A",1,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"A",2,4,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"B",1,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"C",3,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",6000,"C",4,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"A",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"B",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"C",1,5,86,0,2024-08-10
+"Skistodiaptomus","male","RoadSalt",6000,"C",2,5,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"A",4,4,42,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"A",2,4,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"A",1,4,86,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"B",3,3,42,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"B",2,3,62,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"C",5,5,42,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"B",3,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"B",4,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"B",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"C",3,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"C",4,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"C",5,5,18,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"C",1,5,42,1,2024-08-10
+"Skistodiaptomus","male","RoadSalt",7000,"C",2,5,42,1,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"B",1,3,86,0,2024-08-10
+"Skistodiaptomus","female","RoadSalt",7000,"C",1,5,86,0,2024-08-10

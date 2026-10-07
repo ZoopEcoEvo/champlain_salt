@@ -1,0 +1,98 @@
+original_path,new_path,renamed_on,method,notes
+Raw_data/2024_data/ctmax_data/2024_01_13_1_obs.csv,Raw_data/2024_data/ctmax_data/2024-01-13_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_01_13_1_temp.CSV,Raw_data/2024_data/ctmax_data/2024-01-13_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_01_20_1_obs.csv,Raw_data/2024_data/ctmax_data/2024-01-20_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_01_20_1_temp.CSV,Raw_data/2024_data/ctmax_data/2024-01-20_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_01_20_2_obs.csv,Raw_data/2024_data/ctmax_data/2024-01-20_ctmax_obs_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_01_20_2_temp.CSV,Raw_data/2024_data/ctmax_data/2024-01-20_ctmax_temp_rep2.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_01_27_1_obs.csv,Raw_data/2024_data/ctmax_data/2024-01-27_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_01_27_1_temp.CSV,Raw_data/2024_data/ctmax_data/2024-01-27_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_01_27_2_obs.csv,Raw_data/2024_data/ctmax_data/2024-01-27_ctmax_obs_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_01_27_2_temp.CSV,Raw_data/2024_data/ctmax_data/2024-01-27_ctmax_temp_rep2.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_02_03_1_obs.csv,Raw_data/2024_data/ctmax_data/2024-02-03_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_02_03_1_temp.CSV,Raw_data/2024_data/ctmax_data/2024-02-03_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_02_03_2_obs.csv,Raw_data/2024_data/ctmax_data/2024-02-03_ctmax_obs_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_02_03_2_temp.CSV,Raw_data/2024_data/ctmax_data/2024-02-03_ctmax_temp_rep2.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_02_10_1_obs.csv,Raw_data/2024_data/ctmax_data/2024-02-10_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_02_10_1_temp.CSV,Raw_data/2024_data/ctmax_data/2024-02-10_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/2024_02_10_2_obs.csv,Raw_data/2024_data/ctmax_data/2024-02-10_ctmax_obs_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/2024_02_10_2_temp.CSV,Raw_data/2024_data/ctmax_data/2024-02-10_ctmax_temp_rep2.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/ctmax_data/trial_2023_12_19_1_obs.csv,Raw_data/2024_data/ctmax_data/trial_2023-12-19_ctmax_obs_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/ctmax_data/trial_2023_12_19_1_temp.CSV,Raw_data/2024_data/ctmax_data/trial_2023-12-19_ctmax_temp_rep1.csv,2026-10-07,git mv,extension lowercased (.CSV -> .csv) for cross-platform case-sensitivity
+Raw_data/2024_data/surv_data/2024_01_14_surv.csv,Raw_data/2024_data/surv_data/2024-01-14_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/surv_data/2024_01_21_surv.csv,Raw_data/2024_data/surv_data/2024-01-21_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/surv_data/2024_01_28_surv.csv,Raw_data/2024_data/surv_data/2024-01-28_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/surv_data/2024_08_10_surv.csv,Raw_data/2024_data/surv_data/2024-08-10_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/surv_data/trial_surv_1.csv,Raw_data/2024_data/surv_data/trial_survival_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2024_data/surv_data/trial_surv_2.csv,Raw_data/2024_data/surv_data/trial_survival_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/Body Size Measurements.csv,Raw_data/2025_data/2025_body_size_measurements.csv,2026-10-07,git mv,supplementary file: snake_case + year prefix applied
+Raw_data/2025_data/Water_Sample_Full_Data.csv,Raw_data/2025_data/2025_water_sample_full_data.csv,2026-10-07,git mv,supplementary file: snake_case + year prefix applied
+Raw_data/2025_data/column_data.pdf,Raw_data/2025_data/2025_column_data.pdf,2026-10-07,git mv,supplementary file: snake_case + year prefix applied
+Raw_data/2025_data/ctmax_data/01_20_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-01-20_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/02_03_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-02-03_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/02_05_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-02-05_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/02_07_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-02-07_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/02_10_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-02-10_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/02_15_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-02-15_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/03_22_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-03-22_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/03_24_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-03-24_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/03_29_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-03-29_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/03_31_26_HeatAssay_1.csv,Raw_data/2025_data/ctmax_data/2026-03-31_ctmax_heatassay_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/03_31_26_HeatAssay_2.csv,Raw_data/2025_data/ctmax_data/2026-03-31_ctmax_heatassay_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/11_10_25_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2025-11-10_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/11_12_25_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2025-11-12_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/11_19_25_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2025-11-19_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/11_21_25_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2025-11-21_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/12_08_25_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2025-12-08_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/12_10_25_HeatAssay_1.csv,Raw_data/2025_data/ctmax_data/2025-12-10_ctmax_heatassay_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/12_10_25_HeatAssay_2.csv,Raw_data/2025_data/ctmax_data/2025-12-10_ctmax_heatassay_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ctmax_data/1_22_26_HeatAssay.csv,Raw_data/2025_data/ctmax_data/2026-01-22_ctmax_heatassay.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/01_20_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-01-20_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/01_22_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-01-22_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/02_03_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-02-03_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/02_05_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-02-05_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/02_07_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-02-07_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/02_10_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-02-10_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/02_15_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-02-15_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/03_22_26-Ramp.csv,Raw_data/2025_data/ramp_data/2026-03-22_ramp.csv,2026-10-07,git mv,fixed hyphen/underscore inconsistency in original filename
+Raw_data/2025_data/ramp_data/03_24_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-03-24_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/03_29_26_Ramp.csv,Raw_data/2025_data/ramp_data/2026-03-29_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/03_31_26_Ramp_1.csv,Raw_data/2025_data/ramp_data/2026-03-31_ramp_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/03_31_26_Ramp_2.csv,Raw_data/2025_data/ramp_data/2026-03-31_ramp_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/11_10_25_Ramp.csv,Raw_data/2025_data/ramp_data/2025-11-10_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/11_12_25_Ramp.csv,Raw_data/2025_data/ramp_data/2025-11-12_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/11_19_25_Ramp.csv,Raw_data/2025_data/ramp_data/2025-11-19_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/11_21_25_Ramp.csv,Raw_data/2025_data/ramp_data/2025-11-21_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/12_08_25_Ramp.csv,Raw_data/2025_data/ramp_data/2025-12-08_ramp.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/12_10_25_Ramp_1.csv,Raw_data/2025_data/ramp_data/2025-12-10_ramp_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/ramp_data/12_10_25_Ramp_2.csv,Raw_data/2025_data/ramp_data/2025-12-10_ramp_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/01_14_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-14_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/01_16_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-16_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/01_23_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-23_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/01_30_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-30_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/02_09_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-09_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/02_20_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-20_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/02_23_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-23_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/03_16_26_Survival.csv,Raw_data/2025_data/surv_data/2026-03-16_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/03_18_26_Survival_1.csv,Raw_data/2025_data/surv_data/2026-03-18_survival_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/03_18_26_Survival_2.csv,Raw_data/2025_data/surv_data/2026-03-18_survival_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/03_25_26_Survival_1.csv,Raw_data/2025_data/surv_data/2026-03-25_survival_rep1.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/03_25_26_Survival_2.csv,Raw_data/2025_data/surv_data/2026-03-25_survival_rep2.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/09_23_25_Survival.csv,Raw_data/2025_data/surv_data/2025-09-23_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/09_30_25_Survival.csv,Raw_data/2025_data/surv_data/2025-09-30_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/10_02_25_Survival.csv,Raw_data/2025_data/surv_data/2025-10-02_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/10_14_25_Survival.csv,Raw_data/2025_data/surv_data/2025-10-14_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/10_16_25_Survival.csv,Raw_data/2025_data/surv_data/2025-10-16_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/10_28_25_Survival.csv,Raw_data/2025_data/surv_data/2025-10-28_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/10_30_25_Survival.csv,Raw_data/2025_data/surv_data/2025-10-30_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/11_04_25_Survival.csv,Raw_data/2025_data/surv_data/2025-11-04_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/11_06_25_Survival.csv,Raw_data/2025_data/surv_data/2025-11-06_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/11_13_25_Survival.csv,Raw_data/2025_data/surv_data/2025-11-13_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/11_15_25_Survival.csv,Raw_data/2025_data/surv_data/2025-11-15_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/12_02_25_Survival.csv,Raw_data/2025_data/surv_data/2025-12-02_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/12_04_25_Survival.csv,Raw_data/2025_data/surv_data/2025-12-04_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/1_21_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-21_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/1_28_26_Survival.csv,Raw_data/2025_data/surv_data/2026-01-28_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/2_11_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-11_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/2_2_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-02_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv
+Raw_data/2025_data/surv_data/2_4_26_Survival.csv,Raw_data/2025_data/surv_data/2026-02-04_survival.csv,2026-10-07,git mv,standardized to YYYY-MM-DD_<type>[_repN].csv

@@ -13,33 +13,18 @@ library(dabestr)
 library(lme4)
 library(lmerTest)
 
-source("Scripts/project_functions.R")
-
 #Determine which scripts should be run
-prelim_report = F #Makes a preliminary report based on environmental data from Lake Champlain
 process_data = T #Runs data analysis 
 make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
-
-if(prelim_report == T){
-  
-  prelim_surv = read.csv(file = "Raw_data/surv_data/trial_surv_1.csv")
-  prelim_surv2 = read.csv(file = "Raw_data/surv_data/trial_surv_2.csv")
-  
-  ctmax_temp1 = read.csv(file = "Raw_data/ctmax_data/trial_2023_12_19_1_temp.CSV")
-  ctmax_time1 = read.csv(file = "Raw_data/ctmax_data/trial_2023_12_19_1_obs.csv")
-  ctmax_temp2 = read.csv(file = "Raw_data/ctmax_data/trial_2024_01_13_temp.CSV")
-  ctmax_time2 = read.csv(file = "Raw_data/ctmax_data/trial_2024_01_13_1_obs.csv")
-  
-  render(input = "Output/Reports/prelim_data.Rmd", #Input the path to your .Rmd file here
-         output_format = "all")
-}
 
 ############################
 ### Read in the RAW data ###
 ############################
 
 if(process_data == T){
+  source("Scripts/project_functions.R")
+  
   source(file = "Scripts/01_data_processing.R")
 }
 
@@ -54,11 +39,11 @@ if(make_report == T){
   daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv") %>% 
     mutate(exp_day = round(hour / 24))
   
-  oreg_data = read.csv(file = "Raw_data/2024_data/surv_data/2024_08_10_surv.csv")
+  oreg_data = read.csv(file = "Raw_data/2024_data/surv_data/2024-08-10_survival.csv")
   
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   
-  size_data = read.csv("Raw_data/2025_data/Body Size Measurements.csv") %>% 
+  size_data = read.csv("Raw_data/2025_data/2025_body_size_measurements.csv") %>% 
     separate(assay_date, sep = "_", into = c("month", "day", "year", "assay")) %>% 
     mutate(assay = as.numeric(if_else(is.na(assay), "1", assay)), 
            assay_date = lubridate::make_date(year = as.numeric(year) + 2000, month = as.numeric(month), day = as.numeric(day)), 

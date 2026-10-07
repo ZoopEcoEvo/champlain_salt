@@ -35,23 +35,24 @@ est_ctmax = function(temp_data, time_data) {
 expand_surv = function(prelim_surv) {
   
   expanded_data = prelim_surv %>% 
+    select(species, sex, salt, treatment, replicate, starts_with(c("hour_", "x"))) %>% 
     mutate(treatment = as.numeric(treatment)) %>% 
-    pivot_longer(cols = starts_with("hour_"),
+    pivot_longer(cols = starts_with(c("hour_", "x")),
                  values_to = "surv", 
                  names_to = "hour",
-                 names_prefix = "hour_") %>% ### Gets data into long format
-    group_by(treatment, replicate) %>% 
+                 names_prefix = "x") %>% ### Gets data into long format
+    group_by(species, sex, salt, treatment, replicate) %>% 
     mutate(initial = first(surv)) %>% 
-    group_by(treatment, replicate, hour) %>% 
+    group_by(species, sex, salt, treatment, replicate, hour) %>% 
     drop_na(surv) %>% 
-    mutate(hour = as.numeric(hour),
+    mutate(hour = parse_number(hour),
            "ind_surv" = paste(rep(c(0,1), c(surv, initial - surv)), collapse = ",")) %>% ### Assembles vector of mortality events for each time point (0 = survived, 1 = mortality)
     select(-surv) %>% 
     separate_rows(ind_surv, sep = ",", convert = T) %>% ### Separates data so it's one event per ro
     mutate("ID" = row_number()) %>%  
     ungroup() %>% 
     group_by(treatment, replicate, ID) %>% 
-    select(salt, treatment, replicate, ID, initial, hour, ind_surv) 
+    select(species, sex, salt, treatment, replicate, ID, initial, hour, ind_surv) 
   
   return(expanded_data)
 }
@@ -59,7 +60,7 @@ expand_surv = function(prelim_surv) {
 make_surv = function(expanded_data){
   
   mort_1 = expanded_data %>% ungroup() %>%  
-    group_by(treatment, ID) %>% 
+    group_by(species, sex, salt, treatment, ID) %>% 
     filter(ind_surv == 1) ### Pulls out only the mortality events 
   
   if(dim(mort_1)[1] > 0){
@@ -68,7 +69,7 @@ make_surv = function(expanded_data){
   }  
   
   mort_2 = expanded_data %>% ungroup() %>%  
-    group_by(treatment, ID) %>% 
+    group_by(species, sex, salt, treatment, ID) %>% 
     filter(hour == max(hour)) %>% ### Pulls out just the final observations
     filter(ind_surv == 0) ### Filters to just survivors
   
