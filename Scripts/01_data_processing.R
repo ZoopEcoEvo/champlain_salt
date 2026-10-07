@@ -1,249 +1,259 @@
-
-capitalize_first <- function(x) {
-  x <- tolower(x)
-  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
-  return(x)
-}
+# =============================================================================
+# 01_data_processing.R
+#
+# Combines raw survival and CTmax files (2024 + 2025/26 cohorts) into tidy,
+# individual-level datasets and writes them to Output/Output_data/.
+# Requires Scripts/project_functions.R to already be sourced (supplies
+# expand_surv(), make_surv(), est_ctmax()) -- see Scripts/02_controller.R.
+#
+# Produces:
+#   - survival_data   -> Output/Output_data/surv_data.csv
+#       One row per individual per experiment, with the hour it died
+#       (ind_surv == 1) or was last observed alive (ind_surv == 0).
+#   - daily_prop_data -> Output/Output_data/daily_prop_data.csv
+#       Observed proportion surviving at each check, for descriptive plots.
+#   - ctmax_data      -> Output/Output_data/ctmax_data.csv
+#       One row per individual CTmax measurement.
+#
+# Model fitting and plotting live in Output/Reports/report.Rmd, not here
+# (see CHECKLIST.md Phase 2).
+# =============================================================================
 
 ### Processing Data from Three Sources
 # Winter 2024 (L. sicilis survival and CTmax; Road Salt and Instant Ocean)
 # Summer 2024 (Skistodiaptomus survival; Road Salt)
 # Fall 2025/Winter 2026 (L. sicilis & L. minutus survival and CTmax; Ion-specific)
 
-#### Processing the Survival data ####
-#### Processing the 2024/2025 Survival data ####
 
-# Identifies all survival data for experiments 
-surv_files = dir(path = "Raw_data/2024_data/surv_data/")[str_detect(dir(path = "Raw_data/2024_data/surv_data/"), pattern = "2024")]
-sic_surv = surv_files[str_detect(surv_files, "2024-01")]
-oreg_surv = surv_files[str_detect(surv_files, "2024-08")]
+# =============================================================================
+# 1. SURVIVAL DATA: combine raw files into one tidy, individual-level table
+# =============================================================================
 
-surv_data = data.frame()
-daily_prop_data = data.frame()
+## ---- 1a. 2024 cohort (L. sicilis winter trials; Skistodiaptomus summer trial) ----
+# Files: Raw_data/2024_data/surv_data/2024-*.csv
+# Columns: salt, treatment (dose), [sex], replicate, hour_* (count of
+# survivors remaining at each check)
 
-for(file in surv_files){
-  
-  # Extracts experiment date from file name
-  exp_date = str_split(string = str_replace_all(file, pattern = "_", replacement = "-"), pattern = "-surv")[[1]][1]
-  
-  raw_data = read.csv(file = paste("Raw_data/2024_data/surv_data/", file, sep = "")) %>% 
-    discard(~all(is.na(.x)))
-  
-  if(file %in% sic_surv){
-    raw_data$species = "L. sicilis"
-    
-    raw_data$sex = "female"
-  }else{
-    raw_data$species = "Skistodiaptomus"}
-  
-  raw_data = raw_data %>% 
-    select(species, sex, salt, treatment, replicate, starts_with("hour_"))
-  
-  # Uses custom functions to process survival data into usable formats
-  data = raw_data %>% 
-    expand_surv() %>% 
-    make_surv() %>% 
-    arrange(treatment) %>% 
-    mutate("exp_date" = lubridate::as_date(exp_date))
-  
-  # Adds experimental data to collective data frame
-  surv_data = bind_rows(surv_data, data)
-  
-  ### Processes data to provide daily proportional survival data
-  
-  prop_data = data.frame()
-  for(i in 6:dim(raw_data)[2]){
-    
-    col_name = colnames(raw_data)[i]
-    hour = as.numeric(str_split_fixed(col_name, pattern = "_", n = 2)[2])
-    
-    day_data = raw_data %>%  
-      select(species, sex, salt:{{col_name}}) %>% 
-      expand_surv() %>% 
-      make_surv() %>% 
-      ungroup() %>% 
-      group_by(species, sex, salt, treatment, replicate, initial) %>% 
-      summarise(num_died = sum(ind_surv), .groups = "keep") %>%  
-      mutate(total_surv = initial - num_died,
-             prop_surv = total_surv / initial,
-             hour = hour,
-             exp_date = lubridate::as_date(exp_date))
-    
-    prop_data = bind_rows(prop_data, day_data)
+surv_files_2024 <- dir("Raw_data/2024_data/surv_data") |>
+  keep(~ str_detect(.x, "^2024"))                # drops the "trial_*" pilot files
+sic_files <- surv_files_2024[str_detect(surv_files_2024, "2024-01")]
+
+surv_2024 <- map_dfr(surv_files_2024, function(file) {
+  exp_date <- str_extract(file, "^\\d{4}-\\d{2}-\\d{2}")
+
+  raw_data <- read.csv(file.path("Raw_data/2024_data/surv_data", file)) |>
+    discard(~ all(is.na(.x)))
+
+  if (file %in% sic_files) {
+    raw_data$species <- "L. sicilis"
+    raw_data$sex <- "female"
+  } else {
+    raw_data$species <- "Skistodiaptomus"   # sex already present in this file
   }
-  
-  daily_prop_data = bind_rows(daily_prop_data, prop_data)
-  
-}
+
+  raw_data |>
+    select(species, sex, salt, treatment, replicate, starts_with("hour_")) |>
+    expand_surv() |>
+    make_surv() |>
+    mutate(exp_date = as_date(exp_date))
+})
+
+## ---- 1b. 2025/2026 cohort (L. sicilis & L. minutus, ion-specific trials) ----
+# Files: Raw_data/2025_data/surv_data/*.csv
+# Columns differ from 2024: wide, descriptive headers; dose stored as
+# chloride concentration (mg/L); hour columns are "0 Hour", "26 Hour", etc.
+
+surv_files_2025 <- dir("Raw_data/2025_data/surv_data")
+
+surv_2025 <- map_dfr(surv_files_2025, function(file) {
+  exp_date <- str_extract(file, "^\\d{4}-\\d{2}-\\d{2}")
+
+  raw_data <- read.csv(file.path("Raw_data/2025_data/surv_data", file)) |>
+    # Several 2025 files have fully-blank trailing rows (all commas, no
+    # values). Empty strings in character columns read as "" rather than NA,
+    # and `discard()` only drops all-NA *columns*, not rows -- so blank rows
+    # would otherwise survive as phantom records with blank species/salt.
+    # Convert "" -> NA, then explicitly drop any row that's NA everywhere.
+    mutate(across(where(is.character), ~ na_if(.x, ""))) |>
+    filter(if_any(everything(), ~ !is.na(.x))) |>
+    discard(~ all(is.na(.x))) |>
+    janitor::clean_names() |>
+    mutate(sex = "female", replicate = row_number()) |>
+    select(species, sex, replicate, "salt" = treatment,
+           "treatment" = cl_concentration_mg_l, starts_with("x"))
+
+  raw_data |>
+    expand_surv() |>
+    make_surv() |>
+    mutate(exp_date = as_date(exp_date))
+})
+
+## ---- 1c. Combine cohorts, harmonize labels, drop pilot arm ----------------
+# "Instant Ocean" was only run alongside the 2024 L. sicilis trials as a
+# check against the main RoadSalt dose-response design; excluded here as in
+# the prior pipeline.
+
+survival_data <- bind_rows(
+    surv_2024 |> mutate(replicate = as.character(replicate)),
+    surv_2025 |> mutate(replicate = as.character(replicate))
+  ) |>
+  mutate(
+    species = case_when(
+      str_to_lower(species) %in% c("l. sicilis", "l.sicilis") ~ "L. sicilis",
+      str_to_lower(species) %in% c("l. minutus", "l.minutus") ~ "L. minutus",
+      TRUE ~ "Skistodiaptomus"
+    ),
+    # Harmonize dose onto a common chloride-equivalent scale so RoadSalt/
+    # NaCl/MgCl2 doses are comparable; 0.7 factor per prior analysis --
+    # document its source (see CHECKLIST.md Phase 1 data dictionary item).
+    est_chloride = if_else(salt == "RoadSalt", treatment * 0.7, treatment)
+  ) |>
+  filter(salt != "InstantOcean") |>
+  select(species, sex, salt, treatment, est_chloride, replicate, exp_date,
+         ID, initial, hour, ind_surv) |>
+  arrange(species, salt, exp_date, treatment, replicate)
 
 
-#### Processing the 2025/2026 Survival data ####
+# =============================================================================
+# 2. DAILY PROPORTIONAL SURVIVAL: observed proportion surviving at each check
+# =============================================================================
+# Kept separate from `survival_data` because it's a repeated-measures count
+# (survivors remaining at each check), not an individual event/censoring
+# time -- used for descriptive plots against model predictions.
 
-# Processing the 2025 acclimation experiment data
-surv_files_2025 = dir(path = "Raw_data/2025_data/surv_data/")
+## ---- 2a. 2024 cohort -------------------------------------------------------
+daily_prop_2024 <- map_dfr(surv_files_2024, function(file) {
+  exp_date <- str_extract(file, "^\\d{4}-\\d{2}-\\d{2}")
 
-surv_2025_data = data.frame()
-daily_prop_data_2025 = data.frame()
+  raw_data <- read.csv(file.path("Raw_data/2024_data/surv_data", file)) |>
+    discard(~ all(is.na(.x)))
 
-for(file in surv_files_2025){
-  
-  # Extracts experiment date from file name
-  exp_date = str_split(string = str_replace_all(file, pattern = "_", replacement = "-"), pattern = "-survival")[[1]][1]
-  
-  raw_data = read.csv(file = paste("Raw_data/2025_data/surv_data/", file, sep = "")) %>% 
-    discard(~all(is.na(.x))) |> 
-    janitor::clean_names() |> 
-    mutate(sex = "female", 
-           replicate = row_number(), 
-           exp_date = exp_date) %>% 
-    select(species, sex, replicate, exp_date = collection_date, "salt" = treatment, "treatment" = cl_concentration_mg_l, 
-           starts_with("x")) 
-  
-  # Uses custom functions to process survival data into usable formats
-  data = raw_data %>% 
-    expand_surv() %>% 
-    make_surv() %>% 
-    arrange(treatment) %>% 
-    mutate("exp_date" = lubridate::as_date(exp_date))
-  
-  # Adds experimental data to collective data frame
-  surv_2025_data = bind_rows(surv_2025_data, data)
-  
-  ### Processes data to provide daily proportional survival data
-  
-  prop_data = data.frame()
-  for(i in 7:dim(raw_data)[2]){
-    
-    col_name = colnames(raw_data)[i]
-    hour = parse_number(col_name)
-    
-    day_data = raw_data %>%  
-      select(species, sex, replicate, salt:{{col_name}}) %>% 
-      expand_surv() %>% 
-      make_surv() %>% 
-      ungroup() %>% 
-      group_by(species, sex, salt, treatment, replicate, initial) %>% 
-      summarise(num_died = sum(ind_surv), .groups = "keep") %>%  
-      mutate(total_surv = initial - num_died,
-             prop_surv = total_surv / initial,
-             hour = hour)
-    
-    prop_data = bind_rows(prop_data, day_data)
+  if (file %in% sic_files) {
+    raw_data$species <- "L. sicilis"
+    raw_data$sex <- "female"
+  } else {
+    raw_data$species <- "Skistodiaptomus"
   }
-  
-  daily_prop_data_2025 = bind_rows(daily_prop_data_2025, prop_data)
-  
-}
+
+  raw_data |>
+    select(species, sex, salt, treatment, replicate, starts_with("hour_")) |>
+    pivot_longer(starts_with("hour_"), names_to = "hour", values_to = "n_surviving",
+                 names_prefix = "hour_") |>
+    mutate(hour = as.numeric(hour)) |>
+    group_by(species, sex, salt, treatment, replicate) |>
+    mutate(initial = first(n_surviving)) |>
+    ungroup() |>
+    mutate(exp_date = as_date(exp_date))
+})
+
+## ---- 2b. 2025/2026 cohort ---------------------------------------------------
+daily_prop_2025 <- map_dfr(surv_files_2025, function(file) {
+  exp_date <- str_extract(file, "^\\d{4}-\\d{2}-\\d{2}")
+
+  raw_data <- read.csv(file.path("Raw_data/2025_data/surv_data", file)) |>
+    # Same blank-trailing-row issue as section 1b -- see note there.
+    mutate(across(where(is.character), ~ na_if(.x, ""))) |>
+    filter(if_any(everything(), ~ !is.na(.x))) |>
+    discard(~ all(is.na(.x))) |>
+    janitor::clean_names() |>
+    mutate(sex = "female", replicate = row_number()) |>
+    select(species, sex, replicate, "salt" = treatment,
+           "treatment" = cl_concentration_mg_l, starts_with("x"))
+
+  raw_data |>
+    pivot_longer(starts_with("x"), names_to = "hour", values_to = "n_surviving") |>
+    mutate(hour = parse_number(hour)) |>
+    group_by(species, sex, salt, treatment, replicate) |>
+    mutate(initial = first(n_surviving)) |>
+    ungroup() |>
+    mutate(exp_date = as_date(exp_date))
+})
+
+## ---- 2c. Combine, harmonize, derive proportion + day -----------------------
+daily_prop_data <- bind_rows(
+    daily_prop_2024 |> mutate(replicate = as.character(replicate)),
+    daily_prop_2025 |> mutate(replicate = as.character(replicate))
+  ) |>
+  mutate(
+    species = case_when(
+      str_to_lower(species) %in% c("l. sicilis", "l.sicilis") ~ "L. sicilis",
+      str_to_lower(species) %in% c("l. minutus", "l.minutus") ~ "L. minutus",
+      TRUE ~ "Skistodiaptomus"
+    ),
+    est_chloride = if_else(salt == "RoadSalt", treatment * 0.7, treatment),
+    prop_surv = n_surviving / initial,
+    day = round(hour / 24)
+  ) |>
+  filter(salt != "InstantOcean")
 
 
-all_surv_data = surv_data |> 
-  mutate(replicate = as.character(replicate)) |> 
-  bind_rows(surv_2025_data |> mutate(replicate = as.character(replicate))) |> 
-  filter(salt != "InstantOcean") |> 
-  mutate(species = capitalize_first(species))
+# =============================================================================
+# 3. CTMAX DATA: combine raw files into one tidy, individual-level table
+# =============================================================================
 
-all_prop = daily_prop_data |> 
-  mutate(replicate = as.integer(as.factor(replicate))) |> 
-  bind_rows(daily_prop_data_2025) |> 
-  filter(salt != "InstantOcean") |> 
-  mutate(species = capitalize_first(species),
-         day = floor(hour/24), 
-         est_chloride = if_else(salt == "RoadSalt", treatment * 0.7, treatment))
+## ---- 3a. 2024 cohort (paired observation/temperature-logger files) --------
+ctmax_files_2024 <- dir("Raw_data/2024_data/ctmax_data") |>
+  discard(~ str_detect(.x, "trial"))
+obs_files_2024  <- ctmax_files_2024[str_detect(ctmax_files_2024, "_obs")]
+temp_files_2024 <- ctmax_files_2024[str_detect(ctmax_files_2024, "_temp")]
 
-all_prop |> 
-  ggplot(aes(x = est_chloride, y = prop_surv, colour = factor(day))) + 
-  facet_grid(salt~species, scales = "free") + 
-  geom_hline(yintercept = 0.5) + 
-  geom_point() + 
-  geom_smooth(method = "glm", 
-              se = F, 
-              method.args = list(family = "binomial")) + 
-  theme_bw() + 
-  theme(panel.grid = element_blank())
+ctmax_2024 <- map_dfr(obs_files_2024, function(file) {
+  temp_file <- str_replace(file, "_obs", "_temp")
+  stopifnot("No matching temperature file found" = temp_file %in% temp_files_2024)
 
+  est_ctmax(
+    temp_data = read.csv(file.path("Raw_data/2024_data/ctmax_data", temp_file)),
+    time_data = read.csv(file.path("Raw_data/2024_data/ctmax_data", file))
+  )
+}) |>
+  mutate(species = "L. sicilis", sex = "female") |>
+  select("collection_temp" = lab_temp, "assay_date" = experiment_date, species, sex,
+         "exp_rep" = experiment, salt, tube, "dose_assignment" = treatment, ctmax) |>
+  mutate(
+    acc_time = 6,   # fixed 6 h lab acclimation for this cohort -- document source (CHECKLIST Phase 1)
+    assay_date = as_date(assay_date, format = "%m/%d/%y")
+  )
 
-# Write the data to files in the Output directory
-write.csv(surv_data, file = here::here("output", "output_data", "surv_data.csv"), row.names = F)
+## ---- 3b. 2025/2026 cohort (one row per animal already) --------------------
+ctmax_files_2025 <- dir("Raw_data/2025_data/ctmax_data")
 
-write.csv(daily_prop_data, file = here::here("output", "output_data", "daily_prop_data.csv"), row.names = F)
+ctmax_2025 <- map_dfr(ctmax_files_2025, ~ read.csv(file.path("Raw_data/2025_data/ctmax_data", .x))) |>
+  janitor::clean_names() |>
+  drop_na(start_temperature) |>
+  select(collection_date, "collection_temp" = lake_temperature_degrees_c,
+         "lab_temp" = lab_temperature, start_temperature, assay_date, species, exp_rep,
+         salt = treatment, tube, dose_assignment, "cl_conc" = cl_concentrations,
+         ctmax = ct_max_temp) |>
+  mutate(
+    collection_date = as_date(collection_date, format = "%m/%d/%y"),
+    assay_date = as_date(assay_date, format = "%m/%d/%y"),
+    acc_time = as.integer(assay_date - collection_date),
+    cl_conc = cl_conc / 1000,
+    tube = parse_number(tube)
+  )
 
-write.csv(all_prop, file = here::here("output", "output_data", "all_prop.csv"), row.names = F)
-
-
-
-#### Processing the CTmax data ####
-#### Processing the 2024/2025 CTmax data ####
-# Identifies all files for the CTmax experiments 
-ctmax_files = dir(path = "Raw_data/2024_data/ctmax_data/")[!str_detect(dir(path = "Raw_data/2024_data/ctmax_data/"), pattern = "trial")]
-ctmax_times = ctmax_files[str_detect(ctmax_files, pattern = "_obs")]
-ctmax_temps = ctmax_files[str_detect(ctmax_files, pattern = "_temp")]
-
-ctmax_data = data.frame()
-for(file in ctmax_times){
-  
-  # Matching temp-logger file shares the same date/rep, swapping "obs" for "temp"
-  temp_file = str_replace(file, pattern = "_obs", replacement = "_temp")
-  stopifnot("No matching temperature file found" = temp_file %in% ctmax_temps)
-  
-  time_data = read.csv(file = paste("Raw_data/2024_data/ctmax_data/", file, sep = ""))
-  temp_data = read.csv(file = paste("Raw_data/2024_data/ctmax_data/", temp_file, sep = ""))
-  
-  exp_data = est_ctmax(temp_data = temp_data, time_data = time_data) 
-  
-  ctmax_data = bind_rows(ctmax_data, exp_data) %>% 
-    mutate(species = "L. sicilis", 
-           sex = "female")
-}
-
-ctmax_data_2024 = ctmax_data |> 
-  select("collection_temp" = lab_temp, "assay_date" = experiment_date,
-         species, sex, "exp_rep" = experiment, "treatment" = salt, tube, 
-         "dose_assignment" = treatment, ctmax) |> 
-  mutate(acc_time = 6, 
-         lab_temp = collection_temp,
-         sex = "female",
-         tube = as.numeric(tube),
-         assay_date = lubridate::as_date(assay_date, format = "%m/%d/%y"))
+## ---- 3c. Combine cohorts, harmonize labels ---------------------------------
+ctmax_data <- bind_rows(ctmax_2024, ctmax_2025) |>
+  mutate(
+    species = case_when(
+      str_to_lower(species) %in% c("l. sicilis", "l.sicilis") ~ "L. sicilis",
+      str_to_lower(species) %in% c("l. minutus", "l.minutus") ~ "L. minutus",
+      TRUE ~ species
+    ),
+    dose_group = case_when(
+      salt == "RoadSalt" & dose_assignment == "control" ~ "Control",
+      salt == "RoadSalt" & dose_assignment == "salt" ~ "Salt",
+      salt != "RoadSalt" & cl_conc == 0 ~ "Control",
+      salt != "RoadSalt" & cl_conc > 0 ~ "Salt"
+    )
+  ) |>
+  filter(salt != "InstantOcean", ctmax > 15) |>  # drop pilot arm + one implausible low reading (see CHECKLIST)
+  arrange(species, salt, assay_date, tube)
 
 
-#### Processing the 2025/2026 CTmax data ####
-
-ctmax_files = dir(path = "Raw_data/2025_data/ctmax_data/")
-
-ctmax_acclim_data = data.frame()
-for(ctmax in ctmax_files){
-  
-  ctmax_run = read.csv(file = paste("Raw_data/2025_data/ctmax_data/", ctmax, sep = ""))
-  
-  ctmax_acclim_data = bind_rows(ctmax_acclim_data, ctmax_run)
-}
-
-acclim_data = ctmax_acclim_data %>%  
-  janitor::clean_names() %>%  
-  drop_na(start_temperature) %>%  
-  select(collection_date, 'collection_temp' = lake_temperature_degrees_c, "lab_temp" = lab_temperature, 
-         start_temperature, assay_date, species, exp_rep, treatment, tube, dose_assignment, "cl_conc" = cl_concentrations, "ctmax" = ct_max_temp) %>% 
-  mutate(collection_date = lubridate::as_date(collection_date, format = "%m/%d/%y"),
-         assay_date = lubridate::as_date(assay_date, format = "%m/%d/%y"), 
-         acc_time = as.integer(assay_date - collection_date), 
-         cl_conc = cl_conc / 1000, 
-         tube = parse_number(tube)) %>% 
-  filter(ctmax > 15) # Filtering out abnormally low CTmax value
-
-write.csv(acclim_data, file = here::here("output", "output_data", "acclim_data.csv"), row.names = F)
-
-all_ctmax_data = bind_rows(acclim_data, ctmax_data_2024) |> 
-  filter(treatment != "InstantOcean") |> 
-  mutate(cl_conc = if_else(dose_assignment == "control", 0, cl_conc), 
-         species = capitalize_first(species),
-         dose_assignment = if_else(cl_conc == 0, "Control", "Salt"),
-         dose_assignment = if_else(is.na(cl_conc), "Salt", dose_assignment))
-
-all_ctmax_data |> 
-  ggplot(aes(x = dose_assignment, y = ctmax)) + 
-  facet_grid(species~treatment) + 
-  geom_boxplot()
-
-
-# Write the data to files in the Output directory
-write.csv(all_ctmax_data, file = here::here("output", "output_data", "ctmax_data.csv"), row.names = F)
+# =============================================================================
+# 4. WRITE TIDY DATASETS
+# =============================================================================
+write.csv(survival_data, file = "Output/Output_data/surv_data.csv", row.names = FALSE)
+write.csv(daily_prop_data, file = "Output/Output_data/daily_prop_data.csv", row.names = FALSE)
+write.csv(ctmax_data, file = "Output/Output_data/ctmax_data.csv", row.names = FALSE)

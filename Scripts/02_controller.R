@@ -39,8 +39,6 @@ if(make_report == T){
   daily_prop_data = read.csv(file = "Output/Output_data/daily_prop_data.csv") %>% 
     mutate(exp_day = round(hour / 24))
   
-  oreg_data = read.csv(file = "Raw_data/2024_data/surv_data/2024-08-10_survival.csv")
-  
   ctmax_data = read.csv(file = "Output/Output_data/ctmax_data.csv")
   
   size_data = read.csv("Raw_data/2025_data/2025_body_size_measurements.csv") %>% 
@@ -54,25 +52,6 @@ if(make_report == T){
            )) %>% 
     dplyr::select(assay_date, assay, "size" = body_size_mm, "tube" = tube_number, species)
 
-  acclim_data = read.csv(file = "Output/Output_data/acclim_data.csv") %>% 
-    mutate(species = if_else(species == "L. Sicilis", "L. sicilis", "L. minutus"), 
-           tube = parse_number(tube), 
-           assay_date = as_date(assay_date), 
-           assay = if_else(assay_date == "2026-03-31" & treatment == "NaCl", 2, 1)) %>% 
-    left_join(size_data, by = c("assay_date", "species", "tube", "assay")) %>% 
-    mutate(tube = as.factor(tube))
-  
-  surv_2025_data = read.csv(file = "Output/Output_data/surv_2025.csv") %>% 
-    mutate(collection_date = as_date(collection_date, format = "%m/%d/%y"), 
-           cl_conc = cl_conc/1000, 
-           species = case_when(
-             species == "L. Sicilis" ~ "L. sicilis", 
-             species == "L. Minutus" ~ "L. minutus", 
-             species == "Skistodiaptomus" ~ species
-           )) %>% 
-    drop_na(surviving)
-  
-  
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
          output_format = "all")
