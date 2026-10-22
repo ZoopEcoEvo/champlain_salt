@@ -14,7 +14,7 @@ library(lme4)
 library(lmerTest)
 
 #Determine which scripts should be run
-process_data = T #Runs data analysis 
+process_data = F #Runs data analysis 
 make_report = T #Runs project summary
 knit_manuscript = F #Compiles manuscript draft
 
