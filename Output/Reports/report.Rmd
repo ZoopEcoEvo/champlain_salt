@@ -144,10 +144,9 @@ salt.means %>%  data.frame() %>%
 
 ```
 
-
 ## Survival Data
 
-### Sample Sizes 
+### Sample Sizes
 
 ```{r}
 
@@ -155,6 +154,8 @@ species_surv_total = surv_data %>%
   filter(exp_day == 1) %>% 
   group_by(species, salt) %>% 
   summarise(total_n = sum(initial))
+
+surv_data |> filter(exp_day == 1, species == "L. sicilis", salt == "MgCl2") 
 
 species_surv_collections = surv_data %>% 
   filter(exp_day == 1) %>% 
@@ -189,8 +190,6 @@ species_surv_total %>%
 
 ```
 
-
-
 ```{r}
 
 species_ctmax_total = ctmax_data %>% 
@@ -217,8 +216,7 @@ species_ctmax_total %>%
 
 ```
 
-### Survival 
-
+### Survival
 
 ### Weibull (accelerated failure time) survival model
 
@@ -315,7 +313,7 @@ ggplot(pred_grid, aes(x = est_chloride, y = surv_prob, colour = factor(day))) +
 
 Note: the model assumes a single shared Weibull shape parameter across all species/salt/dose combinations (no `strata()` term). If the cloglog diagnostic above shows clearly non-parallel lines across groups, consider refitting with `strata(salt)` (or `strata(group)`) so each group gets its own shape, and update the `shape` term above accordingly.
 
-### LC50 Values 
+### LC50 Values
 
 ```{r}
 
@@ -335,7 +333,7 @@ daily_prop_data %>%
 
 ```
 
-We previously fit a separate logistic regression for each species x salt x day subset and extracted the LC50 (chloride concentration producing 50% mortality) from each with `dose.p()`. That approach has two problems: (1) each `glm(prop_surv ~ est_chloride, family = quasibinomial)` ignored how many individuals each proportion was based on (`initial` ranges from 3 to 12 per replicate), so a 3-animal dish counted as much as a 12-animal dish; and (2) fitting each day in total isolation, with no shared information across days, gave wildly unstable estimates on days with little mortality spread (e.g. an LC50 of 4.2x10^16 g Cl for one group) and discarded the standard errors before plotting, so there was no way to see which day-specific estimates were trustworthy.
+We previously fit a separate logistic regression for each species x salt x day subset and extracted the LC50 (chloride concentration producing 50% mortality) from each with `dose.p()`. That approach has two problems: (1) each `glm(prop_surv ~ est_chloride, family = quasibinomial)` ignored how many individuals each proportion was based on (`initial` ranges from 3 to 12 per replicate), so a 3-animal dish counted as much as a 12-animal dish; and (2) fitting each day in total isolation, with no shared information across days, gave wildly unstable estimates on days with little mortality spread (e.g. an LC50 of 4.2x10\^16 g Cl for one group) and discarded the standard errors before plotting, so there was no way to see which day-specific estimates were trustworthy.
 
 Instead, we fit one quasibinomial model per species x salt combination, using the actual survival counts (`cbind(n_surviving, n_dead)`, which supplies the sample size directly rather than via `weights`) and an `est_chloride * day` interaction. This pools information across days within a group and lets us formally test whether the dose-response relationship (and hence LC50) changes over time, via an F-test comparing the model with and without the interaction (appropriate here since `quasibinomial` doesn't have a well-defined likelihood for a chi-square LRT).
 
@@ -368,7 +366,7 @@ knitr::kable(interaction_summary, digits = 3,
              caption = "F-test for the est_chloride:day interaction (does the dose-response relationship change over time?) within each species x salt model. p_adj applies a Holm correction across the 8 tests.")
 ```
 
-Only `L. sicilis` x RoadSalt shows a significant chloride:day interaction after correcting for multiple comparisons; the others are suggestive at best (uncorrected p ~ 0.09 for `L. sicilis`/NaCl and `Skistodiaptomus`/NaCl) or show no evidence of a time trend.
+Only `L. sicilis` x RoadSalt shows a significant chloride:day interaction after correcting for multiple comparisons; the others are suggestive at best (uncorrected p \~ 0.09 for `L. sicilis`/NaCl and `Skistodiaptomus`/NaCl) or show no evidence of a time trend.
 
 To visualize this, we convert each group's fitted intercept/slope-by-day into an LC50(day) trajectory with a delta-method confidence interval (the same approach `dose.p()` uses for a single model, extended here to a day-varying intercept and slope), evaluated only across the days actually observed within each species x salt group.
 
@@ -418,22 +416,23 @@ lc50_traj = lc50_models %>%
   )
 ```
 
-```{r lc50-trajectory-plot, fig.width=9, fig.height=8}
+```{r lc50-trajectory-plot, fig.width=11, fig.height=4}
+
 ggplot(lc50_traj, aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
-  facet_wrap(species ~ salt, scales = "free") + 
+  facet_wrap(species ~ .) + 
   geom_ribbon(aes(ymin = lwr_g, ymax = upr_g), alpha = 0.2, colour = NA) + 
   geom_line(linewidth = 1.2) + 
   scale_color_manual(values = salt_cols) + 
   scale_fill_manual(values = salt_cols) + 
+  coord_cartesian(ylim = c(0,15)) + 
   labs(x = "Day", y = "LC50 (g Chloride / L)") + 
-  theme_matt_facets() + 
-  theme(legend.position = "none")
+  theme_matt_facets() 
 ```
 
 The ribbon width makes the earlier instability visible rather than hiding it: for example, the `L. sicilis`/NaCl and `Skistodiaptomus`/MgCl2 trajectories carry very wide intervals at the days where the interaction test above was non-significant, meaning those day-to-day changes in LC50 shouldn't be over-interpreted. The `RoadSalt` trajectories (and `L. sicilis`/MgCl2) are comparatively well-identified across the full day range.
 
-
 ## Body Sizes
+
 ```{r}
 
 size_data %>% 

@@ -1,7 +1,7 @@
 Effects of salinity acclimation on upper thermal limits of Lake
 Champlain diaptomid copepods
 ================
-2026-10-07
+2026-10-22
 
 - [CTmax Data](#ctmax-data)
 - [Survival Data](#survival-data)
@@ -30,7 +30,7 @@ ggplot(ctmax_model_data, aes(x = treatment, y = ctmax)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-1-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
 
 Shown below are the sample sizes for the various salt-treatment
 combinations. Fewer experiments were run with Instant Ocean, so the
@@ -115,7 +115,7 @@ salt.means %>%  data.frame() %>%
   theme(legend.position = "right")
 ```
 
-<img src="../Figures/report/unnamed-chunk-5-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ## Survival Data
 
@@ -127,6 +127,61 @@ species_surv_total = surv_data %>%
   filter(exp_day == 1) %>% 
   group_by(species, salt) %>% 
   summarise(total_n = sum(initial))
+
+surv_data |> filter(exp_day == 1, species == "L. sicilis", salt == "MgCl2") 
+##       species    sex  salt treatment est_chloride replicate   exp_date ID initial hour ind_surv exp_day
+## 1  L. sicilis female MgCl2      1100         1100         2 2026-01-23  5       5   24        1       1
+## 2  L. sicilis female MgCl2      1600         1600         7 2026-01-23  5       5   24        1       1
+## 3  L. sicilis female MgCl2      2100         2100         3 2026-01-30  4       5   25        1       1
+## 4  L. sicilis female MgCl2      2100         2100         3 2026-01-30  5       5   25        1       1
+## 5  L. sicilis female MgCl2      2200         2200         4 2026-01-30  5       5   25        1       1
+## 6  L. sicilis female MgCl2      2400         2400         6 2026-01-30  4       5   25        1       1
+## 7  L. sicilis female MgCl2      2400         2400         6 2026-01-30  5       5   25        1       1
+## 8  L. sicilis female MgCl2      2500         2500         7 2026-01-30  4       5   25        1       1
+## 9  L. sicilis female MgCl2      2500         2500         7 2026-01-30  5       5   25        1       1
+## 10 L. sicilis female MgCl2      2600         2600         8 2026-01-30  2       5   25        1       1
+## 11 L. sicilis female MgCl2      2600         2600         8 2026-01-30  3       5   25        1       1
+## 12 L. sicilis female MgCl2      2600         2600         8 2026-01-30  4       5   25        1       1
+## 13 L. sicilis female MgCl2      2600         2600         8 2026-01-30  5       5   25        1       1
+## 14 L. sicilis female MgCl2      2300         2300         5 2026-02-04  5       5   24        1       1
+## 15 L. sicilis female MgCl2      2400         2400         6 2026-02-04  4       5   24        1       1
+## 16 L. sicilis female MgCl2      2400         2400         6 2026-02-04  5       5   24        1       1
+## 17 L. sicilis female MgCl2      2500         2500         7 2026-02-04  2       5   24        1       1
+## 18 L. sicilis female MgCl2      2500         2500         7 2026-02-04  3       5   24        1       1
+## 19 L. sicilis female MgCl2      2500         2500         7 2026-02-04  4       5   24        1       1
+## 20 L. sicilis female MgCl2      2500         2500         7 2026-02-04  5       5   24        1       1
+## 21 L. sicilis female MgCl2      2600         2600         8 2026-02-04  3       5   24        1       1
+## 22 L. sicilis female MgCl2      2600         2600         8 2026-02-04  4       5   24        1       1
+## 23 L. sicilis female MgCl2      2600         2600         8 2026-02-04  5       5   24        1       1
+## 24 L. sicilis female MgCl2      2000         2000         1 2026-02-09  5       5   24        1       1
+## 25 L. sicilis female MgCl2      2100         2100         2 2026-02-09  4       5   24        1       1
+## 26 L. sicilis female MgCl2      2100         2100         2 2026-02-09  5       5   24        1       1
+## 27 L. sicilis female MgCl2      2000         2000         2 2026-03-18  5       5   26        1       1
+## 28 L. sicilis female MgCl2      2100         2100         3 2026-03-18  5       5   26        1       1
+## 29 L. sicilis female MgCl2      2200         2200         4 2026-03-18  5       5   26        1       1
+## 30 L. sicilis female MgCl2      2300         2300         5 2026-03-18  3       5   26        1       1
+## 31 L. sicilis female MgCl2      2300         2300         5 2026-03-18  4       5   26        1       1
+## 32 L. sicilis female MgCl2      2300         2300         5 2026-03-18  5       5   26        1       1
+## 33 L. sicilis female MgCl2      2400         2400         6 2026-03-18  5       5   26        1       1
+## 34 L. sicilis female MgCl2      2500         2500         7 2026-03-18  4       5   26        1       1
+## 35 L. sicilis female MgCl2      2500         2500         7 2026-03-18  5       5   26        1       1
+## 36 L. sicilis female MgCl2      2600         2600         8 2026-03-18  2       5   26        1       1
+## 37 L. sicilis female MgCl2      2600         2600         8 2026-03-18  3       5   26        1       1
+## 38 L. sicilis female MgCl2      2600         2600         8 2026-03-18  4       5   26        1       1
+## 39 L. sicilis female MgCl2      2600         2600         8 2026-03-18  5       5   26        1       1
+## 40 L. sicilis female MgCl2      1900         1900         1 2026-03-25  5       5   22        1       1
+## 41 L. sicilis female MgCl2      2100         2100         3 2026-03-25  5       5   22        1       1
+## 42 L. sicilis female MgCl2      2200         2200         4 2026-03-25  3       5   22        1       1
+## 43 L. sicilis female MgCl2      2200         2200         4 2026-03-25  4       5   22        1       1
+## 44 L. sicilis female MgCl2      2200         2200         4 2026-03-25  5       5   22        1       1
+## 45 L. sicilis female MgCl2      2300         2300         5 2026-03-25  4       4   22        1       1
+## 46 L. sicilis female MgCl2      2400         2400         6 2026-03-25  3       5   22        1       1
+## 47 L. sicilis female MgCl2      2400         2400         6 2026-03-25  4       5   22        1       1
+## 48 L. sicilis female MgCl2      2400         2400         6 2026-03-25  5       5   22        1       1
+## 49 L. sicilis female MgCl2      2500         2500         7 2026-03-25  4       5   22        1       1
+## 50 L. sicilis female MgCl2      2500         2500         7 2026-03-25  5       5   22        1       1
+## 51 L. sicilis female MgCl2      2600         2600         8 2026-03-25  3       4   22        1       1
+## 52 L. sicilis female MgCl2      2600         2600         8 2026-03-25  4       4   22        1       1
 
 species_surv_collections = surv_data %>% 
   filter(exp_day == 1) %>% 
@@ -253,7 +308,7 @@ km_fit = survfit(Surv(hour, ind_surv) ~ species + salt, data = surv_model_data)
 ggsurvplot(km_fit, data = surv_model_data, fun = "cloglog", facet.by = "salt")
 ```
 
-<img src="../Figures/report/weibull-km-check-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/weibull-km-check-1.png" style="display: block; margin: auto;" />
 
 ``` r
 weibull_fit = survreg(
@@ -378,7 +433,7 @@ ggplot(pred_grid, aes(x = est_chloride, y = surv_prob, colour = factor(day))) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/weibull-pred-plot-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/weibull-pred-plot-1.png" style="display: block; margin: auto;" />
 
 Note: the model assumes a single shared Weibull shape parameter across
 all species/salt/dose combinations (no `strata()` term). If the cloglog
@@ -405,7 +460,7 @@ daily_prop_data %>%
               linewidth = 2.5)
 ```
 
-<img src="../Figures/report/unnamed-chunk-9-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 We previously fit a separate logistic regression for each species x salt
 x day subset and extracted the LC50 (chloride concentration producing
@@ -532,18 +587,19 @@ lc50_traj = lc50_models %>%
 ```
 
 ``` r
+
 ggplot(lc50_traj, aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
-  facet_wrap(species ~ salt, scales = "free") + 
+  facet_wrap(species ~ .) + 
   geom_ribbon(aes(ymin = lwr_g, ymax = upr_g), alpha = 0.2, colour = NA) + 
   geom_line(linewidth = 1.2) + 
   scale_color_manual(values = salt_cols) + 
   scale_fill_manual(values = salt_cols) + 
+  coord_cartesian(ylim = c(0,15)) + 
   labs(x = "Day", y = "LC50 (g Chloride / L)") + 
-  theme_matt_facets() + 
-  theme(legend.position = "none")
+  theme_matt_facets() 
 ```
 
-<img src="../Figures/report/lc50-trajectory-plot-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/lc50-trajectory-plot-1.png" style="display: block; margin: auto;" />
 
 The ribbon width makes the earlier instability visible rather than
 hiding it: for example, the `L. sicilis`/NaCl and
@@ -567,4 +623,4 @@ ggplot(aes(x = size)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-10-1.png" alt="" style="display: block; margin: auto;" />
+<img src="../Figures/report/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
