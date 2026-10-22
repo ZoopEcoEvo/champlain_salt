@@ -7,7 +7,7 @@ output:
     citation_package: natbib
   word_document: 
     reference_docx: doc_template.docx
-title: "TITLE"
+title: "Road salt major ion effects on thermal tolerance of copepod Leptodiaptomus species"
 author:
   - name: Author 1
     affiliation: Place 1
@@ -18,7 +18,7 @@ author:
   - name: Author 3
     affiliation: Place 3
     location: 
-abstract: "ABSTRACT HERE."
+abstract: "Increasingly frequent winter warming events cause the environment to alternate from freezing to melting which can have a major impact on lake ecosystems. Specifically, road salt application followed by melting leads to runoff and increased salinity in freshwater ecosystems with detrimental effects on zooplankton communities such as reduction in thermal tolerance. Stressors of high salinity may occur in an isolated manner or in tandem with warming events. Previous work from our lab demonstrated the negative impacts of road salt on copepod survivorship, however, the same negative effects were not observed with artificial sea water. This project seeks to test the effects of major ions found in road salt, NaCl and MgCl2, on survival and thermal limits in two freshwater copepod species, Leptodiaptomus minutus and L. sicilis, with additional survivorship measured in Skistodiaptomus spp.. Copepods were exposed to 8 doses of each salt during a 5-day survivorship experiment followed by critical thermal maximum (CTmax) assays. We observed differences in survivorship between each of the species and treatments. L. sicilis were the most resilient to increased salt concentration followed by L. minutus and Skistodiaptomus spp.. L. minutus is present in the lake from August to January while L. sicilis is present in the lake from November to June, and Skistodiaptomus spp. are present from June to October. These temporal differences in conjunction with ecological history data may describe these trends. Following salt acclimation, thermal limit measurements demonstrated no significant effect of salt exposure on L. minutus thermal limits, however, salt exposure significantly decreased thermal limits in L. sicilis. In today's climate, increasing salt and temperature exist as concurrent environmental stressors. There has been limited work done to understand the relationship of these stressors on freshwater copepods. This work aims to fill that gap to help inform policy and management to protect our lake ecosystem."
 keywords: "keyword1, keyword2, keyword3"
 contact: "**Correspondance**: ___" 
 current: "This preprint is current as of `r format(Sys.time(), '%B %d, %Y')`"
@@ -50,6 +50,22 @@ if(knitr::is_latex_output()){
 # Introduction
 
 # Methods
+
+## Field Collections
+
+Plankton were sampled at Lake Champlain in Burlington, VT, USA from September 2025 - March 2026 (coordinates: 44.481149, -73.225451). Sampling occurred using a 500 um mesh plankton net within the top 3-6 meters of the lake in a combination of horizontal and vertical tows. Surface water temperature was measured at the time of each sampling with a handheld thermometer and samples were placed in an insulated bag for transport back to the laboratory. In the laboratory, samples were dispersed in several 600mL beakers for storage and placed in a lab incubator (ThermoFisher Scientific Incubator, Model: TFFU20F2QWA). The incubator was adjusted to be within 5°C of the temperature recorded in the lake at the time each sample was taken. Continued temperature measurements are made by a USGS probe approximately 650 meters from the sampling site (coordinates: 44.47616017, -73.2215166) allowing for further analysis of our accuracy in lab to lake temperature shifts. Collection temperatures closely matched temperatures seen by the probe. During the sampling period of (1/27/26 - 3/23/26) Lake Champlain had frozen over making the primary sampling location inaccessible. Instead, a secondary location was chosen closer to shore with shallower water and a nearby marina kept the water moving to avoid freezing. Any samples taken during this time were from the secondary location.
+
+##Copepod Identification and Experimental Set Up Seasonality and species abundance was used to divide the project into two distinct groups: Fall sampling (L. minutus and Skistodiaptomus sp) and Winter sampling (L. sicilis). Lake Champlain has begun to see two distinct size morphs within a year of L. sicilis with body size differences instead of a singular morph similar to that of other calanoid species in the lake (Sasaki et al., In Review). Sampling for this experiment contained only one size morph for L. sicilis and body size measurements following heat testing were taken in order to ensure the same size morph was being used (Fig. 1). <!--# Body Size Figure Here -->
+
+Our sampling from early fall through winter yielded survivorship data on three species of calanoid copepod in Lake Champlain. Identification remains uncertain with Skistodiaptomus as there are two species, S. oregonensis and S. pallidus which can only be distinguished through genetic methods. Historically, S. oregonensis has been identified within Lake Champlain (LaMay et al., 2013), but S. pallidus has also been found using genetic methods in surveys of the lake (Sasaki et al., In Review). Therefore, for the following project we acknowledge there is most likely a combination of the two species in our sample and refer to them as Skistodiaptomus spp.
+
+Fresh plankton samples were used to complete each assay. When sorting through the bulk tow, calandoid copepods were isolated, identified to species, and adult females were selected for each species. Copepods in life stage C5 or C6 were classified as adults due to challenges in morphologically differentiating two with the understanding that the likelihood of a C5 animal ending up in a dish was randomized across all dishes.
+
+Dose ranges were determined through previous pilot study and were adjusted over the course of the experiment to locate a range inducing 0-100% mortality. Both species demonstrated variation in their salt tolerance such that doses had to be adjusted regularly. This variation explains why the dose range of certain groups does not reach full mortality. Testing of these ranges consistently before animals were no longer available in the lake was a challenge. Treatment groups were replicated within each species for survivorship and thermal limits.
+
+## Surviviorship Assays
+
+Selected copepods were placed in petri dishes of 10mL spring water cooled to the collection temperature of the samples with 5 animals per dish. Each assay consisted of 10 total dishes: 2 control dishes of 20mL spring water and 8 treatment dishes with a combination of 10mL spring water and 10mL salt solution (Fig. 2). Salt solution is created through serial dilution across a selected range and is made at double the test dose to compensate for the 10mL spring water the copepods were sorted into. Each replication of a given salt group occurs with a new plankton tow sample. Treatment groups consist of NaCl and MgCl2 6H2O (henceforth referred to as MgCl2) (Fig. S1) with dose ranges selected with the goal of reaching 0-100% mortality in each range. In both salts Skistodiaptomus spp. were tested from 0.425-0.8 g/L with additional testing in NaCl at 1-1.2g/L, L. minutus was tested from 1-1.7g/L, and L. sicilis was tested from 1.2-2.6 g/L. Sample size differed between treatments and species due to varied copepod abundance levels and pilot treatments occurring in NaCl (Table 1). Copepods were acclimated to their given dose over the course of an hour with 10mL total of salt solution added. Dishes sat for 10 minutes following acclimation and survivorship was evaluated at "Hour 0". Sample dishes were kept at or near lake temperature for the entirety of the assay with survivorship being evaluated every 24 hours for 5 days. Survivorship was evaluated by gently disturbing the water inside the petri dish and watching for movement. If no movement was observed after a minute of observation and gentle movement of the water, the copepod was determined to have died. <!--# Graphical Methods Figure --> <!--# Sample Size Table -->
 
 ## Statistical Analysis
 
