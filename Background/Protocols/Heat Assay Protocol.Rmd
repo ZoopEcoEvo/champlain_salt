@@ -1,0 +1,20 @@
+# Copepod Salinity Experiments
+## Heat Assay Procedure:
+
+1. Identify the start temp of heat assays based on what the fridge temp is kept at.
+2. Collect ice from across the hall (door code 0303 if locked) to lower the CTMax machine to the selected temperature 
+3. Plug in three cords to the outlet (temp monitor, and two cords for the aquarium pump). This will allow the water to begin moving through the machine and you will be able to view the current temp of the water.
+4. Pull selected dishes of animals for assays (this will be predetermined) and controls 
+  1. Pipet out all 5 individuals from the dishes that are being observed and select the living animals. If any look abnormal, note the abnormalities and if necessary omit them from the heat assay all together. 
+5. Randomly assort where controls and dosed animals will be on the rack and note which tubes have which treatment in the lab notebook 
+6. Fill each tube with 5mLs of the treatment that animal was acclimated to and 5mL spring water.
+  1. Controls: 10mL spring water
+  2. D1: 5mL D1 salt solution, 5mL spring water
+7. Place the tubes in the CTMax machine and leave them for a couple mins allowing the water to cool. 
+8. Add the animals to their selected tubes placing the pipet into the water and watching the copepod leave the end
+  1. It can be helpful to turn on the light at the back of the CTMax to see the copepods
+9. Once all the animals are added, plug the last cord into the temp probe socket marked heating and begin a stopwatch timer. 
+  1. Write down start temp and mark the temperature every 5 minutes
+  2. Check animals at the start and every 10 minutes for the first half hour. Check more regularly after this period.
+10. When an animal is no longer responding to stimulus (4 full turns of the vial in one direction, pause, 4 full turns in the opposite direction) remove the vial and mark the time, temperature, and vial number in the data sheet. 
+11. Once all animals are removed, unplug all the elements of the CTMax, place all tubes back into the rack and refer to Heat Assay Body Size Measurements for the procedure.

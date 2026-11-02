@@ -76,11 +76,19 @@ theme_matt_facets = function(base_size = 18,
 
 # Introduction and Central Question(s)
 
-A few sentences
+<!--# Would there be a way for me to include my graphical abstract here? What is the best way to incorperate that into the markdown file? -->
+
+Increasingly frequent winter warming events cause the environment to alternate from freezing to melting which can have a major impact on lake ecosystems. Specifically, road salt application followed by melting leads to runoff and increased salinity in freshwater ecosystems with detrimental effects on zooplankton communities such as reduction in thermal tolerance. Stressors of high salinity may occur in an isolated manner or in tandem with warming events.
+
+## Question:
+
+How does short term exposure to road salt and the isolated exposure of two salt components found in road salt impact the survivirorship and thermal limits of freshwater copepods?
 
 # Hypotheses
 
-Bullet list
+Survivorship: Exposure to higher concentrations of road salt, NaCl, and MgCl2 will increase mortality over a 5-day period.
+
+Thermal Limits: Copepods acclimated to higher salt concentrations will exhibit decreased thermal limits.
 
 # Main Figures
 
@@ -88,6 +96,62 @@ List with captions and interpretation <!--# Sydney lists the figures in order, a
 
 <!--# Matt adds the figures / code as needed -->
 
+## Survivorship
+
+We found that both road salt ions reduced survival in a species and treatment specific manner. The winter-dominant species, *L. sicilis*, was most resilient to increased salt concentration followed by *L. minutus*, fall species, and *Skistodiaptomus spp.*, summer species. Between salts, MgCl2 had a stronger effect on survivorship in *L. sicilis* whereas NaCl decreased survivorship in *L. minutus* and *Skistodiaptomus spp.*.
+
+<!--# Survivorship weeble regression figure here -->
+
+Key Takeaways:
+
+-   Species have different salt sensitivities
+
+-   Most sensitive: Skisto \> Minutus \> Sicilis
+
+-   Minutus is more sensitive to NaCl, Sicilis is the opposite
+
+→ Sets up a narrative on salt specific effects 
+
+<!--# lc50 figure here -->
+
+Key Takeaways:
+
+-   MgCl2 LC50 is constant across both species and has a rapid effect on the animals
+
+-   NaCl requires a longer exposure to both animals in order to reach LC50 in an ecologically relevant level
+
+→ Suggests a salt specific effect on survivorship 
+
+## Thermal Tolerance
+
+<!--# CTmax mixed effects model here --> <!--# Parameter estimate here -->
+
+<!--# If we were to make these into a multipannel single figure, can we do that in R? -->
+
+Key Takeways:
+
+-   No significant difference between the salts
+
+-   *L. sicilis*: Significant effects of ions on thermal tolerance
+
+-   In combination with survival data → lower thermal limits correspond to lower survivorship measured
+
+→ Different species respond differently to salt stress
+
+<!--# Proportion mortality figure here --> <!--# Similar plot with road salt data? -->
+
+Key Takeaways:
+
+-   Can be used as validation for missing *L. minutus* data (we see the same trends observed here that we had predicted above in *L. minutus* - no difference between the salts)
+
+-   Mg continues to have a strong effect in *L. sicilis*
+
+-   *L. sicilis*: ion effects are condition dependent with something else happening in NaCl
+
 # Main Conclusion
 
-Bullets
+-   Mortality differs depending on both salt type and species in copepods
+
+-   Increased freshwater salinization negatively impacts thermal tolerance in winter dominant *L. sicilis* but not *L. minutus*
+
+-   Regulation of road salt use is necessary to decrease freshwater salinization and protect zooplankton species
