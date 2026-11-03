@@ -1,0 +1,44 @@
+---
+title: "Author Agreement"
+author: "Sydney Sharp"
+date: "2026-11-03"
+output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Requirements for Authorship
+
+1.  Assisted on experiment and/or data collection
+
+2.  Provides feedback on manuscript drafts
+
+    1.  Responds to emails when feedback is required
+
+    2.  If there is no response from a co-author after two weeks or
+        three attempts to contact, they will be listed in the
+        acknowledgements and no longer remain a co-author.
+
+3.  Approves author agreement
+
+## AI Use in Manuscript Coding
+
+1.  No AI use Proofreading: No AI use
+2.  Writing/drafting: No AI use
+3.  Reference management: No AI use
+4.  Conceptual outlines: No AI use
+5.  We ask that when reviewing the manuscript you avoid using AI
+
+## Author Order 
+
+1.  Author order will be as follows: Sydney Sharp, "Anna McPeak, Chiara
+    Cohen, Katie Anthony, Olivia Britton, HS students, ---", Melissa
+    Pespeni, Matthew Sasaki
+2.  Sydney Sharp will be first author as the main driver of the project
+    and manuscript writing. Melissa Pespeni and Matt Sasaki will be the
+    last authors as primary supervisors to the project.
+3.  All middle authors have been alphabetized by first name
+
+Please acknowledge your approval of this agreement in an email to
+[sydsharp72\@gmail.com](mailto:sydsharp72@gmail.com){.email}
