@@ -85,7 +85,7 @@ theme_matt_facets = function(base_size = 18,
 
 ## CTmax Data
 
-```{r}
+```{r ctmax-plot, fig.width=7, fig.height=5}
 ctmax_model_data = ctmax_data %>% 
   mutate(treatment = case_when(
     dose_group == "Control" ~ "Control",
@@ -93,102 +93,17 @@ ctmax_model_data = ctmax_data %>%
   ))
 
 ggplot(ctmax_model_data, aes(x = treatment, y = ctmax)) + 
-  facet_wrap(species~.) + 
-  geom_boxplot() + 
-  geom_point(size = 1) + 
-  theme_matt_facets()
+  facet_wrap(species~., scales = "free_x") + 
+  geom_boxplot(outlier.color = NA) + 
+  geom_point(size = 1, position = position_jitter(height = 0, width = 0.1)) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt_facets() + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
 ```
 
 Shown below are the sample sizes for the various salt-treatment combinations. Fewer experiments were run with Instant Ocean, so the sample sizes are smaller for this salt.
-
-```{r}
-
-ctmax_data %>% 
-  count(species, salt, dose_group) %>% 
-  knitr::kable()
-
-```
-
-A linear mixed effects model was used to examine variation in CTmax as a function of salt type (Instant Ocean and road salt) and treatment (control or salt-acclimated). We also examined the interaction between these factors to determine whether the effect of treatment depended on the type of salt used. Experiment date was included as a random effect to control for any differences between collections or experimental replicates.
-
-```{r}
-
-salt.model = lmer(data = ctmax_model_data,
-                  ctmax ~ species * treatment + (1|assay_date))
-
-knitr::kable(car::Anova(salt.model, type = "III"))
-
-```
-
-The mixed effects model indicates that there was a significant interaction between salt type and treatment. We examined this interaction by calculating the marginal treatment means by salt type. Shown below, there was no significant difference between treatment groups in the Instant Ocean experiments, but there was a substantial difference between treatment groups in the road salt experiments.
-
-```{r}
-salt.means = emmeans::emmeans(salt.model, ~ treatment | species) %>% emmeans::contrast(method = "trt.vs.ctrl")
-
-knitr::kable(salt.means)
-```
-
-```{r}
-
-salt.means %>%  data.frame() %>% 
-  ggplot(aes(y = contrast, x = estimate, colour = species)) + 
-  geom_vline(xintercept = 0) + 
-  geom_errorbar(aes(xmin = estimate - SE, xmax = estimate + SE),
-                width = 0.2, linewidth = 1, 
-                position = position_dodge(width = 0.4)) + 
-  geom_point(size = 3, 
-                position = position_dodge(width = 0.4)) + 
-  theme_matt() + 
-  theme(legend.position = "right")
-
-```
-
-## Survival Data
-
-### Sample Sizes
-
-```{r}
-
-species_surv_total = surv_data %>% 
-  filter(exp_day == 1) %>% 
-  group_by(species, salt) %>% 
-  summarise(total_n = sum(initial))
-
-surv_data |> filter(exp_day == 1, species == "L. sicilis", salt == "MgCl2") 
-
-species_surv_collections = surv_data %>% 
-  filter(exp_day == 1) %>% 
-  select(species, salt, exp_date) %>% 
-  distinct() %>% 
-  group_by(species, salt) %>% 
-  count(name = "collections")
-
-species_surv_mean = surv_data %>% 
-  filter(exp_day == 1) %>% 
-  group_by(species, salt, exp_date, replicate, est_chloride) %>% 
-  summarise(n = sum(initial)) %>% 
-  ungroup() %>% 
-  group_by(species, salt) %>% 
-  summarise(mean_n = mean(n))
-
-species_surv_concentrations = surv_data %>% 
-  select(species, salt, exp_date, est_chloride) %>% 
-  distinct() %>% 
-  group_by(species, salt, exp_date) %>% 
-  count() %>% 
-  ungroup() %>% 
-  group_by(species, salt) %>% 
-  summarise(mean_n_conditions = mean(n))
-
-
-species_surv_total %>% 
-  inner_join(species_surv_collections, by = c("species", "salt")) %>% 
-  inner_join(species_surv_mean, by = c("species", "salt")) %>% 
-  inner_join(species_surv_concentrations, by = c("species", "salt")) %>% 
-  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per replicate, and the average number of conditions (chloride concentrations) employed during each replicate.")
-
-```
 
 ```{r}
 
@@ -213,6 +128,81 @@ species_ctmax_total %>%
   inner_join(species_ctmax_collections, by = c("species", "salt")) %>% 
   inner_join(species_ctmax_mean, by = c("species", "salt")) %>% 
   knitr::kable(digits = 2, caption = "Sample size information from the CTmax experiments. Shown here for each species and salt type are the total number of CTmax measurements, the number of collections (i.e. experimental replicates), and the average number of CTmax measurements per replicate")
+
+```
+
+A linear mixed effects model was used to examine variation in CTmax as a function of salt type (Instant Ocean and road salt) and treatment (control or salt-acclimated). We also examined the interaction between these factors to determine whether the effect of treatment depended on the type of salt used. Experiment date was included as a random effect to control for any differences between collections or experimental replicates.
+
+```{r}
+
+salt.model = lmer(data = ctmax_model_data,
+                  ctmax ~ species * treatment + (1|assay_date))
+
+knitr::kable(car::Anova(salt.model, type = "III"))
+
+```
+
+The mixed effects model indicates that there was a significant interaction between salt type and treatment. We examined this interaction by calculating the marginal treatment means by salt type. Shown below, there was no significant difference between treatment groups in the Instant Ocean experiments, but there was a substantial difference between treatment groups in the road salt experiments.
+
+```{r}
+salt.means = emmeans::emmeans(salt.model, ~ treatment | species) %>% emmeans::contrast(method = "trt.vs.ctrl")
+
+knitr::kable(salt.means)
+```
+
+```{r ctmax-effects-plot, fig.width=6, fig.height=4}
+
+salt.means %>% data.frame() %>% 
+  mutate(salt = str_remove_all(contrast, " - Control")) |> 
+  ggplot(aes(y = salt, x = estimate, colour = species)) + 
+  geom_vline(xintercept = 0) + 
+  geom_errorbar(aes(xmin = estimate - SE, xmax = estimate + SE),
+                width = 0.3, linewidth = 1.8, 
+                position = position_dodge(width = 0.4)) + 
+  geom_point(size = 4, 
+                position = position_dodge(width = 0.4)) + 
+  labs(x = "Effect of Salt Treatment \non CTmax (°C)", 
+       y = NULL) + 
+  theme_matt() + 
+  theme(legend.position = "right")
+
+```
+
+## Survival Data
+
+### Sample Sizes
+
+```{r}
+
+# Tallying up the individual survival data to get total n per species and salt
+species_surv_total = survival_data |> 
+  ungroup() |>  
+  count(species, salt)
+
+species_surv_collections = daily_prop_data %>% 
+  filter(hour == 0) %>% 
+  select(species, salt, exp_date) %>% 
+  distinct() %>% 
+  group_by(species, salt) %>% 
+  count(name = "replicates")
+
+species_surv_mean = daily_prop_data %>% 
+  filter(hour == 0) %>% 
+  group_by(species, salt) %>% 
+  summarise(mean_n = mean(initial))
+
+species_surv_concentrations = surv_data %>% 
+  select(species, salt, exp_date, treatment) |> 
+  distinct() |> 
+  count(species, salt, exp_date) |> 
+  group_by(species, salt) %>% 
+  summarise(mean_conditions = mean(n))
+
+species_surv_total %>% 
+  inner_join(species_surv_collections, by = c("species", "salt")) %>% 
+  inner_join(species_surv_mean, by = c("species", "salt")) %>% 
+  inner_join(species_surv_concentrations, by = c("species", "salt")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per condition, and the average number of conditions (chloride concentrations) employed during each replicate.")
 
 ```
 
@@ -315,21 +305,26 @@ Note: the model assumes a single shared Weibull shape parameter across all speci
 
 ### LC50 Values
 
-```{r}
-
-salt_cols = c("MgCl2" = "#761968", 
-              "NaCl" = "#32ad3a", 
-              "RoadSalt" = "red")
+```{r prop-surv-plot, fig.width=8, fig.height=7}
 
 daily_prop_data %>% 
     filter(exp_day != 0) %>% 
-  ggplot(aes(x = est_chloride, y = prop_surv, colour = species, weight = initial)) + 
-  facet_grid(exp_day~salt, scales = "free") + 
+  ggplot(aes(x = est_chloride, y = prop_surv, colour = factor(day), weight = initial)) + 
+  facet_grid(species~salt, scales = "free") + 
+  geom_hline(yintercept = 0.5) + 
   geom_point(aes(size = initial), alpha = 0.6)+ 
   geom_smooth(method = "glm",
               method.args = list(family = "quasibinomial"), 
               se = F, 
-              linewidth = 2.5)
+              linewidth = 2.5) + 
+  scale_y_continuous(breaks = c(0,1)) +
+  labs(x = "Estimated Chloride (mg)", 
+       y = "Proportion Surviving", 
+       size = "N", 
+       colour = "Day") + 
+  theme_matt_facets() + 
+  theme(axis.text.x = element_text(angle = 310, hjust = 0, vjust = 0.5),
+        strip.text.y.right = element_text(size = 15))
 
 ```
 
@@ -338,6 +333,12 @@ We previously fit a separate logistic regression for each species x salt x day s
 Instead, we fit one quasibinomial model per species x salt combination, using the actual survival counts (`cbind(n_surviving, n_dead)`, which supplies the sample size directly rather than via `weights`) and an `est_chloride * day` interaction. This pools information across days within a group and lets us formally test whether the dose-response relationship (and hence LC50) changes over time, via an F-test comparing the model with and without the interaction (appropriate here since `quasibinomial` doesn't have a well-defined likelihood for a chi-square LRT).
 
 ```{r lc50-models}
+
+salt_cols = c("MgCl2" = "#761968", 
+              "NaCl" = "#32ad3a", 
+              "RoadSalt" = "red")
+
+
 lc50_models = daily_prop_data %>% 
   filter(day != 0) %>% 
   mutate(n_dead = initial - n_surviving) %>% 
@@ -418,7 +419,10 @@ lc50_traj = lc50_models %>%
 
 ```{r lc50-trajectory-plot, fig.width=11, fig.height=4}
 
-ggplot(lc50_traj, aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
+lc50_traj |>  
+  filter(!(species == "Skistodiaptomus" & salt %in% c("MgCl2", "NaCl") | 
+             species == "L. sicilis" & day > 5)) |> 
+ggplot(aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
   facet_wrap(species ~ .) + 
   geom_ribbon(aes(ymin = lwr_g, ymax = upr_g), alpha = 0.2, colour = NA) + 
   geom_line(linewidth = 1.2) + 
@@ -433,7 +437,7 @@ The ribbon width makes the earlier instability visible rather than hiding it: fo
 
 ## Body Sizes
 
-```{r}
+```{r size-plot, fig.width=6, fig.height=3}
 
 size_data %>% 
   filter(species != "Other") %>% 

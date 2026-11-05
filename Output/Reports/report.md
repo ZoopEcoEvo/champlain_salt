@@ -1,7 +1,7 @@
 Effects of salinity acclimation on upper thermal limits of Lake
 Champlain diaptomid copepods
 ================
-2026-10-22
+2026-11-05
 
 - [CTmax Data](#ctmax-data)
 - [Survival Data](#survival-data)
@@ -24,13 +24,16 @@ ctmax_model_data = ctmax_data %>%
   ))
 
 ggplot(ctmax_model_data, aes(x = treatment, y = ctmax)) + 
-  facet_wrap(species~.) + 
-  geom_boxplot() + 
-  geom_point(size = 1) + 
-  theme_matt_facets()
+  facet_wrap(species~., scales = "free_x") + 
+  geom_boxplot(outlier.color = NA) + 
+  geom_point(size = 1, position = position_jitter(height = 0, width = 0.1)) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt_facets() + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
 ```
 
-<img src="../Figures/report/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-plot-1.png" style="display: block; margin: auto;" />
 
 Shown below are the sample sizes for the various salt-treatment
 combinations. Fewer experiments were run with Instant Ocean, so the
@@ -38,23 +41,41 @@ sample sizes are smaller for this salt.
 
 ``` r
 
-ctmax_data %>% 
-  count(species, salt, dose_group) %>% 
-  knitr::kable()
+species_ctmax_total = ctmax_data %>% 
+  group_by(species, salt) %>% 
+  count(name = "total")
+
+species_ctmax_collections = ctmax_data %>% 
+  select(species, salt, exp_rep) %>% 
+  distinct() %>% 
+  group_by(species, salt) %>% 
+  count(name = "collections")
+
+species_ctmax_mean = ctmax_data %>% 
+  group_by(species, salt, exp_rep) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(species, salt) %>% 
+  summarise(mean_n = mean(n))
+
+species_ctmax_total %>% 
+  inner_join(species_ctmax_collections, by = c("species", "salt")) %>% 
+  inner_join(species_ctmax_mean, by = c("species", "salt")) %>% 
+  knitr::kable(digits = 2, caption = "Sample size information from the CTmax experiments. Shown here for each species and salt type are the total number of CTmax measurements, the number of collections (i.e. experimental replicates), and the average number of CTmax measurements per replicate")
 ```
 
-| species    | salt     | dose_group |   n |
-|:-----------|:---------|:-----------|----:|
-| L. minutus | MgCl2    | Control    |  11 |
-| L. minutus | MgCl2    | Salt       |  39 |
-| L. minutus | NaCl     | Control    |  14 |
-| L. minutus | NaCl     | Salt       |  31 |
-| L. sicilis | MgCl2    | Control    |  17 |
-| L. sicilis | MgCl2    | Salt       |  43 |
-| L. sicilis | NaCl     | Control    |  27 |
-| L. sicilis | NaCl     | Salt       |  85 |
-| L. sicilis | RoadSalt | Control    |  35 |
-| L. sicilis | RoadSalt | Salt       |  35 |
+| species    | salt     | total | collections | mean_n |
+|:-----------|:---------|------:|------------:|-------:|
+| L. minutus | MgCl2    |    50 |           4 |  12.50 |
+| L. minutus | NaCl     |    45 |           4 |  11.25 |
+| L. sicilis | MgCl2    |    60 |           4 |  15.00 |
+| L. sicilis | NaCl     |   112 |           4 |  28.00 |
+| L. sicilis | RoadSalt |    70 |           2 |  35.00 |
+
+Sample size information from the CTmax experiments. Shown here for each
+species and salt type are the total number of CTmax measurements, the
+number of collections (i.e. experimental replicates), and the average
+number of CTmax measurements per replicate
 
 A linear mixed effects model was used to examine variation in CTmax as a
 function of salt type (Instant Ocean and road salt) and treatment
@@ -103,19 +124,22 @@ knitr::kable(salt.means)
 
 ``` r
 
-salt.means %>%  data.frame() %>% 
-  ggplot(aes(y = contrast, x = estimate, colour = species)) + 
+salt.means %>% data.frame() %>% 
+  mutate(salt = str_remove_all(contrast, " - Control")) |> 
+  ggplot(aes(y = salt, x = estimate, colour = species)) + 
   geom_vline(xintercept = 0) + 
   geom_errorbar(aes(xmin = estimate - SE, xmax = estimate + SE),
-                width = 0.2, linewidth = 1, 
+                width = 0.3, linewidth = 1.8, 
                 position = position_dodge(width = 0.4)) + 
-  geom_point(size = 3, 
+  geom_point(size = 4, 
                 position = position_dodge(width = 0.4)) + 
+  labs(x = "Effect of Salt Treatment \non CTmax (°C)", 
+       y = NULL) + 
   theme_matt() + 
   theme(legend.position = "right")
 ```
 
-<img src="../Figures/report/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-effects-plot-1.png" style="display: block; margin: auto;" />
 
 ## Survival Data
 
@@ -123,152 +147,54 @@ salt.means %>%  data.frame() %>%
 
 ``` r
 
-species_surv_total = surv_data %>% 
-  filter(exp_day == 1) %>% 
-  group_by(species, salt) %>% 
-  summarise(total_n = sum(initial))
+# Tallying up the individual survival data to get total n per species and salt
+species_surv_total = survival_data |> 
+  ungroup() |>  
+  count(species, salt)
 
-surv_data |> filter(exp_day == 1, species == "L. sicilis", salt == "MgCl2") 
-##       species    sex  salt treatment est_chloride replicate   exp_date ID initial hour ind_surv exp_day
-## 1  L. sicilis female MgCl2      1100         1100         2 2026-01-23  5       5   24        1       1
-## 2  L. sicilis female MgCl2      1600         1600         7 2026-01-23  5       5   24        1       1
-## 3  L. sicilis female MgCl2      2100         2100         3 2026-01-30  4       5   25        1       1
-## 4  L. sicilis female MgCl2      2100         2100         3 2026-01-30  5       5   25        1       1
-## 5  L. sicilis female MgCl2      2200         2200         4 2026-01-30  5       5   25        1       1
-## 6  L. sicilis female MgCl2      2400         2400         6 2026-01-30  4       5   25        1       1
-## 7  L. sicilis female MgCl2      2400         2400         6 2026-01-30  5       5   25        1       1
-## 8  L. sicilis female MgCl2      2500         2500         7 2026-01-30  4       5   25        1       1
-## 9  L. sicilis female MgCl2      2500         2500         7 2026-01-30  5       5   25        1       1
-## 10 L. sicilis female MgCl2      2600         2600         8 2026-01-30  2       5   25        1       1
-## 11 L. sicilis female MgCl2      2600         2600         8 2026-01-30  3       5   25        1       1
-## 12 L. sicilis female MgCl2      2600         2600         8 2026-01-30  4       5   25        1       1
-## 13 L. sicilis female MgCl2      2600         2600         8 2026-01-30  5       5   25        1       1
-## 14 L. sicilis female MgCl2      2300         2300         5 2026-02-04  5       5   24        1       1
-## 15 L. sicilis female MgCl2      2400         2400         6 2026-02-04  4       5   24        1       1
-## 16 L. sicilis female MgCl2      2400         2400         6 2026-02-04  5       5   24        1       1
-## 17 L. sicilis female MgCl2      2500         2500         7 2026-02-04  2       5   24        1       1
-## 18 L. sicilis female MgCl2      2500         2500         7 2026-02-04  3       5   24        1       1
-## 19 L. sicilis female MgCl2      2500         2500         7 2026-02-04  4       5   24        1       1
-## 20 L. sicilis female MgCl2      2500         2500         7 2026-02-04  5       5   24        1       1
-## 21 L. sicilis female MgCl2      2600         2600         8 2026-02-04  3       5   24        1       1
-## 22 L. sicilis female MgCl2      2600         2600         8 2026-02-04  4       5   24        1       1
-## 23 L. sicilis female MgCl2      2600         2600         8 2026-02-04  5       5   24        1       1
-## 24 L. sicilis female MgCl2      2000         2000         1 2026-02-09  5       5   24        1       1
-## 25 L. sicilis female MgCl2      2100         2100         2 2026-02-09  4       5   24        1       1
-## 26 L. sicilis female MgCl2      2100         2100         2 2026-02-09  5       5   24        1       1
-## 27 L. sicilis female MgCl2      2000         2000         2 2026-03-18  5       5   26        1       1
-## 28 L. sicilis female MgCl2      2100         2100         3 2026-03-18  5       5   26        1       1
-## 29 L. sicilis female MgCl2      2200         2200         4 2026-03-18  5       5   26        1       1
-## 30 L. sicilis female MgCl2      2300         2300         5 2026-03-18  3       5   26        1       1
-## 31 L. sicilis female MgCl2      2300         2300         5 2026-03-18  4       5   26        1       1
-## 32 L. sicilis female MgCl2      2300         2300         5 2026-03-18  5       5   26        1       1
-## 33 L. sicilis female MgCl2      2400         2400         6 2026-03-18  5       5   26        1       1
-## 34 L. sicilis female MgCl2      2500         2500         7 2026-03-18  4       5   26        1       1
-## 35 L. sicilis female MgCl2      2500         2500         7 2026-03-18  5       5   26        1       1
-## 36 L. sicilis female MgCl2      2600         2600         8 2026-03-18  2       5   26        1       1
-## 37 L. sicilis female MgCl2      2600         2600         8 2026-03-18  3       5   26        1       1
-## 38 L. sicilis female MgCl2      2600         2600         8 2026-03-18  4       5   26        1       1
-## 39 L. sicilis female MgCl2      2600         2600         8 2026-03-18  5       5   26        1       1
-## 40 L. sicilis female MgCl2      1900         1900         1 2026-03-25  5       5   22        1       1
-## 41 L. sicilis female MgCl2      2100         2100         3 2026-03-25  5       5   22        1       1
-## 42 L. sicilis female MgCl2      2200         2200         4 2026-03-25  3       5   22        1       1
-## 43 L. sicilis female MgCl2      2200         2200         4 2026-03-25  4       5   22        1       1
-## 44 L. sicilis female MgCl2      2200         2200         4 2026-03-25  5       5   22        1       1
-## 45 L. sicilis female MgCl2      2300         2300         5 2026-03-25  4       4   22        1       1
-## 46 L. sicilis female MgCl2      2400         2400         6 2026-03-25  3       5   22        1       1
-## 47 L. sicilis female MgCl2      2400         2400         6 2026-03-25  4       5   22        1       1
-## 48 L. sicilis female MgCl2      2400         2400         6 2026-03-25  5       5   22        1       1
-## 49 L. sicilis female MgCl2      2500         2500         7 2026-03-25  4       5   22        1       1
-## 50 L. sicilis female MgCl2      2500         2500         7 2026-03-25  5       5   22        1       1
-## 51 L. sicilis female MgCl2      2600         2600         8 2026-03-25  3       4   22        1       1
-## 52 L. sicilis female MgCl2      2600         2600         8 2026-03-25  4       4   22        1       1
-
-species_surv_collections = surv_data %>% 
-  filter(exp_day == 1) %>% 
+species_surv_collections = daily_prop_data %>% 
+  filter(hour == 0) %>% 
   select(species, salt, exp_date) %>% 
   distinct() %>% 
   group_by(species, salt) %>% 
-  count(name = "collections")
+  count(name = "replicates")
 
-species_surv_mean = surv_data %>% 
-  filter(exp_day == 1) %>% 
-  group_by(species, salt, exp_date, replicate, est_chloride) %>% 
-  summarise(n = sum(initial)) %>% 
-  ungroup() %>% 
+species_surv_mean = daily_prop_data %>% 
+  filter(hour == 0) %>% 
   group_by(species, salt) %>% 
-  summarise(mean_n = mean(n))
+  summarise(mean_n = mean(initial))
 
 species_surv_concentrations = surv_data %>% 
-  select(species, salt, exp_date, est_chloride) %>% 
-  distinct() %>% 
-  group_by(species, salt, exp_date) %>% 
-  count() %>% 
-  ungroup() %>% 
+  select(species, salt, exp_date, treatment) |> 
+  distinct() |> 
+  count(species, salt, exp_date) |> 
   group_by(species, salt) %>% 
-  summarise(mean_n_conditions = mean(n))
-
+  summarise(mean_conditions = mean(n))
 
 species_surv_total %>% 
   inner_join(species_surv_collections, by = c("species", "salt")) %>% 
   inner_join(species_surv_mean, by = c("species", "salt")) %>% 
   inner_join(species_surv_concentrations, by = c("species", "salt")) %>% 
-  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per replicate, and the average number of conditions (chloride concentrations) employed during each replicate.")
+  knitr::kable(digits = 2, caption = "Sample size information from the survivorship experiments. Shown here for each species and salt type are the total number of individuals monitored for survival, the number of collections (i.e. experimental replicates), and the average number of individuals per condition, and the average number of conditions (chloride concentrations) employed during each replicate.")
 ```
 
-| species         | salt     | total_n | collections | mean_n | mean_n_conditions |
-|:----------------|:---------|--------:|------------:|-------:|------------------:|
-| L. minutus      | MgCl2    |      35 |           3 |   5.00 |              9.00 |
-| L. minutus      | NaCl     |      26 |           3 |   6.50 |              6.80 |
-| L. sicilis      | MgCl2    |     257 |           6 |   9.52 |              8.14 |
-| L. sicilis      | NaCl     |      14 |           2 |   4.67 |              6.27 |
-| L. sicilis      | RoadSalt |     262 |           2 |  43.67 |              8.00 |
-| Skistodiaptomus | NaCl     |     284 |           3 |  16.71 |              5.80 |
-| Skistodiaptomus | RoadSalt |      58 |           1 |   7.25 |              8.00 |
+| species         | salt     |   n | replicates | mean_n | mean_conditions |
+|:----------------|:---------|----:|-----------:|-------:|----------------:|
+| L. minutus      | MgCl2    | 151 |          3 |   5.03 |            9.00 |
+| L. minutus      | NaCl     | 177 |          5 |   4.92 |            6.80 |
+| L. sicilis      | MgCl2    | 316 |          7 |   4.97 |            8.14 |
+| L. sicilis      | NaCl     | 397 |         11 |   4.95 |            6.27 |
+| L. sicilis      | RoadSalt | 283 |          2 |  10.13 |            8.00 |
+| Skistodiaptomus | MgCl2    |  71 |          2 |   4.44 |            7.00 |
+| Skistodiaptomus | NaCl     | 142 |          5 |   4.58 |            5.80 |
+| Skistodiaptomus | RoadSalt | 202 |          1 |   4.67 |            8.00 |
 
 Sample size information from the survivorship experiments. Shown here
 for each species and salt type are the total number of individuals
 monitored for survival, the number of collections (i.e. experimental
-replicates), and the average number of individuals per replicate, and
+replicates), and the average number of individuals per condition, and
 the average number of conditions (chloride concentrations) employed
 during each replicate.
-
-``` r
-
-species_ctmax_total = ctmax_data %>% 
-  group_by(species, salt) %>% 
-  count(name = "total")
-
-species_ctmax_collections = ctmax_data %>% 
-  select(species, salt, exp_rep) %>% 
-  distinct() %>% 
-  group_by(species, salt) %>% 
-  count(name = "collections")
-
-species_ctmax_mean = ctmax_data %>% 
-  group_by(species, salt, exp_rep) %>% 
-  count() %>% 
-  ungroup() %>% 
-  group_by(species, salt) %>% 
-  summarise(mean_n = mean(n))
-
-species_ctmax_total %>% 
-  inner_join(species_ctmax_collections, by = c("species", "salt")) %>% 
-  inner_join(species_ctmax_mean, by = c("species", "salt")) %>% 
-  knitr::kable(digits = 2, caption = "Sample size information from the CTmax experiments. Shown here for each species and salt type are the total number of CTmax measurements, the number of collections (i.e. experimental replicates), and the average number of CTmax measurements per replicate")
-```
-
-| species    | salt     | total | collections | mean_n |
-|:-----------|:---------|------:|------------:|-------:|
-| L. minutus | MgCl2    |    50 |           4 |  12.50 |
-| L. minutus | NaCl     |    45 |           4 |  11.25 |
-| L. sicilis | MgCl2    |    60 |           4 |  15.00 |
-| L. sicilis | NaCl     |   112 |           4 |  28.00 |
-| L. sicilis | RoadSalt |    70 |           2 |  35.00 |
-
-Sample size information from the CTmax experiments. Shown here for each
-species and salt type are the total number of CTmax measurements, the
-number of collections (i.e. experimental replicates), and the average
-number of CTmax measurements per replicate
 
 ### Survival
 
@@ -445,22 +371,27 @@ group gets its own shape, and update the `shape` term above accordingly.
 
 ``` r
 
-salt_cols = c("MgCl2" = "#761968", 
-              "NaCl" = "#32ad3a", 
-              "RoadSalt" = "red")
-
 daily_prop_data %>% 
     filter(exp_day != 0) %>% 
-  ggplot(aes(x = est_chloride, y = prop_surv, colour = species, weight = initial)) + 
-  facet_grid(exp_day~salt, scales = "free") + 
+  ggplot(aes(x = est_chloride, y = prop_surv, colour = factor(day), weight = initial)) + 
+  facet_grid(species~salt, scales = "free") + 
+  geom_hline(yintercept = 0.5) + 
   geom_point(aes(size = initial), alpha = 0.6)+ 
   geom_smooth(method = "glm",
               method.args = list(family = "quasibinomial"), 
               se = F, 
-              linewidth = 2.5)
+              linewidth = 2.5) + 
+  scale_y_continuous(breaks = c(0,1)) +
+  labs(x = "Estimated Chloride (mg)", 
+       y = "Proportion Surviving", 
+       size = "N", 
+       colour = "Day") + 
+  theme_matt_facets() + 
+  theme(axis.text.x = element_text(angle = 310, hjust = 0, vjust = 0.5),
+        strip.text.y.right = element_text(size = 15))
 ```
 
-<img src="../Figures/report/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/prop-surv-plot-1.png" style="display: block; margin: auto;" />
 
 We previously fit a separate logistic regression for each species x salt
 x day subset and extracted the LC50 (chloride concentration producing
@@ -486,6 +417,12 @@ the model with and without the interaction (appropriate here since
 LRT).
 
 ``` r
+
+salt_cols = c("MgCl2" = "#761968", 
+              "NaCl" = "#32ad3a", 
+              "RoadSalt" = "red")
+
+
 lc50_models = daily_prop_data %>% 
   filter(day != 0) %>% 
   mutate(n_dead = initial - n_surviving) %>% 
@@ -588,7 +525,10 @@ lc50_traj = lc50_models %>%
 
 ``` r
 
-ggplot(lc50_traj, aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
+lc50_traj |>  
+  filter(!(species == "Skistodiaptomus" & salt %in% c("MgCl2", "NaCl") | 
+             species == "L. sicilis" & day > 5)) |> 
+ggplot(aes(x = day, y = lc50_g, colour = salt, fill = salt)) + 
   facet_wrap(species ~ .) + 
   geom_ribbon(aes(ymin = lwr_g, ymax = upr_g), alpha = 0.2, colour = NA) + 
   geom_line(linewidth = 1.2) + 
@@ -623,4 +563,4 @@ ggplot(aes(x = size)) +
   theme_matt_facets()
 ```
 
-<img src="../Figures/report/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/size-plot-1.png" style="display: block; margin: auto;" />

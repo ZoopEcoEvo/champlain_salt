@@ -36,6 +36,7 @@
 
 surv_files_2024 <- dir("Raw_data/2024_data/surv_data") |>
   keep(~ str_detect(.x, "^2024"))                # drops the "trial_*" pilot files
+
 sic_files <- surv_files_2024[str_detect(surv_files_2024, "2024-01")]
 
 surv_2024 <- map_dfr(surv_files_2024, function(file) {
