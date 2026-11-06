@@ -1,5 +1,4 @@
-# =============================================================================
-# 01_data_processing.R
+# 01_data_processing.R =============================================================================
 #
 # Combines raw survival and CTmax files (2024 + 2025/26 cohorts) into tidy,
 # individual-level datasets and writes them to Output/Output_data/.
@@ -15,19 +14,16 @@
 #   - ctmax_data      -> Output/Output_data/ctmax_data.csv
 #       One row per individual CTmax measurement.
 #
-# Model fitting and plotting live in Output/Reports/report.Rmd, not here
-# (see CHECKLIST.md Phase 2).
-# =============================================================================
+# Model fitting and plotting are performed in Output/Reports/report.Rmd, not here
 
-### Processing Data from Three Sources
+# Processing Data from Three Sources =============================================================================
 # Winter 2024 (L. sicilis survival and CTmax; Road Salt and Instant Ocean)
 # Summer 2024 (Skistodiaptomus survival; Road Salt)
 # Fall 2025/Winter 2026 (L. sicilis & L. minutus survival and CTmax; Ion-specific)
 
 
-# =============================================================================
-# 1. SURVIVAL DATA: combine raw files into one tidy, individual-level table
-# =============================================================================
+# 1. SURVIVAL DATA =============================================================================
+# combine raw files into one tidy, individual-level table
 
 ## ---- 1a. 2024 cohort (L. sicilis winter trials; Skistodiaptomus summer trial) ----
 # Files: Raw_data/2024_data/surv_data/2024-*.csv
@@ -115,9 +111,9 @@ survival_data <- bind_rows(
   arrange(species, salt, exp_date, treatment, replicate)
 
 
-# =============================================================================
-# 2. DAILY PROPORTIONAL SURVIVAL: observed proportion surviving at each check
-# =============================================================================
+# 2. DAILY PROPORTIONAL SURVIVAL =============================================================================
+# Observed proportion surviving at each check
+
 # Kept separate from `survival_data` because it's a repeated-measures count
 # (survivors remaining at each check), not an individual event/censoring
 # time -- used for descriptive plots against model predictions.
@@ -188,9 +184,8 @@ daily_prop_data <- bind_rows(
   filter(salt != "InstantOcean")
 
 
-# =============================================================================
-# 3. CTMAX DATA: combine raw files into one tidy, individual-level table
-# =============================================================================
+# 3. CTMAX DATA =============================================================================
+# Combine raw files into one tidy, individual-level table
 
 ## ---- 3a. 2024 cohort (paired observation/temperature-logger files) --------
 ctmax_files_2024 <- dir("Raw_data/2024_data/ctmax_data") |>
@@ -252,9 +247,8 @@ ctmax_data <- bind_rows(ctmax_2024, ctmax_2025) |>
   arrange(species, salt, assay_date, tube)
 
 
-# =============================================================================
-# 4. WRITE TIDY DATASETS
-# =============================================================================
+# 4. WRITE TIDY DATASETS =============================================================================
+ 
 write.csv(survival_data, file = "Output/Output_data/surv_data.csv", row.names = FALSE)
 write.csv(daily_prop_data, file = "Output/Output_data/daily_prop_data.csv", row.names = FALSE)
 write.csv(ctmax_data, file = "Output/Output_data/ctmax_data.csv", row.names = FALSE)

@@ -55,6 +55,10 @@ if(make_report == T){
   render(input = "Output/Reports/report.Rmd", #Input the path to your .Rmd file here
          #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
          output_format = "all")
+  
+  render(input = "Output/Reports/manuscript_narrative.Rmd", #Input the path to your .Rmd file here
+         #output_file = "report", #Name your file here if you want it to have a different name; leave off the .html, .md, etc. - it will add the correct one automatically
+         output_format = "all")
 }
 
 ##################################

@@ -4,88 +4,119 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-# Introduction and Central Question(s)
+```{r, echo = F}
 
-<!--# Would there be a way for me to include my graphical abstract here? What is the best way to incorperate that into the markdown file? -->
+library(here)
+library(knitr)
+```
 
-Increasingly frequent winter warming events cause the environment to alternate from freezing to melting which can have a major impact on lake ecosystems. Specifically, road salt application followed by melting leads to runoff and increased salinity in freshwater ecosystems with detrimental effects on zooplankton communities such as reduction in thermal tolerance. Stressors of high salinity may occur in an isolated manner or in tandem with warming events.
+```{r echo = F}
+#| label: fig-abstract
+#| fig-cap: ""
+#| out-width: "90%"
 
-## Question:
+#knitr::include_graphics(here("Output", "Figures", "graphical_abstract.png"))
+```
 
-How does short term exposure to road salt and the isolated exposure of two salt components found in road salt impact the survivirorship and thermal limits of freshwater copepods?
+## Introduction and Central Question(s)
 
-# Hypotheses
+<!--# Including the graphical abstract: add the PNG file (named 'graphical_abstract.png' into the Figures directory), then remove the hash mark before the knitr command in the chunk above -->
+
+Increasingly frequent winter warming events cause the environment to alternate from freezing to melting which can have a major impact on lake ecosystems. Specifically, road salt application followed by melting leads to runoff and increased salinity in freshwater ecosystems with detrimental effects on zooplankton communities such as reduction in thermal tolerance. Stressors like high salinity may occur in an isolated manner or in tandem with warming events.
+
+### Question:
+
+How does short term exposure to road salt and the isolated exposure of two salt components found in road salt impact the survivorship and thermal limits of freshwater copepods?
+
+### Hypotheses
 
 Survivorship: Exposure to higher concentrations of road salt, NaCl, and MgCl2 will increase mortality over a 5-day period.
 
 Thermal Limits: Copepods acclimated to higher salt concentrations will exhibit decreased thermal limits.
 
-# Main Figures
+\newpage
 
-List with captions and interpretation <!--# Sydney lists the figures in order, and provides captions and interpretations -->
+## Main Figures
 
-<!--# Matt adds the figures / code as needed -->
+### Survivorship
 
-## Survivorship
+We found that both road salt ions reduced survival in a species and treatment specific manner. The winter-dominant species, *L. sicilis*, was most resilient to increased salt concentration followed by *L. minutus*, fall species, and *Skistodiaptomus spp.*, summer species. Between salts, MgCl2 had a stronger effect on survivorship in *L. sicilis* whereas NaCl decreased survivorship in *L. minutus* and *Skistodiaptomus spp.*
 
-We found that both road salt ions reduced survival in a species and treatment specific manner. The winter-dominant species, *L. sicilis*, was most resilient to increased salt concentration followed by *L. minutus*, fall species, and *Skistodiaptomus spp.*, summer species. Between salts, MgCl2 had a stronger effect on survivorship in *L. sicilis* whereas NaCl decreased survivorship in *L. minutus* and *Skistodiaptomus spp.*.
+```{r, echo = F}
+#| label: fig-surv
+#| fig-cap: ""
+#| out-width: "90%"
 
-<!--# Survivorship weeble regression figure here -->
+knitr::include_graphics(here("Output", "Figures", "report", "prop-surv-plot-1.png"))
 
-Key Takeaways:
-
--   Species have different salt sensitivities
-
--   Most sensitive: Skisto \> Minutus \> Sicilis
-
--   Minutus is more sensitive to NaCl, Sicilis is the opposite
-
-→ Sets up a narrative on salt specific effects 
-
-<!--# lc50 figure here -->
+```
 
 Key Takeaways:
 
--   MgCl2 LC50 is constant across both species and has a rapid effect on the animals
+- Species have different salt sensitivities
 
--   NaCl requires a longer exposure to both animals in order to reach LC50 in an ecologically relevant level
+- Most sensitive: Skisto \> Minutus \> Sicilis
 
-→ Suggests a salt specific effect on survivorship 
+- Minutus is more sensitive to NaCl, Sicilis is the opposite
 
-## Thermal Tolerance
+- Survivorship figure here is supported by a Weibull regression, using the individual 'time to death' data <!--# Added this line here to contrast the survival plot with the statistical analysis -->
 
-<!--# CTmax mixed effects model here -->
+\newpage
 
-<!--# Parameter estimate here -->
+### Salt-specific LC50 over time
 
-<!--# If we were to make these into a multipannel single figure, can we do that in R? -->
+Key Takeaways:
+
+- MgCl2 LC50 is constant across both species and has a rapid effect on the animals
+
+- NaCl requires a longer exposure to both animals in order to reach LC50 in an ecologically relevant level
+
+```{r, echo = F}
+#| label: fig-lc50
+#| fig-cap: ""
+#| out-width: "90%"
+knitr::include_graphics(here("Output", "Figures", "report", "lc50-trajectory-plot-1.png"))
+```
+
+\newpage
+
+## Salinity stress affects CTmax
+
+<!--# CTmax mixed effects model here; Wasn't entirely sure if you meant raw data or mixed effects model results here - I combined the raw data and parameter estimate plot. We'll hold off on including ANOVA tables in the narrative outline -->
 
 Key Takeways:
 
--   No significant difference between the salts
+- No significant difference between the salts
 
--   *L. sicilis*: Significant effects of ions on thermal tolerance
+- *L. sicilis*: Significant effects of ions on thermal tolerance
 
--   In combination with survival data → lower thermal limits correspond to lower survivorship measured
+- In combination with survival data → lower thermal limits correspond to lower survivorship measured
+
+```{r, echo = F}
+#| label: fig-ctmax
+#| fig-cap: ""
+#| out-width: "70%"
+knitr::include_graphics(here("Output", "Figures", "report", "ctmax-plot-1.png"))
+```
+
+\newpage
 
 → Different species respond differently to salt stress
 
-<!--# Proportion mortality figure here -->
-
-<!--# Similar plot with road salt data? -->
+<!--# Proportion mortality figure here; Is this the CTmax vs. proportional mortality plots we made? -->
 
 Key Takeaways:
 
--   Can be used as validation for missing *L. minutus* data (we see the same trends observed here that we had predicted above in *L. minutus* - no difference between the salts)
+- Can be used as validation for missing *L. minutus* data (we see the same trends observed here that we had predicted above in *L. minutus* - no difference between the salts)
 
--   Mg continues to have a strong effect in *L. sicilis*
+- Mg continues to have a strong effect in *L. sicilis*
 
--   *L. sicilis*: ion effects are condition dependent with something else happening in NaCl
+- *L. sicilis*: ion effects are condition dependent with something else happening in NaCl
 
-# Main Conclusion
+## Main Conclusion
 
--   Mortality differs depending on both salt type and species in copepods
+- Mortality differs depending on both salt type and species in copepods
 
--   Increased freshwater salinization negatively impacts thermal tolerance in winter dominant *L. sicilis* but not *L. minutus*
+- Increased freshwater salinization negatively impacts thermal tolerance in winter dominant *L. sicilis* but not *L. minutus*
 
--   Regulation of road salt use is necessary to decrease freshwater salinization and protect zooplankton species under warming scenarios
+- Regulation of road salt use is necessary to decrease freshwater salinization and protect zooplankton species under warming scenarios

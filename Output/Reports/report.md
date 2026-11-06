@@ -16,25 +16,6 @@ Champlain diaptomid copepods
 
 ## CTmax Data
 
-``` r
-ctmax_model_data = ctmax_data %>% 
-  mutate(treatment = case_when(
-    dose_group == "Control" ~ "Control",
-    dose_group == "Salt" ~ salt
-  ))
-
-ggplot(ctmax_model_data, aes(x = treatment, y = ctmax)) + 
-  facet_wrap(species~., scales = "free_x") + 
-  geom_boxplot(outlier.color = NA) + 
-  geom_point(size = 1, position = position_jitter(height = 0, width = 0.1)) + 
-  labs(x = "Treatment", 
-       y = "CTmax (°C)") + 
-  theme_matt_facets() + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
-```
-
-<img src="../Figures/report/ctmax-plot-1.png" style="display: block; margin: auto;" />
-
 Shown below are the sample sizes for the various salt-treatment
 combinations. Fewer experiments were run with Instant Ocean, so the
 sample sizes are smaller for this salt.
@@ -86,6 +67,10 @@ to control for any differences between collections or experimental
 replicates.
 
 ``` r
+ctmax_model_data = ctmax_data %>% 
+  mutate(treatment = case_when(
+    dose_group == "Control" ~ "Control",
+    dose_group == "Salt" ~ salt))
 
 salt.model = lmer(data = ctmax_model_data,
                   ctmax ~ species * treatment + (1|assay_date))
@@ -124,7 +109,16 @@ knitr::kable(salt.means)
 
 ``` r
 
-salt.means %>% data.frame() %>% 
+ctmax_a = ggplot(ctmax_model_data, aes(x = treatment, y = ctmax)) + 
+  facet_wrap(species~., scales = "free_x") + 
+  geom_boxplot(outlier.color = NA) + 
+  geom_point(size = 1, position = position_jitter(height = 0, width = 0.1)) + 
+  labs(x = "Treatment", 
+       y = "CTmax (°C)") + 
+  theme_matt_facets() + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ctmax_b = salt.means %>% data.frame() %>% 
   mutate(salt = str_remove_all(contrast, " - Control")) |> 
   ggplot(aes(y = salt, x = estimate, colour = species)) + 
   geom_vline(xintercept = 0) + 
@@ -136,10 +130,13 @@ salt.means %>% data.frame() %>%
   labs(x = "Effect of Salt Treatment \non CTmax (°C)", 
        y = NULL) + 
   theme_matt() + 
-  theme(legend.position = "right")
+  theme(legend.position = "bottom")
+
+ggarrange(ctmax_a, ctmax_b, nrow = 2, 
+          labels = "AUTO")
 ```
 
-<img src="../Figures/report/ctmax-effects-plot-1.png" style="display: block; margin: auto;" />
+<img src="../Figures/report/ctmax-plot-1.png" style="display: block; margin: auto;" />
 
 ## Survival Data
 
@@ -219,7 +216,7 @@ surv_model_data = surv_data %>%
   mutate(
     species = factor(species),
     salt = factor(salt),
-    exp_date = factor(exp_date),          # for clustering, not as a fixed effect -- too many levels
+    exp_date = factor(exp_date), # for clustering, not as a fixed effect -- too many levels
     group = interaction(species, salt, drop = TRUE)
   )
 ```
