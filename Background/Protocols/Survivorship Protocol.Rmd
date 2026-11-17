@@ -1,33 +1,32 @@
-
-
 Protocol Updated as of 1/30/2026
-# Copepod Salinity Experiments
-## Copepod Sorting Protocol:
-1. Pull beakers from fridge (labeled from most recent tow) and bring up to main lab 
-  1. Make sure that you are only pulling 1 or 2 beakers at a time (bench top is not the same temp as the fridge - minimize time spent outside of fridge)
-2. Label petri dishes with Treatment Group, Acclimation Date, Dose #, and Replicate # (if applicable)
-3. Pipet 10mL of spring water into the dishes to sort into. 
-4. Sort off copepods (Leptodiaptomus sicilis) females into the dishes 
-  1. Make sure only female copepods are being sorted into the groups
-  2. Consult ID Guide if you are questioning an ID (https://sasaki-lab.com/vermont_copes)
-  3. Make sure that copepods are adults and not juveniles 
-5. Place dishes in benchtop incubators when not in use to limit time spent outside of fridge
-6. Take a water sample from the tow (place in glass bottle labeled Champlain Tow with the date the tow was taken)
-7. Once all groups are sorted, begin acclimations:
-  1. Prepare the 8 different doses using serological pipettes (labeled for each dose) found in our drawer on the bottom shelf
-  2. Measure out 10mL of each dose from the premade salts
-  3. Acclimations take place over the course of an hour → 1mL of each dose gets added every 6 minutes 
-    1. Start with the control and move in the direction of dosage increase
-    2. DON'T FORGET: Clean the pipet between each 6 min round of acclimations
-8. Once acclimations are finished, let copepods sit for another 10 minutes and check survivorship. All copepods should be alive at hour 0 - if not, this must be marked in the data sheet. 
-9. Place all dishes at random into the fridge 
 
-## Survivorship Check Protocol: 
-1. Take 4 dishes out of the fridge at a time and check response to stimulus
-  1. All survivorship checks should take place in the copepod room instead of the main lab
-  2. Stimulus can be gently spinning the petri dish or shifting the dish side to side
-  3. Use the lights to identify movement of copepods 
-2. Utilize survivorship data sheet to mark down the hour in which you are completing the survivorship check and the # of individuals which are still responding to stimulus in the appropriate row. 
-  1. Make sure to mark gravid animals when present. If a gravid animal dies, mark that in the data sheet, and if a non gravid animal dies and the number of gravid animals that were originally recorded are no longer visible (one or more dropped their egg sack) note this in the data sheet for that day
-  2. After day 5 of the survivorship experiments, take final data and clean dishes, remove labels, and put dishes back on shelf in main lab to dry
+# Copepod Salinity Experiments 
 
+## Copepod Sorting Protocol: 
+
+1.  Pull beakers from fridge (labeled from most recent tow) and bring up to main lab
+    1.  Make sure that you are only pulling 1 or 2 beakers at a time (bench top is not the same temp as the fridge - minimize time spent outside of fridge)
+2.  Label petri dishes with Treatment Group, Acclimation Date, Dose #, and Replicate \# (if applicable) 3. Pipet 10mL of spring water into the dishes to sort into.
+3.  Sort off copepods (Leptodiaptomus sicilis) females into the dishes
+    1.  Make sure only female copepods are being sorted into the groups
+    2.  Consult ID Guide if you are questioning an ID (<https://sasaki-lab.com/vermont_copes>)
+    3.  Make sure that copepods are adults and not juveniles
+4.  Place dishes in benchtop incubators when not in use to limit time spent outside of fridge
+5.  Take a water sample from the tow (place in glass bottle labeled Champlain Tow with the date the tow was taken)
+6.  Once all groups are sorted, begin acclimations:
+    1.  Prepare the 8 different doses using serological pipettes (labeled for each dose) found in our drawer on the bottom shelf
+    2.  Measure out 10mL of each dose from the premade salts
+7.  Acclimations take place over the course of an hour → 1mL of each dose gets added every 6 minutes
+    1.  Start with the control and move in the direction of dosage increase
+    2.  DON'T FORGET: Clean the pipet between each 6 min round of acclimations
+8.  Once acclimations are finished, let copepods sit for another 10 minutes and check survivorship. All copepods should be alive at hour 0 - if not, this must be marked in the data sheet. 9. Place all dishes at random into the fridge
+
+## Survivorship Check Protocol:
+
+1.  Take 4 dishes out of the fridge at a time and check response to stimulus
+2.  All survivorship checks should take place in the copepod room instead of the main lab
+3.  Stimulus can be gently spinning the petri dish or shifting the dish side to side
+4.  Use the lights to identify movement of copepods
+5.  Utilize survivorship data sheet to mark down the hour in which you are completing the survivorship check and the \# of individuals which are still responding to stimulus in the appropriate row.
+6.  Make sure to mark gravid animals when present. If a gravid animal dies, mark that in the data sheet, and if a non gravid animal dies and the number of gravid animals that were originally recorded are no longer visible (one or more dropped their egg sack) note this in the data sheet for that day
+7.  After day 5 of the survivorship experiments, take final data and clean dishes, remove labels, and put dishes back on shelf in main lab to dry

@@ -152,9 +152,8 @@ As freshwater lakes continue to increase in salinity (Dugan et al. 2017), these 
 
 \newpage
 
-```{=tex}
 \beginsupplement
-```
+
 # Supplementary Material
 
 ```{r supp-fig-1, echo = F}
