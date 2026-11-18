@@ -22,19 +22,20 @@ editor_options:
 
 3.  Approves author agreement
 
-## AI Use in Manuscript Coding
+## AI Use in Manuscript
 
-1.  No AI use Proofreading: No AI use
-2.  Writing/drafting: No AI use
-3.  Reference management: No AI use
-4.  Conceptual outlines: No AI use
-5.  We ask that when reviewing the manuscript you avoid using AI
+1.  Coding: No AI use
+2.  Proofreading: No AI use
+3.  Writing/drafting: No AI use
+4.  Reference management: No AI use
+5.  Conceptual outlines: No AI use
+6.  We ask that when reviewing the manuscript you avoid using AI
 
-## Author Order 
+## Author Order
 
-1.  Author order will be as follows: Sydney Sharp, "Anna McPeak, Chiara
-    Cohen, Katie Anthony, Olivia Britton, HS students, ---", Melissa
-    Pespeni, Matthew Sasaki
+1.  Author order will be as follows: Sydney Sharp, Anna McPeak, Chiara
+    Cohen, Elizabeth Nahstoll, Katie Anthony, Olivia Britton, Rama
+    Namee, Wynne Adamson, Melissa Pespeni, Matthew Sasaki
 2.  Sydney Sharp will be first author as the main driver of the project
     and manuscript writing. Melissa Pespeni and Matt Sasaki will be the
     last authors as primary supervisors to the project.
@@ -42,3 +43,5 @@ editor_options:
 
 Please acknowledge your approval of this agreement in an email to
 [sydsharp72\@gmail.com](mailto:sydsharp72@gmail.com){.email}
+
+<!--# Emails for all authors: Anna.Mcpeak@uvm.edu, Chiara.Cohen@uvm.edu, emnahstoll@gmail.com, Kathryn.Anthony@uvm.edu, obritton@uvm.edu, ramaalnamee@gmail.com, winnie.adamson.vt@gmail.com, Melissa.Pespeni@uvm.edu, matthew_sasaki@uml.edu  -->
